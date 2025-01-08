@@ -1,51 +1,71 @@
-import { Button } from "@repo/ui";
+import Telegram from '@twa-dev/sdk';
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCloudStorage } from "@/lib/twa/hooks";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { getPaymentUrl } from "@/services/api/subscriptions";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import styles from "./SubscriptionBuy.module.scss";
 
-
 export default function SubscriptionBuyPage() {
-    const params = useParams();
-    const cloudStorage = useCloudStorage();
+  const params = useParams();
+  const cloudStorage = useCloudStorage();
+  const [email, setEmail] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(false);
 
-    const { data: payment_url, isLoading } = useQuery({
-        queryKey: ["url"],
-        queryFn: async () =>
-            getPaymentUrl({
-            token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
-            plan_id: Number(params.planId),
-            email: "www@gmail.com", // починить
-          }),
-        refetchOnMount: false,
-        refetchOnReconnect: false,
-        refetchOnWindowFocus: false,
-        gcTime: 0,
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async () => {
+      const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
+      return getPaymentUrl({
+        token,
+        plan_id: Number(params.planId),
+        email,
       });
-
-      if (isLoading || !payment_url) {
-        return <SubscriptionBuyLoading />;
+    },
+    onSuccess: (paymentUrl) => {
+      if (paymentUrl?.url) {
+        Telegram.openLink(paymentUrl.url); // Редирект на полученный URL
       }
+    },
+    onError: (error) => {
+      console.error("Failed to get payment URL", error);
+    },
+  });
 
-    return (
-        <>
-        <a href={payment_url.url} target="_blank" rel="noopener noreferrer">
-          <div className={styles.complete}>
-              <button
-                  className={styles.button}
-                  >
-                    Далее!
-              </button>
-          </div>
-        </a>
-        </>
-        );
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setIsEmailValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)); // Простая валидация email
+  };
+
+  const handleButtonClick = () => {
+    if (isEmailValid) {
+      mutate();
     }
+  };
 
-const SubscriptionBuyLoading = () => {
-return (
-    <div></div>
-);
-};
+  return (
+    <div className={styles.container}>
+      <div className={styles.formContainer}>
+        <label htmlFor="email" className={styles.label}>Для оплаты необходимо ввести email для отправки чека:</label>
+        <input
+          id="email"
+          type="email"
+          className={styles.input}
+          value={email}
+          onChange={handleEmailChange}
+          placeholder="example@gmail.com"
+        />
+      </div>
+      <div className={styles.complete}>
+        <button
+          className={`${styles.button} ${!isEmailValid || isLoading ? styles.buttonInactive : ""}`}
+          onClick={handleButtonClick}
+          disabled={!isEmailValid || isLoading}
+        >
+          {isLoading ? "Загрузка..." : "Далее!"}
+        </button>
+      </div>
+    </div>
+  );
+}

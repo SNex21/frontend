@@ -1,4 +1,39 @@
-.complete {
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-6);
+    margin-top: 50%;
+  }
+  
+  .formContainer {
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: var(--spacing-6);
+  }
+  
+  .label {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: var(--spacing-2);
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .input {
+    width: 100%;
+    padding: var(--spacing-3);
+    border: 1px solid var(--ds-border-200);
+    border-radius: var(--rounded-lg);
+    font-size: 16px;
+    outline: none;
+  }
+  
+  .input:focus {
+    border-color: var(--ds-primary-500);
+  }
+
+  .complete {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -15,7 +50,6 @@
     z-index: 10;
   }
   
-  
   .button {
     background-color: #4900DC;
     width: 100%;
@@ -27,11 +61,10 @@
     padding: var(--spacing-3) var(--spacing-6);
     cursor: pointer;
     transition: background-color 0.3s;
+  }
   
-    &--inactive {
-      background-color: #280078; /* Цвет неактивной кнопки */
-      color: #a5a5a5;
-      cursor: not-allowed;
-  
-    }
+  .buttonInactive {
+    background-color: #280078;
+    color: #a5a5a5;
+    cursor: not-allowed;
   }
