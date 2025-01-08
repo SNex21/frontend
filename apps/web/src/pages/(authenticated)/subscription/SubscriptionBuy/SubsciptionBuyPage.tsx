@@ -13,7 +13,7 @@ export default function SubscriptionBuyPage() {
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: async () => {
       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
       return getPaymentUrl({
@@ -32,7 +32,7 @@ export default function SubscriptionBuyPage() {
     },
   });
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: { target: { value: any; }; }) => {
     const value = e.target.value;
     setEmail(value);
     setIsEmailValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)); // Простая валидация email
@@ -59,11 +59,10 @@ export default function SubscriptionBuyPage() {
       </div>
       <div className={styles.complete}>
         <button
-          className={`${styles.button} ${!isEmailValid || isLoading ? styles.buttonInactive : ""}`}
+          className={`${styles.button} ${!isEmailValid ? styles.buttonInactive : ""}`}
           onClick={handleButtonClick}
-          disabled={!isEmailValid || isLoading}
+          disabled={!isEmailValid}
         >
-          {isLoading ? "Загрузка..." : "Далее!"}
         </button>
       </div>
     </div>

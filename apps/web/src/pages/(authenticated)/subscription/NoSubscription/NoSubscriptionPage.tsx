@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Haptic } from "@/lib/twa/components/Haptic";
-import { Link } from "react-router-dom";
 import styles from "./NoSubscribe.module.scss";
 import cn from "classnames";
 import { BackButton } from "@/lib/twa/components/BackButton";
@@ -44,7 +43,7 @@ export const NoSubscriptionPage: React.FC = () => {
       }),
   });
 
-  const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
+  const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
 
   if (isLoadingSubInfo || isLoadingPlans || !subscription || !data) {
     return <SubscriptionSectionLoading />;
@@ -85,9 +84,7 @@ export const NoSubscriptionPage: React.FC = () => {
         ))}
         <div className={styles.complete}>
           <button
-            className={cn(styles.button, {
-              [styles["button--inactive"]]: !selectedPlanId,
-            })}
+            className={cn(styles.button, !selectedPlanId && styles["button--inactive"])}
             onClick={handleBuyClick}
             disabled={!selectedPlanId}
           >
@@ -131,9 +128,7 @@ const PlanSubscriptionCard: React.FC<PlanSubscriptionCardProps> = ({
   return (
     <div
       onClick={onSelect}
-      className={cn(styles.subscription_card, {
-        [styles.subscription_card_selected]: isSelected,
-      })}
+      className={cn(styles.subscription_card, isSelected && styles.subscription_card_selected)}   
     >
       
       <div className={styles.subscription_card__content}>
