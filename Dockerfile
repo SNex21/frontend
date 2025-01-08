@@ -14,6 +14,7 @@ EXPOSE 5173
 RUN npm install -g bun
 RUN npm install -D typescript --force
 
+RUN turbo run build
 CMD turbo run dev
  
 # # Generate a partial monorepo with a pruned lockfile for a target workspace.
