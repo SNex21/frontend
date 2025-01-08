@@ -31,11 +31,15 @@ export default function SubscriptionBuyPage() {
 
     return (
         <>
-            <div className={styles.complete__buttons}>
-            <Button asChild>
-                <a href={payment_url.url} target="_blank" rel="noopener noreferrer">Купить!</a>
-            </Button>
-            </div>
+        <a href={payment_url.url} target="_blank" rel="noopener noreferrer">
+          <div className={styles.complete}>
+              <button
+                  className={styles.button}
+                  >
+                    Далее!
+              </button>
+          </div>
+        </a>
         </>
         );
     }
