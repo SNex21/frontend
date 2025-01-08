@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Haptic } from "@/lib/twa/components/Haptic";
 import { Link } from "react-router-dom";
 import styles from "./SubscriptionSection.module.scss";
+import { ArrowIcon } from "@repo/ui/icons";
 import cn from "classnames";
 
 import { useUser } from "@/providers/AuthProvider/AuthProvider";
@@ -14,6 +15,7 @@ import { Skeleton } from "@repo/ui";
 
 interface SubscriptionCardProps {
   title: string;
+  icon: React.ReactNode;
   description?: string;
   isSm?: boolean;
   href?: string;
@@ -41,22 +43,24 @@ const SubscriptionSection: FC = () => {
         <h2 className={styles.section__heading}>Подписка</h2>
         {!user.subscription ? (
           <SubscriptionCard
-          title="У тебя пока нет подписки"
-          description="Открывай доступ ко всем заданиям с подпиской!"
+          title="Подключи Учи-бот Плюс!"
+          description="Получи доступ ко всем заданиям ЕГЭ-2025 от команды Учи-Бота по удобному тарифу"
           href={"/subscription"}
+          icon={<ArrowIcon size={25} />}
         />
         ) : (
           <SubscriptionCard
           title={`Подписка ${subscription.plan.title}`}
           description={`Действует до ${formatDate(subscription.end_date)}`}
           href={"/subscription"}
+          icon={<ArrowIcon size={25} />}
         />
         )}
       </section>
       )
     };
 
-const SubscriptionCard: FC<SubscriptionCardProps> = ({ title, description, isSm = false, href = "" }) => {
+const SubscriptionCard: FC<SubscriptionCardProps> = ({ title, description, icon, isSm = false, href = "" }) => {
   return (
     <Haptic type="impact" value="medium" asChild>
       <Link to={href} className={styles.card}>
@@ -68,6 +72,9 @@ const SubscriptionCard: FC<SubscriptionCardProps> = ({ title, description, isSm 
             {title}
           </h3>
           {description && <p className={styles.card__content__description}>{description}</p>}
+        </div>
+        <div className={styles.card__icon}>
+          <span className={styles.card__icon_arrow}>{icon}</span>
         </div>
       </Link>
     </Haptic>
