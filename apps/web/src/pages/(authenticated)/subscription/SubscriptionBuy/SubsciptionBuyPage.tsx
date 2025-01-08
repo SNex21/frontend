@@ -63,6 +63,7 @@ export default function SubscriptionBuyPage() {
           onClick={handleButtonClick}
           disabled={!isEmailValid}
         >
+          Далее
         </button>
       </div>
     </div>
