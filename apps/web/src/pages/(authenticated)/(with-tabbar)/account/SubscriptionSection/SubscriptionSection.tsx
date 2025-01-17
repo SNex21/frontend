@@ -3,6 +3,7 @@ import { Haptic } from "@/lib/twa/components/Haptic";
 import { Link } from "react-router-dom";
 import styles from "./SubscriptionSection.module.scss";
 import { ArrowIcon } from "@repo/ui/icons";
+import { СonfettiEmoji } from "@repo/ui/emojis";
 import cn from "classnames";
 
 import { useUser } from "@/providers/AuthProvider/AuthProvider";
@@ -14,6 +15,7 @@ import { Skeleton } from "@repo/ui";
 
 
 interface SubscriptionCardProps {
+  emoji?: React.ReactNode;
   title: string;
   icon: React.ReactNode;
   description?: string;
@@ -50,6 +52,7 @@ const SubscriptionSection: FC = () => {
         />
         ) : (
           <SubscriptionCard
+          emoji={<СonfettiEmoji size={25} />}
           title={`Подписка ${subscription.plan.title}`}
           description={`Действует до ${formatDate(subscription.end_date)}`}
           href={"/subscription"}
@@ -60,10 +63,11 @@ const SubscriptionSection: FC = () => {
       )
     };
 
-const SubscriptionCard: FC<SubscriptionCardProps> = ({ title, description, icon, isSm = false, href = "" }) => {
+const SubscriptionCard: FC<SubscriptionCardProps> = ({ emoji, title, description, icon, isSm = false, href = "" }) => {
   return (
     <Haptic type="impact" value="medium" asChild>
       <Link to={href} className={styles.card}>
+      {emoji && <div className={styles.card__emoji}>{emoji}</div>}
         <div className={styles.card__content}>
           <h3
             className={cn(styles.card__content__title, {
