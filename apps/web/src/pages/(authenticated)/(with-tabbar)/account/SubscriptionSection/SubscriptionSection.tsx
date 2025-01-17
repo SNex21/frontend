@@ -56,7 +56,7 @@ const SubscriptionSection: FC = () => {
           title={`Подписка ${subscription.plan.title}`}
           description={`Действует до ${formatDate(subscription.end_date)}`}
           href={"/subscription"}
-          icon={<ArrowIcon size={40} />}
+          icon={<ArrowIcon size={75} />}
         />
         )}
       </section>
