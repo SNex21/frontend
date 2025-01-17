@@ -52,11 +52,11 @@ const SubscriptionSection: FC = () => {
         />
         ) : (
           <SubscriptionCard
-          emoji={<СonfettiEmoji size={25} />}
+          emoji={<СonfettiEmoji size={50} />}
           title={`Подписка ${subscription.plan.title}`}
           description={`Действует до ${formatDate(subscription.end_date)}`}
           href={"/subscription"}
-          icon={<ArrowIcon size={75} />}
+          icon={<ArrowIcon size={25} />}
         />
         )}
       </section>
