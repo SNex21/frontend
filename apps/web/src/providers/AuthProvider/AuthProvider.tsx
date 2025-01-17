@@ -44,7 +44,7 @@ const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
         await updateUser({
           id: Number(await cloudStorage.getItem("user_id")),
           token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
-          timezone: new Date().getTimezoneOffset(),
+          timezone: -Math.round(new Date().getTimezoneOffset() / 60) ,
           telegramUsername: initData?.user?.username ?? "",
         });
       } catch (e) {
