@@ -7,12 +7,19 @@ import { Button } from "@repo/ui";
 import { LoudlyCryingFaceEmoji } from "@repo/ui/emojis";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { completeSession } from "@/services/api/tasks";
+import { useCloudStorage } from "@/lib/twa/hooks";
+import { Guess } from "@/models/Session";
 
 interface LessonHeaderProps {
   stats: { total: number; completed: number; index: number };
 }
 
-const LessonHeader: React.FC<LessonHeaderProps> = ({ stats }) => {
+interface LessonHeaderSessionIdProps {
+  session: { id: number; startDate: number, guesses: Guess[]};
+}
+
+const LessonHeader: React.FC<LessonHeaderProps, LessonHeaderSessionIdProps> = ({ stats, session }) => {
   const navigate = useNavigate();
 
   const [opened, setOpened] = React.useState(false);
@@ -28,6 +35,17 @@ const LessonHeader: React.FC<LessonHeaderProps> = ({ stats }) => {
 
   const exit = React.useCallback(() => {
     setOpened(false);
+    const cloudStorage = useCloudStorage();
+    try {
+      await completeSession({
+        token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
+        id: session.id,
+        wastedTime: new Date().getTime() - session.startDate,
+        guesses: session.guesses,
+      });
+    } catch (e) {
+      console.error(e);
+    }
     navigate("/");
   }, []);
 

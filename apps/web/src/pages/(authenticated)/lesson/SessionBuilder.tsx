@@ -22,6 +22,7 @@ const WOM_TO_SOLVE = 0;
 interface SessionBuilderProps {
   session: Session;
   stats: { total: number; completed: number; index: number };
+  startDate: number;
   setStats: React.Dispatch<
     React.SetStateAction<{
       total: number;
@@ -33,7 +34,7 @@ interface SessionBuilderProps {
   onComplete: ({ guesses }: { guesses: Guess[] }) => Promise<void>;
 }
 
-const SessionBuilder: React.FC<SessionBuilderProps> = ({ session, stats, setStats, onComplete }) => {
+const SessionBuilder: React.FC<SessionBuilderProps> = ({ session, stats, startDate, setStats, onComplete }) => {
   const challenges = React.useRef(getChallenges(session.challenges));
   const guesses = React.useRef<Guess[]>([]);
 
@@ -183,7 +184,7 @@ const SessionBuilder: React.FC<SessionBuilderProps> = ({ session, stats, setStat
       exit={{ opacity: 0, transform: "translateX(-100%)", transition: { delay: 0.6 } }}
       className={styles.lesson}
     >
-      <LessonHeader stats={stats} />
+      <LessonHeader stats={stats} session={session.id, startDate, guesses.current} />
       <AnimatePresence>{challengeScreens.map((challenge) => challenge)}</AnimatePresence>
     </motion.div>
   );
