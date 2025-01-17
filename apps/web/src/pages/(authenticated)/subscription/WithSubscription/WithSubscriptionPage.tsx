@@ -7,12 +7,14 @@ import { BackButton } from "@/lib/twa/components/BackButton";
 import { useNavigate } from "react-router-dom";
 
 import { useCloudStorage } from "@/lib/twa/hooks";
+import { СonfettiEmoji } from "@repo/ui/emojis";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { useQuery } from "@tanstack/react-query";
 import { getSubscriptionInfo } from "@/services/api/subscriptions";
 import { Skeleton } from "@repo/ui";
 
 interface WithSubscriptionCardProps {
+    icon?: React.ReactNode;
     title: string;
     description?: string;
     price?: number;
@@ -48,7 +50,8 @@ export const WithSubscriptionPage: FC = () =>  {
         <section className={cn("wrapper", styles.section)}>
         <h2 className={styles.section__heading}>Подписка</h2>
         <WithSubscriptionCard
-        title={`Подписка ${subscription.plan.title}`}
+        icon={<СonfettiEmoji size={25} />}
+        title={`Подписка "${subscription.plan.title}"`}
         description={`Действует до ${formatDate(subscription.end_date)}`}
         price={subscription.price}
         href={"/"}
@@ -58,10 +61,11 @@ export const WithSubscriptionPage: FC = () =>  {
     )
   };
 
-const WithSubscriptionCard: FC<WithSubscriptionCardProps> = ({ title, description, price,  isSm = false, href = "" }) => {
+const WithSubscriptionCard: FC<WithSubscriptionCardProps> = ({ icon, title, description, price,  isSm = false, href = "" }) => {
 return (
     <Haptic type="impact" value="medium" asChild>
     <Link to={href} className={styles.card}>
+        {icon && <div className={styles.card__icon}>{icon}</div>}
         <div className={styles.card__content}>
         <h3
             className={cn(styles.card__content__title, {
