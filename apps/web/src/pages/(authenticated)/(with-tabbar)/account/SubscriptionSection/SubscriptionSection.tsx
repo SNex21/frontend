@@ -46,7 +46,7 @@ const SubscriptionSection: FC = () => {
         <h2 className={styles.section__heading}>Подписка</h2>
         {!user.subscription ? (
           <SubscriptionCardWithoutSub
-          emoji={<LightningEmoji size={19} />}
+          emoji={<LightningEmoji size={22} />}
           title="Подключи Учи-бот Плюс!"
           description="Получи доступ ко всем заданиям ЕГЭ-2025 от команды Учи-Бота по удобному тарифу"
           href={"/subscription"}
