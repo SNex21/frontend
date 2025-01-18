@@ -74,7 +74,7 @@ const SubscriptionCard: FC<SubscriptionCardProps> = ({ emoji, title, description
             className={cn(styles.card__content__title, {
               [styles.card__content__title_sm!]: isSm,
             })}>
-            {emoji && <div className={styles.card__emoji}>{emoji}</div>}
+            {emoji && <div className={styles.card__emoji_no_sub}>{emoji}</div>}
             {title}
           </h3>
           {description && <p className={styles.card__content__description}>{description}</p>}

@@ -49,6 +49,16 @@
     margin-left: 12px;
     height: 100%;
   }
+
+  &__emoji_no_sub {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    margin-left: 12px;
+    height: 100%;
+    margin-right: 10px;
+  }
   
   &__icon_arrow {
     font-weight: bold;
