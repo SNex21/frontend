@@ -70,11 +70,11 @@ const SubscriptionCard: FC<SubscriptionCardProps> = ({ emoji, title, description
     <Haptic type="impact" value="medium" asChild>
       <Link to={href} className={styles.card}>
         <div className={styles.card__content}>
-        {emoji && <div className={styles.card__emoji}>{emoji}</div>}
           <h3
             className={cn(styles.card__content__title, {
               [styles.card__content__title_sm!]: isSm,
             })}>
+            {emoji && <div className={styles.card__emoji}>{emoji}</div>}
             {title}
           </h3>
           {description && <p className={styles.card__content__description}>{description}</p>}
