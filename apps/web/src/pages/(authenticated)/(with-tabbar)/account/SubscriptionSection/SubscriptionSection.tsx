@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import styles from "./SubscriptionSection.module.scss";
 import { ArrowIcon } from "@repo/ui/icons";
 import { СonfettiEmoji } from "@repo/ui/emojis";
-import { LightningEmoji } from "@repo/ui/emojis";
 import cn from "classnames";
 
 import { useUser } from "@/providers/AuthProvider/AuthProvider";
