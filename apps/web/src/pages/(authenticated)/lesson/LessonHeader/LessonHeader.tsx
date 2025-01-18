@@ -13,13 +13,10 @@ import { Guess } from "@/models/Session";
 
 interface LessonHeaderProps {
   stats: { total: number; completed: number; index: number };
+  session: { id: number; startDate: number; guesses: Guess[] };
 }
 
-interface LessonHeaderSessionIdProps {
-  session: { id: number; startDate: number, guesses: Guess[]};
-}
-
-const LessonHeader: React.FC<LessonHeaderProps, LessonHeaderSessionIdProps> = ({ stats, session }) => {
+const LessonHeader: React.FC<LessonHeaderProps> = ({ stats, session }) => {
   const navigate = useNavigate();
 
   const [opened, setOpened] = React.useState(false);

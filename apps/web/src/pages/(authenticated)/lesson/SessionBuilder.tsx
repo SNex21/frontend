@@ -184,7 +184,7 @@ const SessionBuilder: React.FC<SessionBuilderProps> = ({ session, stats, startDa
       exit={{ opacity: 0, transform: "translateX(-100%)", transition: { delay: 0.6 } }}
       className={styles.lesson}
     >
-      <LessonHeader stats={stats} session={session.id, startDate, guesses.current} />
+      <LessonHeader stats={stats} session={session.id, startDate, guesses.current} />  /*исправить нахуй */
       <AnimatePresence>{challengeScreens.map((challenge) => challenge)}</AnimatePresence>
     </motion.div>
   );
