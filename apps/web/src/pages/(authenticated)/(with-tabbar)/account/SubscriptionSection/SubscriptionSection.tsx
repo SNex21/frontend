@@ -92,7 +92,7 @@ const SubscriptionCardWithoutSub: FC<SubscriptionCardProps> = ({ emoji, title, d
     <Haptic type="impact" value="medium" asChild>
       <Link to={href} className={styles.card}>
         <div className={styles.card__content}>
-        {emoji && <div className={styles.card__emoji}>{emoji}</div>}
+        {emoji && <div className={styles.card__emoji_no_sub}>{emoji}</div>}
           <h3
             className={cn(styles.card__content__title, {
               [styles.card__content__title_sm!]: isSm,
