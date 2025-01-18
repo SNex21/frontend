@@ -77,7 +77,7 @@ export default function LessonPage() {
     <AnimatePresence>
       {isLoading && <LessonPageLoading initial key="loading" />}
       {session && !completed && (
-        <SessionBuilder key="session" session={session} stats={stats} setStats={setStats} onComplete={complete} startDate={startDate}/>
+        <SessionBuilder key="session" session={session} stats={stats} setStats={setStats} onComplete={complete} startDate={startDate ?? Date.now()}/>
       )}
       {completed && <LessonComplete startDate={startDate ?? Date.now()} correctPercentage={correctPercentage} />}
     </AnimatePresence>
