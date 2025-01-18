@@ -20,7 +20,6 @@ interface WorkoutCardBlockedProps {
   title: string;
   description?: string;
   isSm?: boolean;
-  href?: string;
 }
 
 
@@ -30,7 +29,7 @@ const WorkoutSection: FC = () => {
 
   return (
     <>
-    {!user.subscription ? 
+    {user.subscription ? 
     (<section className="wrapper">
       <div className={styles.section}>
         <WorkoutCard
@@ -58,16 +57,14 @@ const WorkoutSection: FC = () => {
           title="Начать тренировку"
           description="по всем заданиям"
           icon={<FlexedBicepsEmoji size={25} />}
-          href={"/lesson"}
         />
         <div className={styles.row}>
-          <WorkoutCardBlocked title="Практика ошибок" icon={<WarningEmoji size={25} />} isSm href={"/lesson/mistakes"} />
+          <WorkoutCardBlocked title="Практика ошибок" icon={<WarningEmoji size={25} />} isSm />
           {showHardLessonButton && (
             <WorkoutCardBlocked
               title="Самые сложные"
               icon={<PersonLiftingWeightsEmoji size={25} />}
               isSm
-              href={"/lesson/hard"}
             />
           )}
         </div>
@@ -99,10 +96,9 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ icon, title, description, isSm = fa
   );
 };
 
-const WorkoutCardBlocked: FC<WorkoutCardBlockedProps> = ({ icon, title, description, isSm = false, href = "" }) => {
+const WorkoutCardBlocked: FC<WorkoutCardBlockedProps> = ({ icon, title, description, isSm = false}) => {
   return (
     <Haptic type="impact" value="medium" asChild>
-      <Link to={href} className={styles.blocked_card}>
         {icon && <div className={styles.blocked_card__icon}>{icon}</div>}
         <div className={styles.blocked_card__content}>
           <h3
@@ -114,7 +110,6 @@ const WorkoutCardBlocked: FC<WorkoutCardBlockedProps> = ({ icon, title, descript
           </h3>
           {description && <p className={styles.blocked_card__content__description}>{description}</p>}
         </div>
-      </Link>
     </Haptic>
   );
 };
