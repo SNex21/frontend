@@ -18,6 +18,7 @@ interface LessonHeaderProps {
 }
 
 const LessonHeader: React.FC<LessonHeaderProps> = ({ stats, session }) => {
+  const cloudStorage = useCloudStorage();
   const navigate = useNavigate();
   const [opened, setOpened] = React.useState(false);
   const progressBarRef = React.useRef<HTMLDivElement>(null);
@@ -31,7 +32,6 @@ const LessonHeader: React.FC<LessonHeaderProps> = ({ stats, session }) => {
 
   const exit = React.useCallback(async () => {
     setOpened(false);
-    const cloudStorage = useCloudStorage();
     try {
       await completeSession({
         token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
