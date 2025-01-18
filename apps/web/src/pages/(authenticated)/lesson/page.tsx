@@ -79,7 +79,7 @@ export default function LessonPage() {
       {session && !completed && (
         <SessionBuilder key="session" session={session} stats={stats} setStats={setStats} onComplete={complete} startDate={startDate}/>
       )}
-      {completed && <LessonComplete startDate={startDate} correctPercentage={correctPercentage} />}
+      {completed && <LessonComplete startDate={startDate ?? Date.now()} correctPercentage={correctPercentage} />}
     </AnimatePresence>
   );
 }
