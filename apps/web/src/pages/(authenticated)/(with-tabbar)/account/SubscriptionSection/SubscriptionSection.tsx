@@ -46,7 +46,7 @@ const SubscriptionSection: FC = () => {
         <h2 className={styles.section__heading}>Подписка</h2>
         {!user.subscription ? (
           <SubscriptionCardWithoutSub
-          emoji={<LightningEmoji size={22} />}
+          emoji={<LightningEmoji size={19} />}
           title="Подключи Учи-бот Плюс!"
           description="Получи доступ ко всем заданиям ЕГЭ-2025 от команды Учи-Бота по удобному тарифу"
           href={"/subscription"}
@@ -70,11 +70,11 @@ const SubscriptionCard: FC<SubscriptionCardProps> = ({ emoji, title, description
     <Haptic type="impact" value="medium" asChild>
       <Link to={href} className={styles.card}>
         <div className={styles.card__content}>
+        {emoji && <div className={styles.card__emoji}>{emoji}</div>}
           <h3
             className={cn(styles.card__content__title, {
               [styles.card__content__title_sm!]: isSm,
             })}>
-            {emoji && <div className={styles.card__emoji_no_sub}>{emoji}</div>}
             {title}
           </h3>
           {description && <p className={styles.card__content__description}>{description}</p>}
@@ -91,8 +91,8 @@ const SubscriptionCardWithoutSub: FC<SubscriptionCardProps> = ({ emoji, title, d
   return (
     <Haptic type="impact" value="medium" asChild>
       <Link to={href} className={styles.card}>
-      {emoji && <div className={styles.card__emoji}>{emoji}</div>}
         <div className={styles.card__content}>
+        {emoji && <div className={styles.card__emoji}>{emoji}</div>}
           <h3
             className={cn(styles.card__content__title, {
               [styles.card__content__title_sm!]: isSm,
