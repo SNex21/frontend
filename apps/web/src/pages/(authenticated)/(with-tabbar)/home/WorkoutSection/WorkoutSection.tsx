@@ -14,6 +14,15 @@ interface WorkoutCardProps {
   href?: string;
 }
 
+interface WorkoutCardBlockedProps {
+  icon?: React.ReactNode;
+  title: string;
+  description?: string;
+  isSm?: boolean;
+  href?: string;
+}
+
+
 const WorkoutSection: FC = () => {
   const showHardLessonButton = useFeatureFlagEnabled("hard-lesson-button");
 
@@ -56,6 +65,26 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ icon, title, description, isSm = fa
             {title}
           </h3>
           {description && <p className={styles.card__content__description}>{description}</p>}
+        </div>
+      </Link>
+    </Haptic>
+  );
+};
+
+const WorkoutCardBlocked: FC<WorkoutCardBlockedProps> = ({ icon, title, description, isSm = false, href = "" }) => {
+  return (
+    <Haptic type="impact" value="medium" asChild>
+      <Link to={href} className={styles.blocked_card}>
+        {icon && <div className={styles.blocked_card__icon}>{icon}</div>}
+        <div className={styles.blocked_card__content}>
+          <h3
+            className={cn(styles.blocked_card__content__title, {
+              [styles.blocked_card__content__title_sm!]: isSm,
+            })}
+          >
+            {title}
+          </h3>
+          {description && <p className={styles.blocked_card__content__description}>{description}</p>}
         </div>
       </Link>
     </Haptic>
