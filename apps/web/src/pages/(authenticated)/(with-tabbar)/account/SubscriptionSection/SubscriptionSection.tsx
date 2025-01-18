@@ -44,7 +44,7 @@ const SubscriptionSection: FC = () => {
       <section className={cn("wrapper", styles.section)}>
         <h2 className={styles.section__heading}>Подписка</h2>
         {!user.subscription ? (
-          <SubscriptionCardWithoutSub
+          <SubscriptionCard
           title="Подключи Учи-бот Плюс!"
           description="Получи доступ ко всем заданиям ЕГЭ-2025 от команды Учи-Бота по удобному тарифу"
           href={"/subscription"}
@@ -52,7 +52,7 @@ const SubscriptionSection: FC = () => {
         />
         ) : (
           <SubscriptionCard
-          emoji={<СonfettiEmoji size={19} />}
+          emoji={<СonfettiEmoji size={38} />}
           title={`Подписка "${subscription.plan.title}"`}
           description={`Действует до ${formatDate(subscription.end_date)}`}
           href={"/subscription"}
@@ -67,30 +67,8 @@ const SubscriptionCard: FC<SubscriptionCardProps> = ({ emoji, title, description
   return (
     <Haptic type="impact" value="medium" asChild>
       <Link to={href} className={styles.card}>
+      {emoji && <div className={styles.card__emoji}>{emoji}</div>}
         <div className={styles.card__content}>
-        {emoji && <div className={styles.card__emoji}>{emoji}</div>}
-          <h3
-            className={cn(styles.card__content__title, {
-              [styles.card__content__title_sm!]: isSm,
-            })}>
-            {title}
-          </h3>
-          {description && <p className={styles.card__content__description}>{description}</p>}
-        </div>
-        <div className={styles.card__icon}>
-          <span className={styles.card__icon_arrow}>{icon}</span>
-        </div>
-      </Link>
-    </Haptic>
-  );
-};
-
-const SubscriptionCardWithoutSub: FC<SubscriptionCardProps> = ({ emoji, title, description, icon, isSm = false, href = "" }) => {
-  return (
-    <Haptic type="impact" value="medium" asChild>
-      <Link to={href} className={styles.card}>
-        <div className={styles.card__content}>
-        {emoji && <div className={styles.card__emoji}>{emoji}</div>}
           <h3
             className={cn(styles.card__content__title, {
               [styles.card__content__title_sm!]: isSm,
