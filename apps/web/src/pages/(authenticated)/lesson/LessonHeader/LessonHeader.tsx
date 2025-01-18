@@ -14,7 +14,7 @@ import { ACCESS_TOKEN_NAME } from "@/services/auth/storage";
 
 interface LessonHeaderProps {
   stats: { total: number; completed: number; index: number };
-  session: { id: number; startDate: number; guesses: Guess[] };
+  session: { id: string; startDate: number; guesses: Guess[] };
 }
 
 const LessonHeader: React.FC<LessonHeaderProps> = ({ stats, session }) => {
