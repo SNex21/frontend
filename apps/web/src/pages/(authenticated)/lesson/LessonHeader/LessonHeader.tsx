@@ -38,12 +38,12 @@ const LessonHeader: React.FC<LessonHeaderProps> = ({ stats, session }) => {
         id: session.id,
         wastedTime: new Date().getTime() - session.startDate,
         guesses: session.guesses,
-      });
+      });   
     } catch (e) {
       console.error(e);
     }
     navigate("/");
-  }, [navigate, session]);
+  }, []);
 
   const progress = React.useMemo(() => {
     if (!progressBarRef.current || stats.total === 0) {
@@ -53,7 +53,7 @@ const LessonHeader: React.FC<LessonHeaderProps> = ({ stats, session }) => {
     const initial = 0.15 * progressBarRef.current.offsetWidth;
     const solved = (stats.completed / stats.total) * 0.85 * progressBarRef.current.offsetWidth;
     return initial + solved;
-  }, [stats]);
+  }, [stats, progressBarRef.current]);
 
   return (
     <header className={styles.header}>
