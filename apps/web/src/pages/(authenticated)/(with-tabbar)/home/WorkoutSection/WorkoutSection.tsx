@@ -99,7 +99,7 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ icon, title, description, isSm = fa
 const WorkoutCardBlocked: FC<WorkoutCardBlockedProps> = ({ icon, title, description, isSm = false}) => {
   return (
     <Haptic type="impact" value="medium" asChild>
-      <div>
+      <div className={styles.card}>
         {icon && <div className={styles.blocked_card__icon}>{icon}</div>}
         <div className={styles.blocked_card__content}>
           <h3
