@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import styles from "./SubscriptionSection.module.scss";
 import { ArrowIcon } from "@repo/ui/icons";
 import { СonfettiEmoji } from "@repo/ui/emojis";
+import { LightningEmoji } from "@repo/ui/emojis";
 import cn from "classnames";
 
 import { useUser } from "@/providers/AuthProvider/AuthProvider";
@@ -45,6 +46,7 @@ const SubscriptionSection: FC = () => {
         <h2 className={styles.section__heading}>Подписка</h2>
         {!user.subscription ? (
           <SubscriptionCard
+          emoji={<LightningEmoji size={38} />}
           title="Подключи Учи-бот Плюс!"
           description="Получи доступ ко всем заданиям ЕГЭ-2025 от команды Учи-Бота по удобному тарифу"
           href={"/subscription"}

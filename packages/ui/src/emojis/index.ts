@@ -10,3 +10,4 @@ export * from "./CrossEmoji";
 export * from "./ClockEmoji";
 export * from "./HitEmoji";
 export * from "./СonfettiEmoji";
+export * from "./LightningEmoji";
