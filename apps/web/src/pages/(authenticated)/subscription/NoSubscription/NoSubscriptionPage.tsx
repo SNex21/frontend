@@ -68,7 +68,6 @@ export const NoSubscriptionPage: React.FC = () => {
 
       <section className={cn("wrapper", styles.section__headings)}>
         <h2 className={styles.section__subheading}>Выбери свою подписку!</h2>
-        <h5 className={styles.section__clue}>Нажми на подписку, чтобы купить её</h5>
       </section>
 
       <section className={cn("wrapper", styles.section)}>

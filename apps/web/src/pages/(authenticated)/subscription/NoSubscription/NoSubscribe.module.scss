@@ -145,7 +145,7 @@
 
 .subscription_card_selected {
   border-color: #4900DC;
-  background-color: #15003f;
+  background-color: var($indigo-800);
   transition: all 0.3s ease;
   color: #fff;
 }
