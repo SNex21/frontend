@@ -63,6 +63,7 @@ const SubscriptionSection: FC = () => {
       )
     };
 
+    
 const SubscriptionCard: FC<SubscriptionCardProps> = ({ emoji, title, description, icon, isSm = false, href = "" }) => {
   return (
     <Haptic type="impact" value="medium" asChild>
