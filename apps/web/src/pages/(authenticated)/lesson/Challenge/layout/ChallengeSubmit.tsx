@@ -3,7 +3,6 @@ import { Button } from "@repo/ui";
 import styles from "../Challenge.module.scss";
 import { ChallengeState } from "@/pages/(authenticated)/lesson/Challenge/Challenge.tsx";
 import cn from "classnames";
-import { CheckMarkButtonEmoji } from "@repo/ui/emojis";
 import { CrossMarkEmoji } from "@repo/ui/emojis";
 import { Haptic } from "@/lib/twa/components/Haptic.tsx";
 import { Challenge } from "@/models/Session";
@@ -77,7 +76,6 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
             </>
           ) : (
             <div className={styles.submit__panel__heading}>
-              /* <CheckMarkButtonEmoji size={23} /> */
               <p> &#9989;</p>
               <h1 className={styles.submit__panel__heading__title}>Верно!</h1>
             </div>
