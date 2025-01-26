@@ -76,7 +76,7 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
             </>
           ) : (
             <div className={styles.submit__panel__heading}>
-              <p> &#9989;</p>
+              <p className={styles.submit__panel__heading__p}> &#9989;</p>
               <h1 className={styles.submit__panel__heading__title}>Верно!</h1>
             </div>
           )}
