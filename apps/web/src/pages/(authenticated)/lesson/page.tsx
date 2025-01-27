@@ -61,7 +61,11 @@ export default function LessonPage() {
   );
 
   const restartSession = React.useCallback(() => {
-    queryClient.invalidateQueries(["tasks", params.topicId]);
+    if (params.topicId) {
+      queryClient.invalidateQueries(["tasks", params.topicId]);
+    } else {
+      console.error("Topic ID is missing!");
+    }
     setCompleted(false); // Сбросить состояние завершения
     setStartDate(new Date().getTime()); // Установить новое время начала
     setStats(defaultStats); // Сбросить статистику
