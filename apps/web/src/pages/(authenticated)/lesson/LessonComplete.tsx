@@ -1,6 +1,7 @@
 import { Button } from "@repo/ui";
 import { motion } from "framer-motion";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Lesson.module.scss";
 import dayjs from "dayjs";
 import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
@@ -19,6 +20,11 @@ interface SummaryCardProps {
 
 const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPercentage, topic_id }) => {
   const wastedTime = React.useMemo(() => (startDate ? new Date().getTime() - startDate : null), [startDate]);
+  const navigate = useNavigate();
+
+  const handleRestart = React.useCallback(() => {
+    navigate(`/lesson/topic/${topic_id}`, { replace: true });
+  }, [navigate, topic_id]);
 
   return (
     <motion.div
@@ -46,9 +52,10 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
         </div>
       </div>
       <div className={styles.complete__buttons}>
-        <Button asChild>
+        {/* <Button asChild>
           <Link to={`/lesson/topic/${topic_id}`}>РЕШАТЬ ДАЛЬШЕ</Link>
-        </Button>
+        </Button> */}
+        <Button onClick={handleRestart}>РЕШАТЬ ДАЛЬШЕ</Button>
       </div>
     </motion.div>
   );
