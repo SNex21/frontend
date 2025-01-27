@@ -1,6 +1,6 @@
 import { SessionBuilder } from "@/pages/(authenticated)/lesson/SessionBuilder.tsx";
 import { useCloudStorage } from "@/lib/twa/hooks";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { completeSession, getTasks } from "@/services/api/tasks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { AnimatePresence } from "framer-motion";
