@@ -1,3 +1,4 @@
+import React, { useState, useEffect, useCallback, useMemo } from "react"; // Добавили useMemo
 import { SessionBuilder } from "@/pages/(authenticated)/lesson/SessionBuilder.tsx";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useQuery } from "@tanstack/react-query";
@@ -5,7 +6,6 @@ import { completeSession, getTasks } from "@/services/api/tasks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
-import React, { useState, useEffect, useCallback } from "react";
 import { LessonComplete } from "./LessonComplete";
 import { useParams } from "react-router-dom";
 import { Guess } from "@/models/Session";
@@ -26,7 +26,7 @@ export default function LessonPage() {
   const [startDate, setStartDate] = useState<number | null>(null);
   const [stats, setStats] = useState(defaultStats);
 
-  const { data: session, isLoading, refetch } = useQuery({
+  const { data: session, isLoading } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () =>
       getTasks({
