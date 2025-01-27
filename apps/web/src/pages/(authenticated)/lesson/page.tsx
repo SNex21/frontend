@@ -65,7 +65,7 @@ export default function LessonPage() {
     setCompleted(false); // Сбросить состояние завершения
     setStartDate(new Date().getTime()); // Установить новое время начала
     setStats(defaultStats); // Сбросить статистику
-    refetch({ force: true }); // Повторно запросить данные для сессии
+    refetch(); // Повторно запросить данные для сессии
   }, [refetch]);
 
   React.useEffect(() => {
