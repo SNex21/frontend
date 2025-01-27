@@ -31,7 +31,7 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
     >
       <Haptic type={"impact"} value={"light"} asChild>
         <Link to="/">
-          <button className={styles.__out_button}>
+          <button className={styles.complete__out_button}>
             <Xmark size={20} />
           </button>
         </Link>
