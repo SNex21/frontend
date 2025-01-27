@@ -79,7 +79,7 @@ export default function LessonPage() {
       {session && !completed && (
         <SessionBuilder key="session" session={session} stats={stats} setStats={setStats} onComplete={complete} startDate={startDate ?? Date.now()}/>
       )}
-      {completed && <LessonComplete startDate={startDate ?? Date.now()} correctPercentage={correctPercentage} />}
+      {completed && <LessonComplete startDate={startDate ?? Date.now()} correctPercentage={correctPercentage} topic_id={params.topicId ? Number(params.topicId) : undefined}/>}
     </AnimatePresence>
   );
 }

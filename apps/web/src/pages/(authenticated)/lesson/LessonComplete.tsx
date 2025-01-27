@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 interface LessonCompleteProps {
   startDate: number | null;
   correctPercentage: number;
+  topic_id: number;
 }
 
 interface SummaryCardProps {
@@ -16,7 +17,7 @@ interface SummaryCardProps {
   icon?: React.ReactNode;
 }
 
-const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPercentage }) => {
+const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPercentage, topic_id }) => {
   const wastedTime = React.useMemo(() => (startDate ? new Date().getTime() - startDate : null), [startDate]);
 
   return (
@@ -46,7 +47,7 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
       </div>
       <div className={styles.complete__buttons}>
         <Button asChild>
-          <Link to="/">ЗАВЕРШИТЬ</Link>
+          <Link to={`/lesson/topic/${topic_id}`}>РЕШАТЬ ДАЛЬШЕ</Link>
         </Button>
       </div>
     </motion.div>
