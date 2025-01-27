@@ -1,7 +1,6 @@
 import { Button } from "@repo/ui";
 import { motion } from "framer-motion";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./Lesson.module.scss";
 import dayjs from "dayjs";
 import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
@@ -18,7 +17,7 @@ interface SummaryCardProps {
   icon?: React.ReactNode;
 }
 
-const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPercentage, topic_id, onRestart }) => {
+const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPercentage, onRestart }) => {
   const wastedTime = React.useMemo(() => (startDate ? new Date().getTime() - startDate : null), [startDate]);
 
   return (
