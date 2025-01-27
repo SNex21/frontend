@@ -5,7 +5,7 @@ import { completeSession, getTasks } from "@/services/api/tasks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { LessonComplete } from "./LessonComplete";
 import { useParams } from "react-router-dom";
 import { Guess } from "@/models/Session";
@@ -18,12 +18,13 @@ const defaultStats = {
 };
 
 export default function LessonPage() {
+  const [enabled, setEnabled] = useState(false); // Управление включением запроса
   const params = useParams();
   const cloudStorage = useCloudStorage();
 
-  const [completed, setCompleted] = React.useState(false);
-  const [startDate, setStartDate] = React.useState<number | null>(null);
-  const [stats, setStats] = React.useState(defaultStats);
+  const [completed, setCompleted] = useState(false);
+  const [startDate, setStartDate] = useState<number | null>(null);
+  const [stats, setStats] = useState(defaultStats);
 
   const { data: session, isLoading, refetch } = useQuery({
     queryKey: ["tasks"],
@@ -34,13 +35,14 @@ export default function LessonPage() {
         isHard: params["*"] === "hard",
         isWorkOnMistakes: params["*"] === "mistakes",
       }),
+    enabled, // Условно выполняем запрос, когда enabled === true
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     gcTime: 0,
   });
 
-  const complete = React.useCallback(
+  const complete = useCallback(
     async ({ guesses }: { guesses: Guess[] }) => {
       if (session && startDate) {
         try {
@@ -59,26 +61,26 @@ export default function LessonPage() {
     [session, startDate],
   );
 
-  const restartSession = React.useCallback(() => {
-    refetch(); // Повторно запросить данные для сессии
+  const restartSession = useCallback(() => {
     setCompleted(false); // Сбросить состояние завершения
     setStartDate(new Date().getTime()); // Установить новое время начала
-    setStats(defaultStats); // Сбросить статистик
-  }, [refetch]);
+    setStats(defaultStats); // Сбросить статистику
+    setEnabled(true); // Включить запрос
+  }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!startDate) {
       setStartDate(new Date().getTime());
     }
   }, [startDate]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (session?.amount && stats.total === 0 && stats.completed === 0 && stats.correct === 0 && stats.index === 1) {
       setStats({ total: session.amount, completed: 0, correct: 0, index: 1 });
     }
   }, [session?.amount, stats]);
 
-  const correctPercentage = React.useMemo(() => Math.round((stats.correct / stats.total) * 100), [stats]);
+  const correctPercentage = useMemo(() => Math.round((stats.correct / stats.total) * 100), [stats]);
 
   return (
     <AnimatePresence>
@@ -99,6 +101,10 @@ export default function LessonPage() {
           correctPercentage={correctPercentage}
           onRestart={restartSession} // Передаем функцию перезапуска
         />
+      )}
+      {/* Кнопка для начала нового запроса */}
+      {!enabled && (
+        <button onClick={restartSession}>РЕШАТЬ ДАЛЬШЕ</button>
       )}
     </AnimatePresence>
   );
