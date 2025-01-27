@@ -4,6 +4,9 @@ import React from "react";
 import styles from "./Lesson.module.scss";
 import dayjs from "dayjs";
 import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
+import { Haptic } from "@/lib/twa/components/Haptic.tsx";
+import { Link } from "react-router-dom";
+import { Xmark } from "@repo/ui/icons";
 
 interface LessonCompleteProps {
   startDate: number | null;
@@ -26,6 +29,13 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
       animate={{ opacity: 1, transform: "translateX(0)", transition: { delay: 0.2, duration: 0.4, ease: "ease" } }}
       exit={{ opacity: 0, transform: "translateX(0)" }}
     >
+      <Haptic type={"impact"} value={"light"} asChild>
+        <Link to="/">
+          <button className={styles.__out_button}>
+            <Xmark size={20} />
+          </button>
+        </Link>
+      </Haptic>
       <div className={styles.complete__content}>
         <div className={styles.complete__info}>
           <h1 className={styles.complete__info__title}>Урок завершен</h1>
