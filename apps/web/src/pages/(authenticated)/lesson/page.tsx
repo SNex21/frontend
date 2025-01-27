@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react"; // Добавили useMemo
+import { useState, useEffect, useCallback, useMemo } from "react"; // Добавили useMemo
 import { SessionBuilder } from "@/pages/(authenticated)/lesson/SessionBuilder.tsx";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useQuery } from "@tanstack/react-query";
