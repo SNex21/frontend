@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Lesson.module.scss";
 import dayjs from "dayjs";
 import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 interface LessonCompleteProps {
   startDate: number | null;
