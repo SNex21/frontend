@@ -8,7 +8,6 @@ import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
 interface LessonCompleteProps {
   startDate: number | null;
   correctPercentage: number;
-  topic_id: number | undefined;
   onRestart: () => void; // Принимаем функцию для перезапуска
 }
 
