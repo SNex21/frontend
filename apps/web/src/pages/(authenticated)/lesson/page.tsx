@@ -38,6 +38,7 @@ export default function LessonPage() {
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     gcTime: 0,
+    cacheTime: 0,
   });
 
   const complete = React.useCallback(
