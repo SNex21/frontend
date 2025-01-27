@@ -91,7 +91,6 @@ export default function LessonPage() {
         <LessonComplete
           startDate={startDate ?? Date.now()}
           correctPercentage={correctPercentage}
-          topic_id={params.topicId ? Number(params.topicId) : undefined}
           onRestart={handleRestart} // Передаем метод для перезапуска сессии
         />
       )}
