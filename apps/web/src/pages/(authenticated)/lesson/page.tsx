@@ -74,13 +74,12 @@ export default function LessonPage() {
 
   const correctPercentage = React.useMemo(() => Math.round((stats.correct / stats.total) * 100), [stats]);
 
-  // Функция для обновления задания
-  const handleRestart = () => {
+  const handleRestart = React.useCallback(() => {
     setCompleted(false); // Сбросить состояние завершения
     setStartDate(new Date().getTime()); // Установить новое время начала
     setStats(defaultStats); // Сбросить статистику
-    refetch(); // Повторно запросить данные
-  };
+    refetch(); // Повторно запросить данные для сессии
+  }, [refetch]);
 
   return (
     <AnimatePresence>
