@@ -18,7 +18,7 @@ const defaultStats = {
 };
 
 export default function LessonPage() {
-  const [enabled, setEnabled] = useState(false); // Управление состоянием запроса
+  const [enabled, setEnabled] = useState(true); // Управление состоянием запроса
   const [completed, setCompleted] = useState(false); // Состояние завершения урока
   const [startDate, setStartDate] = useState<number | null>(null); // Время начала сессии
   const [stats, setStats] = useState(defaultStats); // Статистика
