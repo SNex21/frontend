@@ -8,7 +8,6 @@ import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
 interface LessonCompleteProps {
   startDate: number | null;
   correctPercentage: number;
-  topic_id: number | undefined;
   onRestart: () => void; // Новый пропс для перезапуска сессии
 }
 
@@ -17,7 +16,7 @@ interface SummaryCardProps {
   icon?: React.ReactNode;
 }
 
-const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPercentage, topic_id, onRestart }) => {
+const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPercentage, onRestart }) => {
   const wastedTime = React.useMemo(() => (startDate ? new Date().getTime() - startDate : null), [startDate]);
 
   return (

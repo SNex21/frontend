@@ -20,7 +20,6 @@ const defaultStats = {
 export default function LessonPage() {
   const params = useParams();
   const cloudStorage = useCloudStorage();
-  const queryClient = useQueryClient();
 
   const [completed, setCompleted] = React.useState(false);
   const [startDate, setStartDate] = React.useState<number | null>(null);
@@ -98,7 +97,6 @@ export default function LessonPage() {
         <LessonComplete
           startDate={startDate ?? Date.now()}
           correctPercentage={correctPercentage}
-          topic_id={params.topicId ? Number(params.topicId) : undefined}
           onRestart={restartSession} // Передаем функцию перезапуска
         />
       )}
