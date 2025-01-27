@@ -1,6 +1,6 @@
 import { SessionBuilder } from "@/pages/(authenticated)/lesson/SessionBuilder.tsx";
 import { useCloudStorage } from "@/lib/twa/hooks";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { completeSession, getTasks } from "@/services/api/tasks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { AnimatePresence } from "framer-motion";
@@ -20,6 +20,7 @@ const defaultStats = {
 export default function LessonPage() {
   const params = useParams();
   const cloudStorage = useCloudStorage();
+  const queryClient = useQueryClient();
 
   const [completed, setCompleted] = React.useState(false);
   const [startDate, setStartDate] = React.useState<number | null>(null);
@@ -56,8 +57,16 @@ export default function LessonPage() {
       }
       setCompleted(true);
     },
-    [session, session?.id, startDate],
+    [session, startDate],
   );
+
+  const restartSession = React.useCallback(() => {
+    queryClient.invalidateQueries(["tasks", params.topicId]);
+    setCompleted(false); // Сбросить состояние завершения
+    setStartDate(new Date().getTime()); // Установить новое время начала
+    setStats(defaultStats); // Сбросить статистику
+    refetch(); // Повторно запросить данные для сессии
+  }, [refetch]);
 
   React.useEffect(() => {
     if (!startDate) {
@@ -73,24 +82,24 @@ export default function LessonPage() {
 
   const correctPercentage = React.useMemo(() => Math.round((stats.correct / stats.total) * 100), [stats]);
 
-  // Функция для обновления задания
-  const handleRestart = () => {
-    // Вызов refetch для перезапуска запроса
-    refetch();
-    setCompleted(false); // Сброс состояния завершения сессии
-  };
-
   return (
     <AnimatePresence>
       {isLoading && <LessonPageLoading initial key="loading" />}
       {session && !completed && (
-        <SessionBuilder key="session" session={session} stats={stats} setStats={setStats} onComplete={complete} startDate={startDate ?? Date.now()} />
+        <SessionBuilder
+          key="session"
+          session={session}
+          stats={stats}
+          setStats={setStats}
+          onComplete={complete}
+          startDate={startDate ?? Date.now()}
+        />
       )}
       {completed && (
         <LessonComplete
           startDate={startDate ?? Date.now()}
           correctPercentage={correctPercentage}
-          onRestart={handleRestart} // Передаем метод для перезапуска сессии
+          onRestart={restartSession} // Передаем функцию перезапуска
         />
       )}
     </AnimatePresence>

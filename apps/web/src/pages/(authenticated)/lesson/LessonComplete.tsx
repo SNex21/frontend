@@ -8,7 +8,7 @@ import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
 interface LessonCompleteProps {
   startDate: number | null;
   correctPercentage: number;
-  onRestart: () => void; // Принимаем функцию для перезапуска
+  onRestart: () => void; // Новый пропс для перезапуска сессии
 }
 
 interface SummaryCardProps {
