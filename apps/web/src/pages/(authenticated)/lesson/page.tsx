@@ -61,8 +61,9 @@ export default function LessonPage() {
   );
 
   const restartSession = React.useCallback(() => {
-    if (params.topicId) {
-      queryClient.invalidateQueries(["tasks", Number(params.topicId)]);
+    const topicId = params.topicId ? Number(params.topicId) : undefined;
+    if (topicId !== undefined) {
+      queryClient.invalidateQueries(["tasks", topicId]);
     } else {
       console.error("Topic ID is missing!");
     }
