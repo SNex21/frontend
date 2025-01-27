@@ -45,7 +45,7 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
         </div>
       </div>
       <div className={styles.complete__buttons}>
-        <Button onClick={onRestart}>РЕШАТЬ ДАЛЬШЕ</Button>
+        <Button onClick={onRestart}>РЕШАТЬ ДАЛЬШЕ</Button> {/* Кнопка для начала новой сессии */}
       </div>
     </motion.div>
   );

@@ -1,4 +1,3 @@
-import { useState, useEffect, useCallback, useMemo } from "react"; // Добавили useMemo
 import { SessionBuilder } from "@/pages/(authenticated)/lesson/SessionBuilder.tsx";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useQuery } from "@tanstack/react-query";
@@ -6,6 +5,7 @@ import { completeSession, getTasks } from "@/services/api/tasks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
+import { useState, useEffect, useCallback } from "react";
 import { LessonComplete } from "./LessonComplete";
 import { useParams } from "react-router-dom";
 import { Guess } from "@/models/Session";
@@ -18,14 +18,14 @@ const defaultStats = {
 };
 
 export default function LessonPage() {
-  const [enabled, setEnabled] = useState(false); // Управление включением запроса
+  const [enabled, setEnabled] = useState(false); // Управление состоянием запроса
+  const [completed, setCompleted] = useState(false); // Состояние завершения урока
+  const [startDate, setStartDate] = useState<number | null>(null); // Время начала сессии
+  const [stats, setStats] = useState(defaultStats); // Статистика
   const params = useParams();
   const cloudStorage = useCloudStorage();
 
-  const [completed, setCompleted] = useState(false);
-  const [startDate, setStartDate] = useState<number | null>(null);
-  const [stats, setStats] = useState(defaultStats);
-
+  // Получаем данные о сессии, выполняем запрос только если enabled === true
   const { data: session, isLoading } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () =>
@@ -35,7 +35,7 @@ export default function LessonPage() {
         isHard: params["*"] === "hard",
         isWorkOnMistakes: params["*"] === "mistakes",
       }),
-    enabled, // Условно выполняем запрос, когда enabled === true
+    enabled, // Запрос выполняется только если enabled === true
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
@@ -58,14 +58,14 @@ export default function LessonPage() {
       }
       setCompleted(true);
     },
-    [session, startDate],
+    [session, startDate]
   );
 
   const restartSession = useCallback(() => {
     setCompleted(false); // Сбросить состояние завершения
     setStartDate(new Date().getTime()); // Установить новое время начала
     setStats(defaultStats); // Сбросить статистику
-    setEnabled(true); // Включить запрос
+    setEnabled(true); // Включить запрос для новой сессии
   }, []);
 
   useEffect(() => {
@@ -101,10 +101,6 @@ export default function LessonPage() {
           correctPercentage={correctPercentage}
           onRestart={restartSession} // Передаем функцию перезапуска
         />
-      )}
-      {/* Кнопка для начала нового запроса */}
-      {!enabled && (
-        <button onClick={restartSession}>РЕШАТЬ ДАЛЬШЕ</button>
       )}
     </AnimatePresence>
   );
