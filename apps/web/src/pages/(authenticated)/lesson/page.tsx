@@ -5,7 +5,7 @@ import { completeSession, getTasks } from "@/services/api/tasks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { LessonComplete } from "./LessonComplete";
 import { useParams } from "react-router-dom";
 import { Guess } from "@/models/Session";
