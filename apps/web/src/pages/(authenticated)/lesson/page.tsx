@@ -1,6 +1,6 @@
 import { SessionBuilder } from "@/pages/(authenticated)/lesson/SessionBuilder.tsx";
 import { useCloudStorage } from "@/lib/twa/hooks";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { completeSession, getTasks } from "@/services/api/tasks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { AnimatePresence } from "framer-motion";
@@ -20,7 +20,6 @@ const defaultStats = {
 export default function LessonPage() {
   const params = useParams();
   const cloudStorage = useCloudStorage();
-  const queryClient = useQueryClient();
 
   const [completed, setCompleted] = React.useState(false);
   const [startDate, setStartDate] = React.useState<number | null>(null);
@@ -61,18 +60,10 @@ export default function LessonPage() {
   );
 
   const restartSession = React.useCallback(() => {
-    const topicId = params.topicId ? String(params.topicId) : undefined;
-
-    if (topicId) {
-      queryClient.invalidateQueries(["tasks", topicId]);
-    } else {
-      console.error("Topic ID is missing!");
-    }
-    
+    refetch(); // Повторно запросить данные для сессии
     setCompleted(false); // Сбросить состояние завершения
     setStartDate(new Date().getTime()); // Установить новое время начала
-    setStats(defaultStats); // Сбросить статистику
-    refetch(); // Повторно запросить данные для сессии
+    setStats(defaultStats); // Сбросить статистик
   }, [refetch]);
 
   React.useEffect(() => {
