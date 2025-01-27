@@ -12,7 +12,14 @@ export default defineConfig({
   plugins: [react(), basicSsl()],
   server: {
     host: true,
-    historyApiFallback: true, // Добавлено для обработки маршрутов на стороне клиента
+    fs: {
+      strict: false, // Убедитесь, что Vite может читать файлы за пределами root
+    },
+    // Добавляем fallback через middleware для 404 на SPA
+    middlewareMode: true,
+    watch: {
+      usePolling: true,
+    },
   },
   build: {
     rollupOptions: {
