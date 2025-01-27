@@ -56,15 +56,8 @@ export default function LessonPage() {
       }
       setCompleted(true);
     },
-    [session, startDate],
+    [session, session?.id, startDate],
   );
-
-  const restartSession = React.useCallback(() => {
-    setCompleted(false); // Сбросить состояние завершения
-    setStartDate(new Date().getTime()); // Установить новое время начала
-    setStats(defaultStats); // Сбросить статистику
-    refetch(); // Повторно запросить данные для сессии
-  }, [refetch]);
 
   React.useEffect(() => {
     if (!startDate) {
@@ -80,24 +73,25 @@ export default function LessonPage() {
 
   const correctPercentage = React.useMemo(() => Math.round((stats.correct / stats.total) * 100), [stats]);
 
+  // Функция для обновления задания
+  const handleRestart = () => {
+    // Вызов refetch для перезапуска запроса
+    refetch();
+    setCompleted(false); // Сброс состояния завершения сессии
+  };
+
   return (
     <AnimatePresence>
       {isLoading && <LessonPageLoading initial key="loading" />}
       {session && !completed && (
-        <SessionBuilder
-          key="session"
-          session={session}
-          stats={stats}
-          setStats={setStats}
-          onComplete={complete}
-          startDate={startDate ?? Date.now()}
-        />
+        <SessionBuilder key="session" session={session} stats={stats} setStats={setStats} onComplete={complete} startDate={startDate ?? Date.now()} />
       )}
       {completed && (
         <LessonComplete
           startDate={startDate ?? Date.now()}
           correctPercentage={correctPercentage}
-          onRestart={restartSession} // Передаем функцию перезапуска
+          topic_id={params.topicId ? Number(params.topicId) : undefined}
+          onRestart={handleRestart} // Передаем метод для перезапуска сессии
         />
       )}
     </AnimatePresence>
