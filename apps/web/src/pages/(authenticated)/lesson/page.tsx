@@ -24,9 +24,10 @@ export default function LessonPage() {
   const [completed, setCompleted] = React.useState(false);
   const [startDate, setStartDate] = React.useState<number | null>(null);
   const [stats, setStats] = React.useState(defaultStats);
+  const [sessionKey, setSessionKey] = React.useState(Date.now()); // Добавляем состояние для обновления sessionKey
 
   const { data: session, isLoading, refetch } = useQuery({
-    queryKey: ["tasks"],
+    queryKey: ["tasks", sessionKey],
     queryFn: async () =>
       getTasks({
         token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
@@ -60,6 +61,7 @@ export default function LessonPage() {
   );
 
   const restartSession = React.useCallback(() => {
+    setSessionKey(Date.now());
     setCompleted(false); // Сбросить состояние завершения
     setStartDate(new Date().getTime()); // Установить новое время начала
     setStats(defaultStats); // Сбросить статистику
