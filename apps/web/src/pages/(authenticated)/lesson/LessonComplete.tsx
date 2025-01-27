@@ -1,6 +1,7 @@
 import { Button } from "@repo/ui";
 import { motion } from "framer-motion";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Lesson.module.scss";
 import dayjs from "dayjs";
 import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
@@ -8,7 +9,8 @@ import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
 interface LessonCompleteProps {
   startDate: number | null;
   correctPercentage: number;
-  onRestart: () => void; // Новый пропс для перезапуска сессии
+  topic_id: number | undefined;
+  onRestart: () => void; // Принимаем функцию для перезапуска
 }
 
 interface SummaryCardProps {
@@ -16,7 +18,7 @@ interface SummaryCardProps {
   icon?: React.ReactNode;
 }
 
-const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPercentage, onRestart }) => {
+const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPercentage, topic_id, onRestart }) => {
   const wastedTime = React.useMemo(() => (startDate ? new Date().getTime() - startDate : null), [startDate]);
 
   return (
