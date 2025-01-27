@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 interface LessonCompleteProps {
   startDate: number | null;
   correctPercentage: number;
-  topic_id: number;
+  topic_id: number | null;
 }
 
 interface SummaryCardProps {
