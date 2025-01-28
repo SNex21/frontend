@@ -77,4 +77,24 @@
       }
     }
   }
+
+  .footer {
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+  }
+  
+  .footer__text {
+    color: var(--text-secondary);
+  }
+  
+  .footer__link {
+    color: var(--primary);
+    text-decoration: none;
+  
+    &:hover {
+      text-decoration: underline;
+    }
+  }
   
