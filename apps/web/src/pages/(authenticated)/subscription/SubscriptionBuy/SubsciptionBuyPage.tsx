@@ -49,7 +49,7 @@ export default function SubscriptionBuyPage() {
 
   return (
     <div className={styles.container}>
-      <BackButton onClick={() => navigate("/account")} />
+      <BackButton onClick={() => navigate("/subscription")} />
       <div className={styles.formContainer}>
         <label htmlFor="email" className={styles.label}>Для оплаты необходимо ввести email для отправки чека:</label>
         <input
