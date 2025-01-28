@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { getPaymentUrl } from "@/services/api/subscriptions";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import styles from "./SubscriptionBuy.module.scss";
+import { BackButton } from "@/lib/twa/components/BackButton";
 
 export default function SubscriptionBuyPage() {
   const params = useParams();
@@ -46,6 +47,7 @@ export default function SubscriptionBuyPage() {
 
   return (
     <div className={styles.container}>
+      <BackButton onClick={() => navigate("/account")} />
       <div className={styles.formContainer}>
         <label htmlFor="email" className={styles.label}>Для оплаты необходимо ввести email для отправки чека:</label>
         <input
