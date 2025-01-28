@@ -116,3 +116,8 @@
   margin-bottom: var(--spacing-2);
   font-size: 16px;
 }
+
+.slider__mark--active {
+  color: var(--ds-primary);
+  font-weight: bold;
+}
