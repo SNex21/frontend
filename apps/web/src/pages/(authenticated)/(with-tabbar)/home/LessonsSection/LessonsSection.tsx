@@ -110,19 +110,19 @@ const LessonCardBlocked: FC<Topic> = ({title, ege_number }) => {
 const SubscriptionCard: FC<SubscriptionCardProps> = ({ emoji, title, description, icon, isSm = false, href = "" }) => {
   return (
     <Haptic type="impact" value="medium" asChild>
-      <Link to={href} className={styles.card}>
-      {emoji && <div className={styles.card__emoji}>{emoji}</div>}
-        <div className={styles.card__content}>
+      <Link to={href} className={styles.subscription_card}>
+      {emoji && <div className={styles.subscription_card__emoji}>{emoji}</div>}
+        <div className={styles.subscription_card__content}>
           <h3
-            className={cn(styles.card__content__title, {
-              [styles.card__content__title_sm!]: isSm,
+            className={cn(styles.subscription_card__content__title, {
+              [styles.subscription_card__content__title_sm!]: isSm,
             })}>
             {title}
           </h3>
-          {description && <p className={styles.card__content__description}>{description}</p>}
+          {description && <p className={styles.subscription_card__content__description}>{description}</p>}
         </div>
-        <div className={styles.card__icon}>
-          <span className={styles.card__icon_arrow}>{icon}</span>
+        <div className={styles.subscription_card__icon}>
+          <span className={styles.subscription_card__icon_arrow}>{icon}</span>
         </div>
       </Link>
     </Haptic>
