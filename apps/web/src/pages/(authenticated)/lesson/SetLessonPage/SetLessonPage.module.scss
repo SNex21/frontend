@@ -1,4 +1,4 @@
-.settings {
+.page {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,44 +10,35 @@
 
   background-color: var(--ds-background-100);
 
+  &__header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    padding: var(--spacing-4);
+    background-color: var(--ds-background-100); // Фон для заголовка
+    z-index: 10;
+  }
+
   &__content {
+    flex: 1; // Контент растягивается, занимая всё оставшееся пространство
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 1; // Основной контент занимает всё доступное пространство
-    flex-direction: column;
-    gap: var(--spacing-8);
   }
 
-  &__buttons {
+  &__footer {
     display: flex;
     justify-content: center;
+    padding: var(--spacing-4);
+    padding-bottom: calc(20px + var(--lvh, 100vh) - var(--tg-viewport-height, 100vh)); // Для учета интерфейса на мобильных
   }
 }
 
 .section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-3);
-  padding: var(--spacing-3);
-
-  &__clue {
-    color: var(--ds-gray-900);
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: var(--spacing-3);
-  }
-
-  &__subheading {
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 34px;
-    margin-bottom: var(--spacing-0);
-  }
-
   &__heading {
     font-size: 25px;
     font-weight: 700;
     line-height: 34px;
+    text-align: center;
   }
 }

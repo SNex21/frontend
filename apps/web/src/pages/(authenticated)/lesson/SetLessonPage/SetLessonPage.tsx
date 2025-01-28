@@ -9,15 +9,18 @@ export default function SetLessonPage() {
 
   return (
     <AnimatePresence>
-      <h2 className={styles.section__heading}>Настрой свою тренировку</h2>
-      <div className={styles.settings}>
-        <div className={styles.settings__content}>
+      <div className={styles.page}>
+        <header className={styles.page__header}>
+          <h2 className={styles.section__heading}>Настрой свою тренировку</h2>
+        </header>
+        <div className={styles.page__content}>
+          {/* Здесь можно добавить основной контент, если потребуется */}
         </div>
-        <div className={styles.settings__buttons}>
+        <footer className={styles.page__footer}>
           <Link to={`/lesson/topic/${params.topicId}`}>
             <Button>НАЧАТЬ ТРЕНИРОВКУ!</Button>
           </Link>
-        </div>
+        </footer>
       </div>
     </AnimatePresence>
   );
