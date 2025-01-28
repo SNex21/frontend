@@ -55,7 +55,7 @@ const LessonCards: FC = () => {
   const user = useUser();
 
   return (
-      <div>
+      <section className={cn("wrapper", styles.section)}>
         {!user.subscription ? (
             <SubscriptionCard
             title="Открывай доступ ко всем заданиям вместе с подпиской!"
@@ -63,7 +63,7 @@ const LessonCards: FC = () => {
             icon={<ArrowIcon size={25} />}
           />
           ) : null}
-      </div>
+      </section>
       <div className={styles.cards}>
       {data.map((topic) => (
         topic.private && !user.subscription ? (
