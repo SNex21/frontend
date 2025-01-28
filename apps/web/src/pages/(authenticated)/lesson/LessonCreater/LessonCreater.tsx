@@ -3,6 +3,9 @@ import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import styles from "./LessonCreater.module.scss";
+import cn from "classnames";
+
 
 export default function SetLessonPage() {
   const params = useParams();
