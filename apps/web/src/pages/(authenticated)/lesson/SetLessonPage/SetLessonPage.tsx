@@ -19,14 +19,12 @@ export default function SetLessonPage() {
     : `/lesson/mistakes?amount=${taskAmount}`;
 
   // Возможные значения для ползунка
-  const sliderValues = [15, 30, 60, 80, 100];
+  const sliderValues = [10, 15, 30, 50, 80, 100];
 
-  // Функция для обновления значения, выбирая ближайшее из массива
-  const handleSliderChange = (value: number) => {
-    const closestValue = sliderValues.reduce((prev, curr) =>
-      Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
-    );
-    setTaskAmount(closestValue);
+  // Функция для обновления значения слайдера, выбирая ближайшее значение из массива
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    setTaskAmount(value);
   };
 
   return (
@@ -39,27 +37,30 @@ export default function SetLessonPage() {
           <label htmlFor="taskAmount" className={styles.slider__label}>
             Количество заданий: <span>{taskAmount}</span>
           </label>
-          <input
-            id="taskAmount"
-            type="range"
-            min={15}
-            max={100}
-            step={1} // Ползунок плавно передвигается
-            value={taskAmount}
-            onChange={(e) => handleSliderChange(Number(e.target.value))}
-            className={styles.slider}
-          />
-          <div className={styles.slider__marks}>
-            {sliderValues.map((value) => (
-              <span
-                key={value}
-                className={`${styles.slider__mark} ${
-                  value === taskAmount ? styles["slider__mark--active"] : ""
-                }`}
-              >
-                {value}
-              </span>
-            ))}
+          <div style={{ position: "relative", width: "100%" }}>
+            <input
+              id="taskAmount"
+              type="range"
+              min={10}
+              max={100}
+              step={1}
+              value={taskAmount}
+              onChange={handleSliderChange}
+              className={styles.slider}
+            />
+            <div className={styles.slider__marks}>
+              {sliderValues.map((value) => (
+                <span
+                  key={value}
+                  className={styles.slider__mark}
+                  style={{
+                    left: `calc(${((value - 10) / (100 - 10)) * 100}% - 10px)`,
+                  }}
+                >
+                  {value}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
         <footer className={styles.page__footer}>

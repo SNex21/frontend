@@ -50,7 +50,9 @@
     text-align: center;
   }
 }
+
 .slider {
+  position: relative;
   width: 100%;
   margin: var(--spacing-4) 0;
   appearance: none;
@@ -68,6 +70,8 @@
     border-radius: 50%;
     cursor: pointer;
     transition: background 0.3s;
+    position: absolute;
+    top: -7px;
   }
 
   &::-moz-range-thumb {
@@ -77,6 +81,8 @@
     border-radius: 50%;
     cursor: pointer;
     transition: background 0.3s;
+    position: absolute;
+    top: -7px;
   }
 
   &::-ms-thumb {
@@ -86,21 +92,23 @@
     border-radius: 50%;
     cursor: pointer;
     transition: background 0.3s;
+    position: absolute;
+    top: -7px;
   }
 }
 
 .slider__marks {
   display: flex;
   justify-content: space-between;
-  margin-top: var(--spacing-2);
-  padding: 0 10px;  // Добавляем отступы для выравнивания слайдера
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  padding: 0 10px;
 }
 
 .slider__mark {
   font-size: 14px;
   color: var(--ds-gray-alpha-700);
-  position: relative;
-  transform: translateX(-50%);  // Это нужно для выравнивания чисел точно по центру
 }
 
 .slider__label {
