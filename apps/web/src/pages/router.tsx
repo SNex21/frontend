@@ -21,7 +21,6 @@ const LessonPage = lazy(() => import("@/pages/(authenticated)/lesson/page.tsx"))
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<RootLayout />}>
-      {console.log('---')}
       <Route
         path="/welcome"
         element={
