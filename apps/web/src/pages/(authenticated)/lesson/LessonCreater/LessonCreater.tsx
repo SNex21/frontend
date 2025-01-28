@@ -1,6 +1,5 @@
 import { Button } from "@repo/ui";
 import { AnimatePresence } from "framer-motion";
-import React from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styles from "./LessonCreater.module.scss";
@@ -16,7 +15,7 @@ export default function SetLessonPage() {
         <h2 className={styles.section__heading}>Настрой свою тренировку</h2>
         <Link to={`/lesson/topic/${params.topicId}`}>
           <div className={styles.page__buttons}>
-          <Button onClick={onRestart}>НАЧАТЬ ТРЕНИРОВКУ!</Button> {/* Кнопка для начала новой сессии */}
+          <Button>НАЧАТЬ ТРЕНИРОВКУ!</Button> {/* Кнопка для начала новой сессии */}
           </div>
         </Link>
       </section>
