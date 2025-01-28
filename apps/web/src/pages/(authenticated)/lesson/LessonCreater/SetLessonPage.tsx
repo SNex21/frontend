@@ -2,7 +2,7 @@ import { Button } from "@repo/ui";
 import { AnimatePresence } from "framer-motion";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import styles from "./LessonCreater.module.scss";
+import styles from "./SetLessonPage.module.scss";
 import cn from "classnames";
 
 

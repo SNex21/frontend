@@ -17,7 +17,7 @@ const SubscriptionPage = lazy(() => import("@/pages/(authenticated)/subscription
 const SubsciptionBuyPage = lazy(() => import("@/pages/(authenticated)/subscription/SubscriptionBuy/SubsciptionBuyPage.tsx"));
 
 const LessonPage = lazy(() => import("@/pages/(authenticated)/lesson/page.tsx"));
-const SetLessonPage = lazy(() => import("@/pages/(authenticated)/lesson/LessonCreater/LessonCreater.tsx"));
+const SetLessonPage = lazy(() => import("@/pages/(authenticated)/lesson/LessonCreater/SetLessonPage"));
 
 const router = createBrowserRouter(
   createRoutesFromElements(
