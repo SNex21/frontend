@@ -11,14 +11,15 @@ export default function SetLessonPage() {
 
   return (
     <AnimatePresence>
-      <section className={cn("wrapper", styles.section)}>
+
+        <div className={styles.page}>
         <h2 className={styles.section__heading}>Настрой свою тренировку</h2>
         <Link to={`/lesson/topic/${params.topicId}`}>
           <div className={styles.page__buttons}>
           <Button>НАЧАТЬ ТРЕНИРОВКУ!</Button> {/* Кнопка для начала новой сессии */}
           </div>
         </Link>
-      </section>
+        </div>
     </AnimatePresence>
   );
 }

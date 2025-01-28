@@ -9,6 +9,16 @@
     height: 100dvh;
   
     background-color: var(--ds-background-100);
+    
+    &__content {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+  
+      gap: var(--spacing-8);
+    }
 
     &__buttons {
       padding: 0 var(--spacing-4);
