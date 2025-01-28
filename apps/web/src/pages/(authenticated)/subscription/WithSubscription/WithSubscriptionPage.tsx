@@ -59,35 +59,29 @@ export const WithSubscriptionPage: FC = () =>  {
   };
 
 const WithSubscriptionCard: FC<WithSubscriptionCardProps> = ({ title, description, price,  isSm = false, href = "" }) => {
-return (
-  <>
-    <Haptic type="impact" value="medium" asChild>
-    <Link to={href} className={styles.card}>
-        <div className={styles.card__content}>
-        <h3
-            className={cn(styles.card__content__title, {
-            [styles.card__content__title_sm!]: isSm,
-            })}>
-            {title}
-        </h3>
-        {description && <p className={styles.card__content__description}>{description}</p>}
-        <p className={styles.card__content__description}>
-            {price === 0 ? "Бесплатно" : `${price} руб.`}
-        </p>
-        
-        </div>
-    </Link>
-    </Haptic>
-    <footer className={styles.footer}>
+  return (
+    <div className={styles.page}>
+      <BackButton onClick={() => navigate("/account")} />
+      <section className={cn("wrapper", styles.section)}>
+        <h2 className={styles.section__heading}>Подписка</h2>
+        <WithSubscriptionCard
+          title={`Подписка "${subscription.plan.title}"`}
+          description={`Действует до ${formatDate(subscription.end_date)}`}
+          price={subscription.price}
+          href={"/"}
+        />
+      </section>
+
+      {/* Футер */}
+      <footer className={styles.footer}>
         <p className={styles.footer__text}>
           <Link to="/cancel-auto-payment" className={styles.footer__link}>
             отключить автоплатежи
           </Link>
         </p>
       </footer>
-  </>
-
-);
+    </div>
+  );
 };
 
 const SubscriptionSectionLoading = () => {
