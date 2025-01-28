@@ -79,7 +79,7 @@ const LessonCards: FC = () => {
 const LessonCard: FC<Topic> = ({id, title, ege_number }) => {
   return (
     <Haptic type="impact" value="medium" asChild>
-      <Link to={`/lesson/topic/${id}`}>
+      <Link to={`/set/lesson/${id}`}>
         <div className={styles.card}>
           <div className={styles.card__content}>
             {ege_number && <span className={styles.card__content__number}>№{ege_number}</span>}

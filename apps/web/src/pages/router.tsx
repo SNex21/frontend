@@ -17,6 +17,7 @@ const SubscriptionPage = lazy(() => import("@/pages/(authenticated)/subscription
 const SubsciptionBuyPage = lazy(() => import("@/pages/(authenticated)/subscription/SubscriptionBuy/SubsciptionBuyPage.tsx"));
 
 const LessonPage = lazy(() => import("@/pages/(authenticated)/lesson/page.tsx"));
+const SetLessonPage = lazy(() => import("@/pages/(authenticated)/lesson/LessonCreater/LessonCreater.tsx"));
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,6 +59,8 @@ const router = createBrowserRouter(
             </React.Suspense>
           }
         >
+          <Route path="/set/lesson/*" element={<SetLessonPage />} />
+          <Route path="/set/lesson/:topicId/*" element={<SetLessonPage />} />
           <Route path="/lesson/*" element={<LessonPage />} />
           <Route path="/lesson/topic/:topicId/*" element={<LessonPage />} />
         </Route>
