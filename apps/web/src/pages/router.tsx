@@ -66,12 +66,6 @@ const router = createBrowserRouter(
         <Route path="/subscription/:planId/*" element={<SubsciptionBuyPage />} />
         <Route path="/settings" element={<SettingsPage />} />
 
-        <Route
-        path="/*"
-        loader={() => {
-          throw redirect("/home");
-        }}
-      />
       </Route>
 
       <Route
