@@ -7,6 +7,13 @@ import styles from "./SetLessonPage.module.scss";
 export default function SetLessonPage() {
   const params = useParams();
 
+  // Определяем, какая ссылка будет использоваться
+  const linkPath = params.topicId 
+    ? `/lesson/topic/${params.topicId}` 
+    : params["*"] === "mistakes" 
+    ? "/lesson/mistakes" 
+    : "/lesson/mistakes";
+
   return (
     <AnimatePresence>
       <div className={styles.page}>
@@ -17,11 +24,10 @@ export default function SetLessonPage() {
           {/* Здесь можно добавить основной контент, если потребуется */}
         </div>
         <footer className={styles.page__footer}>
-          <Link to={`/lesson/topic/${params.topicId}`} className={styles.page__button}>
+          <Link to={linkPath} className={styles.page__button}>
             <Button>НАЧАТЬ ТРЕНИРОВКУ!</Button>
           </Link>
         </footer>
-
       </div>
     </AnimatePresence>
   );
