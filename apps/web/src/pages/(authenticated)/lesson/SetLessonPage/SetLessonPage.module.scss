@@ -30,7 +30,6 @@
     display: flex;
     justify-content: center;
     padding: var(--spacing-4);
-    padding-bottom: calc(20px + var(--lvh, 100vh) - var(--tg-viewport-height, 100vh)); // Для учета интерфейса на мобильных
   }
 }
 
