@@ -76,14 +76,14 @@
   border-radius: 3px;
   outline: none;
   transition: background 0.3s;
-  max-width: 400px; /* Ограничим максимальную ширину слайдера */
+  max-width: 270px; /* Ограничим максимальную ширину слайдера */
 }
 
 .slider__marks {
   display: flex;
   justify-content: space-between;
   margin-top: var(--spacing-2);
-  width: 20%; /* Уменьшаем ширину, чтобы метки были ближе друг к другу */
+  width: 40%; /* Уменьшаем ширину, чтобы метки были ближе друг к другу */
   padding: 0 10px;
 }
 
