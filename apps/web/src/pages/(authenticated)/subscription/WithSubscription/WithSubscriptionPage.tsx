@@ -77,15 +77,8 @@ return (
         
         </div>
     </Link>
-    
-    <footer className={styles.footer}>
-        <p className={styles.footer__text}>
-          <Link to="/cancel-auto-payment" className={styles.footer__link}>
-            отключить автоплатежи
-          </Link>
-        </p>
-      </footer>
     </Haptic>
+    
   </>
 
 );
