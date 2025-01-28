@@ -38,34 +38,36 @@ export default function SetLessonPage() {
           <h2 className={styles.section__heading}>Настрой свою тренировку</h2>
         </header>
         <div className={styles.page__content}>
-          <label htmlFor="taskAmount" className={styles.slider__label}>
-            Количество заданий: <span>{taskAmount}</span>
-          </label>
-          <div style={{ position: "relative", width: "100%" }}>
-            <input
-              id="taskAmount"
-              type="range"
-              min={10}
-              max={100}
-              step={1}
-              value={taskAmount}
-              onChange={handleSliderChange}
-              className={styles.slider}
-            />
-            <div className={styles.slider__marks}>
-              {sliderValues.map((value) => (
-                <span
-                  key={value}
-                  className={`${styles.slider__mark} ${
-                    value === taskAmount ? styles["slider__mark--active"] : ""
-                  }`}
-                  style={{
-                    left: `calc(${((value - 10) / (100 - 10)) * 100}% - 10px)`,
-                  }}
-                >
-                  {value}
-                </span>
-              ))}
+          <div className={styles.slider__container}>
+            <label htmlFor="taskAmount" className={styles.slider__label}>
+              Количество заданий: <span>{taskAmount}</span>
+            </label>
+            <div style={{ position: "relative", width: "100%" }}>
+              <input
+                id="taskAmount"
+                type="range"
+                min={10}
+                max={100}
+                step={1}
+                value={taskAmount}
+                onChange={handleSliderChange}
+                className={styles.slider}
+              />
+              <div className={styles.slider__marks}>
+                {sliderValues.map((value) => (
+                  <span
+                    key={value}
+                    className={`${styles.slider__mark} ${
+                      value === taskAmount ? styles["slider__mark--active"] : ""
+                    }`}
+                    style={{
+                      left: `calc(${((value - 10) / (100 - 10)) * 100}% - 10px)`,
+                    }}
+                  >
+                    {value}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>

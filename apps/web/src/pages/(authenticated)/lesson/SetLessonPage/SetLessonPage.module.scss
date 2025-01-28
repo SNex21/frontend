@@ -24,6 +24,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column; /* Добавляем вертикальную ориентацию */
   }
 
   &__footer {
@@ -34,11 +35,11 @@
   }
 
   &__button {
-    width: 100%; /* Кнопка растягивается на всю ширину */
+    width: 100%;
   }
 
   button {
-    width: 100%; /* Сам элемент <Button> растягивается */
+    width: 100%;
   }
 }
 
@@ -51,8 +52,20 @@
   }
 }
 
+.slider__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центрируем метку и слайдер */
+  width: 80%; /* Ограничиваем ширину контейнера */
+}
+
+.slider__label {
+  font-size: 16px;
+  margin-bottom: var(--spacing-2);
+  text-align: center;
+}
+
 .slider {
-  position: relative;
   width: 100%;
   margin: var(--spacing-4) 0;
   appearance: none;
@@ -61,63 +74,76 @@
   border-radius: 3px;
   outline: none;
   transition: background 0.3s;
-
-  &::-webkit-slider-thumb {
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    background: var(--ds-primary);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background 0.3s;
-    position: absolute;
-    top: -7px;
-  }
-
-  &::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background: var(--ds-primary);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background 0.3s;
-    position: absolute;
-    top: -7px;
-  }
-
-  &::-ms-thumb {
-    width: 20px;
-    height: 20px;
-    background: var(--ds-primary);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background 0.3s;
-    position: absolute;
-    top: -7px;
-  }
 }
 
 .slider__marks {
   display: flex;
   justify-content: space-between;
-  position: absolute;
-  width: 100%;
-  top: 100%;
+  margin-top: var(--spacing-2);
+  width: 100%; /* Для корректного выравнивания меток */
   padding: 0 10px;
 }
 
 .slider__mark {
   font-size: 14px;
   color: var(--ds-gray-alpha-700);
-}
-
-.slider__label {
-  display: block;
-  margin-bottom: var(--spacing-2);
-  font-size: 16px;
+  position: relative;
+  transform: translateX(-50%);
 }
 
 .slider__mark--active {
   color: var(--ds-primary);
   font-weight: bold;
+}
+
+.slider__mark--active::after {
+  content: ' •'; /* Добавляем символ после метки, чтобы выделить активное значение */
+}
+
+.slider__mark--inactive {
+  color: var(--ds-gray-alpha-500); /* Делаем менее заметными неактивные метки */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--ds-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 2;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--ds-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 2;
+}
+
+input[type="range"]::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--ds-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 2;
+}
+
+/* Активный слайдер */
+input[type="range"]:active::-webkit-slider-thumb {
+  background: var(--ds-primary-dark);
+}
+
+input[type="range"]:active::-moz-range-thumb {
+  background: var(--ds-primary-dark);
+}
+
+input[type="range"]:active::-ms-thumb {
+  background: var(--ds-primary-dark);
 }
