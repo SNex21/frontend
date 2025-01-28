@@ -68,7 +68,7 @@
 }
 
 .slider {
-  width: 100%;
+  width: 70%;
   margin: var(--spacing-4) 0;
   appearance: none;
   background: var(--ds-gray-alpha-300);
@@ -76,7 +76,7 @@
   border-radius: 3px;
   outline: none;
   transition: background 0.3s;
-  max-width: 270px; /* Ограничим максимальную ширину слайдера */
+  max-width: 370px; /* Ограничим максимальную ширину слайдера */
 }
 
 .slider__marks {
