@@ -68,7 +68,7 @@
 }
 
 .slider {
-  width: 50%;
+  width: 100%;
   margin: var(--spacing-4) 0;
   appearance: none;
   background: var(--ds-gray-alpha-300);
@@ -83,7 +83,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: var(--spacing-2);
-  width: 40%; /* Уменьшаем ширину, чтобы метки были ближе друг к другу */
+  width: 30%; /* Уменьшаем ширину, чтобы метки были ближе друг к другу */
   padding: 0 10px;
 }
 
