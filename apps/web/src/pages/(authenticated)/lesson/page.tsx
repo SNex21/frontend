@@ -7,7 +7,7 @@ import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
 import React from "react";
 import { LessonComplete } from "./LessonComplete";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Guess } from "@/models/Session";
 
 const defaultStats = {
@@ -19,12 +19,15 @@ const defaultStats = {
 
 export default function LessonPage() {
   const params = useParams();
+  const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
   const cloudStorage = useCloudStorage();
 
   const [completed, setCompleted] = React.useState(false);
   const [startDate, setStartDate] = React.useState<number | null>(null);
   const [stats, setStats] = React.useState(defaultStats);
-  const [sessionKey, setSessionKey] = React.useState(Date.now()); // Добавляем состояние для обновления sessionKey
+  const [sessionKey, setSessionKey] = React.useState(Date.now());
+
+  const taskAmount = Number(searchParams.get("amount")) || 10; // Получаем значение amount из параметров
 
   const { data: session, isLoading, refetch } = useQuery({
     queryKey: ["tasks", sessionKey],
@@ -34,6 +37,7 @@ export default function LessonPage() {
         topic_id: params.topicId ? Number(params.topicId) : undefined,
         isHard: params["*"] === "hard",
         isWorkOnMistakes: params["*"] === "mistakes",
+        amount: taskAmount, // Передаем amount в запрос
       }),
     refetchOnMount: false,
     refetchOnReconnect: false,
@@ -62,9 +66,9 @@ export default function LessonPage() {
 
   const restartSession = React.useCallback(() => {
     setSessionKey(Date.now());
-    setCompleted(false); // Сбросить состояние завершения
-    setStartDate(new Date().getTime()); // Установить новое время начала
-    setStats(defaultStats); // Сбросить статистику
+    setCompleted(false);
+    setStartDate(new Date().getTime());
+    setStats(defaultStats);
   }, [refetch]);
 
   React.useEffect(() => {
@@ -98,7 +102,7 @@ export default function LessonPage() {
         <LessonComplete
           startDate={startDate ?? Date.now()}
           correctPercentage={correctPercentage}
-          onRestart={restartSession} // Передаем функцию перезапуска
+          onRestart={restartSession}
         />
       )}
     </AnimatePresence>

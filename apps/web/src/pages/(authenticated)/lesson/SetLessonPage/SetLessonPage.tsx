@@ -1,18 +1,20 @@
 import { Button } from "@repo/ui";
 import { AnimatePresence } from "framer-motion";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import styles from "./SetLessonPage.module.scss";
 
 export default function SetLessonPage() {
   const params = useParams();
+  const navigate = useNavigate();
 
-  // Определяем, какая ссылка будет использоваться
+  const [taskAmount, setTaskAmount] = useState<number>(10); // Добавляем состояние для количества заданий
+
   const linkPath = params.topicId 
-    ? `/lesson/topic/${params.topicId}` 
+    ? `/lesson/topic/${params.topicId}?amount=${taskAmount}` 
     : params["*"] === "mistakes" 
-    ? "/lesson/mistakes" 
-    : "/lesson/mistakes";
+    ? `/lesson/mistakes?amount=${taskAmount}` 
+    : `/lesson/mistakes?amount=${taskAmount}`;
 
   return (
     <AnimatePresence>
@@ -21,12 +23,18 @@ export default function SetLessonPage() {
           <h2 className={styles.section__heading}>Настрой свою тренировку</h2>
         </header>
         <div className={styles.page__content}>
-          {/* Здесь можно добавить основной контент, если потребуется */}
+          <label htmlFor="taskAmount">Количество заданий:</label>
+          <input
+            id="taskAmount"
+            type="number"
+            value={taskAmount}
+            onChange={(e) => setTaskAmount(Number(e.target.value))}
+            min={1}
+            max={100}
+          />
         </div>
         <footer className={styles.page__footer}>
-          <Link to={linkPath} className={styles.page__button}>
-            <Button>НАЧАТЬ ТРЕНИРОВКУ!</Button>
-          </Link>
+          <Button onClick={() => navigate(linkPath)}>НАЧАТЬ ТРЕНИРОВКУ!</Button>
         </footer>
       </div>
     </AnimatePresence>
