@@ -83,12 +83,12 @@
   display: flex;
   justify-content: space-between;
   margin-top: var(--spacing-2);
-  width: 100%;
+  width: 90%; /* Уменьшаем ширину, чтобы метки были ближе друг к другу */
   padding: 0 10px;
 }
 
 .slider__mark {
-  font-size: 12px; /* Уменьшаем размер меток для мобильных */
+  font-size: 12px; /* Уменьшаем размер текста меток */
   color: var(--ds-gray-alpha-700);
   position: relative;
   transform: translateX(-50%);
