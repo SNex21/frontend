@@ -8,13 +8,26 @@ export default function SetLessonPage() {
   const params = useParams();
   const navigate = useNavigate();
 
-  const [taskAmount, setTaskAmount] = useState<number>(10); // Добавляем состояние для количества заданий
+  // Состояние для выбора количества заданий
+  const [taskAmount, setTaskAmount] = useState<number>(15);
 
-  const linkPath = params.topicId 
-    ? `/lesson/topic/${params.topicId}?amount=${taskAmount}` 
-    : params["*"] === "mistakes" 
-    ? `/lesson/mistakes?amount=${taskAmount}` 
+  // Определение ссылки для навигации
+  const linkPath = params.topicId
+    ? `/lesson/topic/${params.topicId}?amount=${taskAmount}`
+    : params["*"] === "mistakes"
+    ? `/lesson/mistakes?amount=${taskAmount}`
     : `/lesson/mistakes?amount=${taskAmount}`;
+
+  // Возможные значения для ползунка
+  const sliderValues = [15, 30, 60, 80, 100];
+
+  // Функция для обновления значения, выбирая ближайшее из массива
+  const handleSliderChange = (value: number) => {
+    const closestValue = sliderValues.reduce((prev, curr) =>
+      Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
+    );
+    setTaskAmount(closestValue);
+  };
 
   return (
     <AnimatePresence>
@@ -23,15 +36,31 @@ export default function SetLessonPage() {
           <h2 className={styles.section__heading}>Настрой свою тренировку</h2>
         </header>
         <div className={styles.page__content}>
-          <label htmlFor="taskAmount">Количество заданий:</label>
+          <label htmlFor="taskAmount" className={styles.slider__label}>
+            Количество заданий: <span>{taskAmount}</span>
+          </label>
           <input
             id="taskAmount"
-            type="number"
-            value={taskAmount}
-            onChange={(e) => setTaskAmount(Number(e.target.value))}
-            min={1}
+            type="range"
+            min={15}
             max={100}
+            step={1} // Ползунок плавно передвигается
+            value={taskAmount}
+            onChange={(e) => handleSliderChange(Number(e.target.value))}
+            className={styles.slider}
           />
+          <div className={styles.slider__marks}>
+            {sliderValues.map((value) => (
+              <span
+                key={value}
+                className={`${styles.slider__mark} ${
+                  value === taskAmount ? styles["slider__mark--active"] : ""
+                }`}
+              >
+                {value}
+              </span>
+            ))}
+          </div>
         </div>
         <footer className={styles.page__footer}>
           <Button onClick={() => navigate(linkPath)}>НАЧАТЬ ТРЕНИРОВКУ!</Button>
