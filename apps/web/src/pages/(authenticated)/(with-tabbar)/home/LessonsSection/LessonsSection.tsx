@@ -4,6 +4,7 @@ import { Haptic } from "@/lib/twa/components/Haptic";
 import cn from "classnames";
 import { useQuery } from "@tanstack/react-query";
 import { useCloudStorage } from "@/lib/twa/hooks";
+import { ArrowIcon } from "@repo/ui/icons";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { Topic } from "@/models/Topic.ts";
 import { Skeleton } from "@repo/ui";
@@ -21,6 +22,15 @@ const LessonsSection: FC = () => {
     </section>
   );
 };
+
+interface SubscriptionCardProps {
+  emoji?: React.ReactNode;
+  title: string;
+  icon: React.ReactNode;
+  description?: string;
+  isSm?: boolean;
+  href?: string;
+}
 
 const LessonCards: FC = () => {
   const cloudStorage = useCloudStorage();
@@ -46,6 +56,14 @@ const LessonCards: FC = () => {
 
   return (
     <div className={styles.cards}>
+      {!user.subscription ? (
+          <SubscriptionCard
+          title="Открывай доступ ко всем заданиям вместе с подпиской!"
+          href={"/subscription"}
+          icon={<ArrowIcon size={25} />}
+        />
+        ) : ()}
+
       {data.map((topic) => (
         topic.private && !user.subscription ? (
           <LessonCardBlocked key={topic.slug} {...topic} />
@@ -85,6 +103,28 @@ const LessonCardBlocked: FC<Topic> = ({title, ege_number }) => {
           <h3 className={styles.blocked_card__content__title}>{title}</h3>
         </div>
       </div>
+    </Haptic>
+  );
+};
+
+const SubscriptionCard: FC<SubscriptionCardProps> = ({ emoji, title, description, icon, isSm = false, href = "" }) => {
+  return (
+    <Haptic type="impact" value="medium" asChild>
+      <Link to={href} className={styles.card}>
+      {emoji && <div className={styles.card__emoji}>{emoji}</div>}
+        <div className={styles.card__content}>
+          <h3
+            className={cn(styles.card__content__title, {
+              [styles.card__content__title_sm!]: isSm,
+            })}>
+            {title}
+          </h3>
+          {description && <p className={styles.card__content__description}>{description}</p>}
+        </div>
+        <div className={styles.card__icon}>
+          <span className={styles.card__icon_arrow}>{icon}</span>
+        </div>
+      </Link>
     </Haptic>
   );
 };
