@@ -15,12 +15,12 @@
     top: 0;
     width: 100%;
     padding: var(--spacing-4);
-    background-color: var(--ds-background-100); // Фон для заголовка
+    background-color: var(--ds-background-100);
     z-index: 10;
   }
 
   &__content {
-    flex: 1; // Контент растягивается, занимая всё оставшееся пространство
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,7 +29,16 @@
   &__footer {
     display: flex;
     justify-content: center;
-    width: 100%;
+    padding: 0 var(--spacing-4);
+    padding-bottom: calc(20px + var(--lvh, 100vh) - var(--tg-viewport-height, 100vh));
+  }
+
+  &__button {
+    width: 100%; /* Кнопка растягивается на всю ширину */
+  }
+
+  button {
+    width: 100%; /* Сам элемент <Button> растягивается */
   }
 }
 

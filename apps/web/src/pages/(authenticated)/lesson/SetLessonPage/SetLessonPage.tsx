@@ -17,10 +17,11 @@ export default function SetLessonPage() {
           {/* Здесь можно добавить основной контент, если потребуется */}
         </div>
         <footer className={styles.page__footer}>
-          <Link to={`/lesson/topic/${params.topicId}`}>
+          <Link to={`/lesson/topic/${params.topicId}`} className={styles.page__button}>
             <Button>НАЧАТЬ ТРЕНИРОВКУ!</Button>
           </Link>
         </footer>
+
       </div>
     </AnimatePresence>
   );
