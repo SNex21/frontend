@@ -70,7 +70,7 @@ const router = createBrowserRouter(
       <Route
         path="/*"
         loader={() => {
-          throw redirect("/");
+          throw redirect("/welcome");
         }}
       />
     </Route>,
