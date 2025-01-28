@@ -62,7 +62,7 @@ const LessonCards: FC = () => {
           href={"/subscription"}
           icon={<ArrowIcon size={25} />}
         />
-        ) : ()}
+        ) : null}
 
       {data.map((topic) => (
         topic.private && !user.subscription ? (
