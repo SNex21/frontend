@@ -9,11 +9,11 @@ export default function SetLessonPage() {
 
   return (
     <AnimatePresence>
-      <div className={styles.page}>
-        <div className={styles.page__content}>
-          <h2 className={styles.section__heading}>Настрой свою тренировку</h2>
+      <h2 className={styles.section__heading}>Настрой свою тренировку</h2>
+      <div className={styles.settings}>
+        <div className={styles.settings__content}>
         </div>
-        <div className={styles.page__buttons}>
+        <div className={styles.settings__buttons}>
           <Link to={`/lesson/topic/${params.topicId}`}>
             <Button>НАЧАТЬ ТРЕНИРОВКУ!</Button>
           </Link>
