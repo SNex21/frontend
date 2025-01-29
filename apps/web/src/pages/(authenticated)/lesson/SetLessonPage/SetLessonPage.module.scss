@@ -1,6 +1,6 @@
 :root {
-  --ds-primary-light: #000000; /* Цвет текста для светлой темы */
-  --ds-primary-dark: #ffffff; /* Цвет текста для темной темы */
+  --ds-primary-light: #000000; /* Цвет ползунка для светлой темы */
+  --ds-primary-dark: #ffffff; /* Цвет ползунка для темной темы */
   --ds-background-light: #ffffff; /* Фон для светлой темы */
   --ds-background-dark: #000000; /* Фон для темной темы */
 }
@@ -27,7 +27,7 @@ body[data-theme="light"] {
 
   &__header {
     position: sticky;
-    top: 0;
+    top: 0; 
     width: 100%;
     padding: var(--spacing-4);
     background-color: var(--ds-background-100);
@@ -65,57 +65,134 @@ body[data-theme="light"] {
     font-weight: 700;
     line-height: 34px;
     text-align: center;
-    color: var(--ds-primary); /* Убедитесь, что текст имеет правильный цвет */
   }
 }
 
-.wheel__container {
+.slider__container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центрируем метку и счетчик */
-  width: 100%; /* Сделаем счетчик на всю ширину */
-  max-width: 500px; /* Ограничиваем максимальную ширину счетчика для мобильных устройств */
+  align-items: center; /* Центрируем метку и слайдер */
+  width: 100%; /* Сделаем слайдер на всю ширину */
+  max-width: 500px; /* Ограничиваем максимальную ширину слайдера для мобильных устройств */
 }
 
-.wheel__label {
+.slider__label {
   font-size: 16px;
   margin-bottom: var(--spacing-2);
   text-align: center;
-  color: var(--ds-primary); /* Убедитесь, что текст имеет правильный цвет */
 }
 
-.wheel__wrapper {
-  position: relative;
+.slider {
   width: 100%;
-  max-width: 150px;
-  height: 150px;
-  overflow: hidden;
-  border: 2px solid var(--ds-gray-alpha-300);
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: var(--spacing-4) 0;
+  appearance: none;
+  background: var(--ds-gray-alpha-300);
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  transition: background 0.3s;
+  max-width: 100%; /* Убираем ограничение максимальной ширины */
 }
 
-.wheel__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.slider__marks {
   display: flex;
-  flex-direction: column;
-  transition: transform 0.2s ease-out;
+  justify-content: space-between;
+  margin-top: var(--spacing-2);
+  width: 100%; /* Увеличиваем ширину до 100% */
+  padding: 0 10px;
+  overflow-x: auto; /* Позволяем прокручивать метки при необходимости */
 }
 
-.wheel__item {
-  font-size: 24px;
-  padding: var(--spacing-2) 0;
-  text-align: center;
+.slider__mark {
+  font-size: 12px; /* Уменьшаем размер текста меток */
+  color: var(--ds-gray-alpha-700);
+  white-space: nowrap; /* Запрещаем перенос строк */
+  transform: translateX(-50%);
+  min-width: 20px; /* Минимальная ширина для меток */
+}
+
+.slider__mark--active {
   color: var(--ds-primary);
-  pointer-events: none;
-}
-
-.wheel__value {
-  font-size: 24px;
   font-weight: bold;
-  color: var(--ds-primary);
+}
+
+.slider__mark--active::after {
+  content: ' •'; /* Добавляем символ после активной метки */
+}
+
+.slider__mark--inactive {
+  color: var(--ds-gray-alpha-500);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--ds-primary); /* Используем переменную для цвета */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 2;
+  border: 2px solid var(--ds-background-100); /* Добавляем границу для лучшей видимости */
+  box-shadow: none; /* Убираем тень */
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--ds-primary); /* Используем переменную для цвета */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 2;
+  border: 2px solid var(--ds-background-100); /* Добавляем границу для лучшей видимости */
+  box-shadow: none; /* Убираем тень */
+}
+
+input[type="range"]::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--ds-primary); /* Используем переменную для цвета */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 2;
+  border: 2px solid var(--ds-background-100); /* Добавляем границу для лучшей видимости */
+  box-shadow: none; /* Убираем тень */
+}
+
+/* Активный слайдер */
+input[type="range"]:active::-webkit-slider-thumb {
+  background: var(--ds-primary);
+}
+
+input[type="range"]:active::-moz-range-thumb {
+  background: var(--ds-primary);
+}
+
+input[type="range"]:active::-ms-thumb {
+  background: var(--ds-primary);
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 480px) {
+  .slider__container {
+    width: 100%;
+    max-width: 100%; /* Убираем ограничение максимальной ширины */
+  }
+
+  .slider__mark {
+    font-size: 10px; /* Еще меньше размер текста на мобильных */
+  }
+
+  .slider__marks {
+    width: 100%; /* Расширяем метки на всю ширину */
+    margin-top: var(--spacing-1); /* Уменьшаем отступы для мобильных */
+    overflow-x: scroll; /* Разрешаем прокрутку меток */
+  }
+
+  .slider {
+    max-width: 100%; /* Ограничиваем ширину слайдера на экранах меньше 480px */
+    margin: 20px auto; /* Центрируем слайдер */
+  }
 }
