@@ -16,6 +16,7 @@ export type GetTasksTopicsRes = Topic[];
 
 export interface CompleteSessionReq {
   id: string;
+  is_aborted: boolean;
   wastedTime: number;
   guesses: Guess[];
 

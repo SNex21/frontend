@@ -52,6 +52,7 @@ export default function LessonPage() {
           await completeSession({
             token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
             id: session.id,
+            is_aborted: false,
             wastedTime: new Date().getTime() - startDate,
             guesses,
           });
