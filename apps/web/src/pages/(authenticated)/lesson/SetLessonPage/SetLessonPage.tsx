@@ -10,28 +10,36 @@ export default function SetLessonPage() {
   const navigate = useNavigate();
   // Состояние для выбора количества заданий
   const [taskAmount, setTaskAmount] = useState<number>(15);
+  const [visibleMarks, setVisibleMarks] = useState<number[]>([]);
   // Определение ссылки для навигации
   const linkPath = params.topicId
     ? `/lesson/topic/${params.topicId}?amount=${taskAmount}`
     : params["*"] === "mistakes"
     ? `/lesson/mistakes?amount=${taskAmount}`
     : `/lesson/mistakes?amount=${taskAmount}`;
-  // Возможные значения для счетчика
+  // Возможные значения для ползунка
   const sliderValues = [10, 15, 30, 50, 80, 100];
 
-  // Логика для определения текущей темы
   useEffect(() => {
-    const isDarkTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.body.setAttribute('data-theme', isDarkTheme ? 'dark' : 'light');
+    const updateVisibleMarks = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth <= 480) {
+        // На маленьких экранах показываем только некоторые метки
+        setVisibleMarks([10, 30, 50, 80, 100]);
+      } else {
+        setVisibleMarks(sliderValues);
+      }
+    };
+
+    updateVisibleMarks();
+    window.addEventListener('resize', updateVisibleMarks);
+    return () => window.removeEventListener('resize', updateVisibleMarks);
   }, []);
 
-  // Функция для обновления значения счетчика, округляя до ближайшего значения из массива
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = Number(e.target.value);
-    if (isNaN(value)) {
-      value = 10; // Значение по умолчанию, если введено некорректное значение
-    }
-    // Округляем значение до ближайшей точки из массива значений
+  // Функция для обновления значения слайдера, округляя до ближайшего значения из массива
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    // Округляем значение ползунка до ближайшей точки
     const closestValue = sliderValues.reduce((prev, curr) =>
       Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
     );
@@ -46,21 +54,39 @@ export default function SetLessonPage() {
           <h2 className={styles.section__heading}>Настрой свою тренировку</h2>
         </header>
         <div className={styles.page__content}>
-          <div className={styles.counter__container}>
-            <label htmlFor="taskAmount" className={styles.counter__label}>
-              Количество заданий:
+          <div className={styles.slider__container}>
+            <label htmlFor="taskAmount" className={styles.slider__label}>
+              Количество заданий: <span>{taskAmount}</span>
             </label>
-            <input
-              id="taskAmount"
-              type="number"
-              min={10}
-              max={100}
-              step={1}
-              value={taskAmount}
-              onChange={handleInputChange}
-              className={styles.counter__input}
-            />
-            <span className={styles.counter__value}>{taskAmount}</span>
+            <div style={{ position: "relative", width: "100%" }}>
+              <input
+                id="taskAmount"
+                type="range"
+                min={10}
+                max={100}
+                step={1}
+                value={taskAmount}
+                onChange={handleSliderChange}
+                className={styles.slider}
+              />
+              <div className={styles.slider__marks}>
+                {sliderValues.map((value) => (
+                  visibleMarks.includes(value) && (
+                    <span
+                      key={value}
+                      className={`${styles.slider__mark} ${
+                        value === taskAmount ? styles["slider__mark--active"] : ""
+                      }`}
+                      style={{
+                        left: `calc(${((value - 10) / (100 - 10)) * 100}% - 10px)`,
+                      }}
+                    >
+                      {value}
+                    </span>
+                  )
+                ))}
+              </div>
+            </div>
           </div>
         </div>
         <footer className={styles.page__footer}>
@@ -70,4 +96,4 @@ export default function SetLessonPage() {
     </AnimatePresence>
   );
 }
- 
+
