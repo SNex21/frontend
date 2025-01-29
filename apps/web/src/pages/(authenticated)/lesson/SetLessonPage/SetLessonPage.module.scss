@@ -128,7 +128,7 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 20px;
   height: 20px;
-  background: var(--ds-primary);
+  background: var(--ds-primary); /* Используем переменную для цвета */
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.3s;
@@ -140,7 +140,7 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background: var(--ds-primary);
+  background: var(--ds-primary); /* Используем переменную для цвета */
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.3s;
@@ -152,7 +152,7 @@ input[type="range"]::-moz-range-thumb {
 input[type="range"]::-ms-thumb {
   width: 20px;
   height: 20px;
-  background: var(--ds-primary);
+  background: var(--ds-primary); /* Используем переменную для цвета */
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.3s;
