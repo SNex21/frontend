@@ -65,6 +65,7 @@ body[data-theme="light"] {
     font-weight: 700;
     line-height: 34px;
     text-align: center;
+    color: var(--ds-text); /* Убедитесь, что текст имеет правильный цвет */
   }
 }
 
@@ -80,6 +81,7 @@ body[data-theme="light"] {
   font-size: 16px;
   margin-bottom: var(--spacing-2);
   text-align: center;
+  color: var(--ds-text); /* Убедитесь, что текст имеет правильный цвет */
 }
 
 .slider {
