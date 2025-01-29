@@ -9,7 +9,7 @@ const GreetingSection: FC = () => {
     <section className="wrapper">
       <div className={styles.greeting}>
         <h1 className={styles.greeting__heading}>
-          Привеьт, <span className={styles.greeting__user}>{user.username}</span>
+          Привет, <span className={styles.greeting__user}>{user.username}</span>
         </h1>
         <p className={styles.greeting__subheading}>
           Что будем тренировать сегодня?
