@@ -35,7 +35,7 @@ const ChoicesAccent: React.FC<ChoicesAccentProps> = ({ choices, currentChoice, s
     <div className={styles.choices}>
       {choices.map((choice, i) => {
         // Проверяем, является ли буква гласной
-        const isVowel = vowels.includes(choice.text.toLowerCase());
+        const isVowel = choice?.text && vowels.includes(choice.text.toLowerCase());
 
         return (
           <ChoiceAccent
@@ -54,7 +54,7 @@ const ChoicesAccent: React.FC<ChoicesAccentProps> = ({ choices, currentChoice, s
 const ChoiceAccent: React.FC<ChoiceAccentProps> = ({ choice, onSelect, state, isSelected }) => {
   // Массив гласных букв
   const vowels = ["а", "е", "ё", "и", "о", "у", "ы", "э", "ю", "я"];
-  const isVowel = vowels.includes(choice?.text.toLowerCase());
+  const isVowel = choice?.text && vowels.includes(choice.text.toLowerCase());
 
   return (
     <Haptic type={"impact"} value={"medium"} disabled={!isVowel || state?.submitted} asChild>
