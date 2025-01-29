@@ -70,10 +70,12 @@ function formatPrompt(prompt: string, GapFillComponent: ReactNode): ReactNode {
   // Возвращаем отформатированный JSX
   return (
     <>
+      <h3>GUGA</h3>
       <h3>{parts[0] && <span>{parts[0].trim()}</span> && <span>ABUBA</span>}</h3>
       {GapFillComponent}
       <h3>ABUBA</h3>
       <h3>{parts[1] && <span>{parts[1].trim()}</span> && <span>ABIBA</span>}</h3>
+      <h3>GIGA</h3>
     </>
   );
 
