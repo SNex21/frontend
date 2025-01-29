@@ -7,23 +7,21 @@ import { Haptic } from "@/lib/twa/components/Haptic.tsx";
 
 interface ChoicesAccentProps {
   choices?: Choice[];
-
   currentChoice: Choice | null;
   setChoice: React.Dispatch<React.SetStateAction<Choice | null>>;
-
   state?: ChallengeState;
+  correctAnswer?: Choice | null; // Новое свойство
 }
 
 interface ChoiceAccentProps {
   choice?: Choice;
-
   onSelect?: () => void;
-
   isSelected?: boolean;
   state?: ChallengeState;
+  isCorrect?: boolean; // Новое свойство
 }
 
-const ChoicesAccent: React.FC<ChoicesAccentProps> = ({ choices, currentChoice, setChoice, state }) => {
+const ChoicesAccent: React.FC<ChoicesAccentProps> = ({ choices, currentChoice, setChoice, state, correctAnswer }) => {
   if (!choices) {
     return null;
   }
@@ -36,6 +34,8 @@ const ChoicesAccent: React.FC<ChoicesAccentProps> = ({ choices, currentChoice, s
       {choices.map((choice, i) => {
         // Проверяем, является ли буква гласной
         const isVowel = choice?.text && vowels.includes(choice.text.toLowerCase());
+        // Проверяем, является ли буква правильной
+        const isCorrect = correctAnswer?.text === choice.text;
 
         return (
           <ChoiceAccent
@@ -44,6 +44,7 @@ const ChoicesAccent: React.FC<ChoicesAccentProps> = ({ choices, currentChoice, s
             onSelect={isVowel && !state?.submitted ? () => setChoice(choice) : undefined}
             isSelected={choice === currentChoice}
             state={state}
+            isCorrect={isCorrect} // Передаем флаг правильности
           />
         );
       })}
@@ -51,7 +52,7 @@ const ChoicesAccent: React.FC<ChoicesAccentProps> = ({ choices, currentChoice, s
   );
 };
 
-const ChoiceAccent: React.FC<ChoiceAccentProps> = ({ choice, onSelect, state, isSelected }) => {
+const ChoiceAccent: React.FC<ChoiceAccentProps> = ({ choice, onSelect, state, isSelected, isCorrect }) => {
   // Массив гласных букв
   const vowels = ["а", "е", "ё", "и", "о", "у", "ы", "э", "ю", "я"];
   const isVowel = choice?.text && vowels.includes(choice.text.toLowerCase());
@@ -62,14 +63,18 @@ const ChoiceAccent: React.FC<ChoiceAccentProps> = ({ choice, onSelect, state, is
         className={cn(styles.choice, {
           [styles["choice_not-submitted"]!]: !state?.submitted,
           [styles.choice_selected!]: isSelected,
-          [styles.choice_right!]: isSelected && state?.submitted && !state?.wrong,
-          [styles.choice_disabled!]: !isVowel, // Добавляем класс для неактивных букв
+          [styles.choice_right!]: isCorrect, // Зелёное выделение для правильной буквы
+          [styles.choice_wrong!]: isSelected && state?.submitted && !state?.wrong,
+          [styles.choice_disabled!]: !isVowel,
         })}
         role="radio"
         onClick={onSelect}
-        aria-disabled={!isVowel} // Добавляем атрибут для доступности
+        aria-disabled={!isVowel}
       >
-        <span className={styles.choice__text}>{choice?.text}</span>
+        <span className={styles.choice__text}>
+          {choice?.text}
+          {isCorrect && "\u0301"} {/* Добавляем ударение для правильной буквы */}
+        </span>
         {isSelected && (
           <div className={styles.choice__accent}>
             <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
