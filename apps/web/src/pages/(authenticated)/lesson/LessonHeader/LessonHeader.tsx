@@ -39,7 +39,7 @@ const LessonHeader: React.FC<LessonHeaderProps> = ({ stats, session }) => {
         is_aborted: true,
         wastedTime: new Date().getTime() - session.startDate,
         guesses: session.guesses,
-      });   
+      });
     } catch (e) {
       console.error(e);
     }

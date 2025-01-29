@@ -1,13 +1,28 @@
+:root {
+  --ds-primary-light: #007bff; /* Цвет ползунка для светлой темы */
+  --ds-primary-dark: #ffffff; /* Цвет ползунка для темной темы */
+  --ds-background-light: #ffffff; /* Фон для светлой темы */
+  --ds-background-dark: #000000; /* Фон для темной темы */
+}
+
+body[data-theme="dark"] {
+  --ds-primary: var(--ds-primary-dark);
+  --ds-background-100: var(--ds-background-dark);
+}
+
+body[data-theme="light"] {
+  --ds-primary: var(--ds-primary-light);
+  --ds-background-100: var(--ds-background-light);
+}
+
 .page {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-
   display: flex;
   flex-direction: column;
-
   background-color: var(--ds-background-100);
 
   &__header {
@@ -76,14 +91,14 @@
   border-radius: 3px;
   outline: none;
   transition: background 0.3s;
-  max-width: 370px; /* Ограничим максимальную ширину слайдера */
+  max-width: 100%; /* Убираем ограничение максимальной ширины */
 }
 
 .slider__marks {
   display: flex;
   justify-content: space-between;
   margin-top: var(--spacing-2);
-  width: 80%; /* Уменьшаем ширину, чтобы метки были ближе друг к другу */
+  width: 100%; /* Увеличиваем ширину до 100% */
   padding: 0 10px;
 }
 
@@ -92,6 +107,7 @@
   color: var(--ds-gray-alpha-700);
   position: relative;
   transform: translateX(-50%);
+  white-space: nowrap; /* Запрещаем перенос строк */
 }
 
 .slider__mark--active {
@@ -116,6 +132,7 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
   transition: background 0.3s;
   z-index: 2;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Добавляем тень для лучшей видимости */
 }
 
 input[type="range"]::-moz-range-thumb {
@@ -126,6 +143,7 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
   transition: background 0.3s;
   z-index: 2;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Добавляем тень для лучшей видимости */
 }
 
 input[type="range"]::-ms-thumb {
@@ -136,6 +154,7 @@ input[type="range"]::-ms-thumb {
   cursor: pointer;
   transition: background 0.3s;
   z-index: 2;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Добавляем тень для лучшей видимости */
 }
 
 /* Активный слайдер */
@@ -155,7 +174,7 @@ input[type="range"]:active::-ms-thumb {
 @media (max-width: 480px) {
   .slider__container {
     width: 100%;
-    max-width: 280px; /* Ограничиваем максимальную ширину слайдера на маленьких экранах */
+    max-width: 100%; /* Убираем ограничение максимальной ширины */
   }
 
   .slider__mark {
@@ -163,18 +182,12 @@ input[type="range"]:active::-ms-thumb {
   }
 
   .slider__marks {
-    padding: 0 5px; /* Уменьшаем отступы на мобильных */
-    width: 100%; /* Метки растягиваются на всю ширину экрана */
+    width: 100%; /* Расширяем метки на всю ширину */
+    margin-top: var(--spacing-1); /* Уменьшаем отступы для мобильных */
   }
 
-  /* Добавим настройки для слайдера, чтобы он умещался на экране */
   .slider {
     max-width: 100%; /* Ограничиваем ширину слайдера на экранах меньше 480px */
     margin: 20px auto; /* Центрируем слайдер */
-  }
-
-  .slider__marks {
-    width: 100%; /* Расширяем метки на всю ширину */
-    margin-top: var(--spacing-1); /* Уменьшаем отступы для мобильных */
   }
 }

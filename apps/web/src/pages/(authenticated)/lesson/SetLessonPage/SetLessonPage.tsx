@@ -8,20 +8,16 @@ import { BackButton } from "@/lib/twa/components/BackButton";
 export default function SetLessonPage() {
   const params = useParams();
   const navigate = useNavigate();
-
   // Состояние для выбора количества заданий
   const [taskAmount, setTaskAmount] = useState<number>(15);
-
   // Определение ссылки для навигации
   const linkPath = params.topicId
     ? `/lesson/topic/${params.topicId}?amount=${taskAmount}`
     : params["*"] === "mistakes"
     ? `/lesson/mistakes?amount=${taskAmount}`
     : `/lesson/mistakes?amount=${taskAmount}`;
-
   // Возможные значения для ползунка
   const sliderValues = [10, 15, 30, 50, 80, 100];
-
   // Функция для обновления значения слайдера, округляя до ближайшего значения из массива
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
