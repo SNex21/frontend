@@ -20,12 +20,17 @@ const NumberWheel: React.FC<NumberWheelProps> = ({ values, initialValue, onChang
     let newValue = selectedValue;
 
     const currentIndex = values.indexOf(selectedValue);
-    if (delta > 0) {
-      // Прокрутка вниз
-      newValue = values[Math.min(currentIndex + 1, values.length - 1)];
+    if (currentIndex !== -1) {
+      if (delta > 0) {
+        // Прокрутка вниз
+        newValue = values[Math.min(currentIndex + 1, values.length - 1)];
+      } else {
+        // Прокрутка вверх
+        newValue = values[Math.max(currentIndex - 1, 0)];
+      }
     } else {
-      // Прокрутка вверх
-      newValue = values[Math.max(currentIndex - 1, 0)];
+      // Если значение не найдено, установим его на первое значение из массива
+      newValue = values[0];
     }
 
     setSelectedValue(newValue);
