@@ -58,7 +58,7 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
           {state.wrong ? (
             <>
               <div className={styles.submit__panel__heading}>
-                <CrossMarkEmoji size={23} />
+                <p className={styles.submit__panel__heading__p}> &#x274C;</p>
                 <h1 className={styles.submit__panel__heading__title}>Неверно</h1>
               </div>
               {correctText && (
