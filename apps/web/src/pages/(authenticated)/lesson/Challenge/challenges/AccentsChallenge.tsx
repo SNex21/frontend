@@ -17,16 +17,22 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
     if (!choice) {
       return;
     }
-
+  
+    // Проверяем, что choices существует
+    if (!challenge.choices) {
+      console.error("Choices are undefined");
+      return;
+    }
+  
     // Находим правильный ответ
     const correct = challenge.choices.find((c) => c.isCorrect);
     setCorrectAnswer(correct || null);
-
+  
     setState({
       submitted: true,
       wrong: !choice.isCorrect,
     });
-
+  
     updateStats(choice.isCorrect);
     notification(choice.isCorrect ? "success" : "error");
   }
