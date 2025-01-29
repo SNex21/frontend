@@ -41,9 +41,9 @@
     --background-color: var(--success-background);
   }
   &_disabled {
-    opacity: 0.5; // Снижаем прозрачность
-    pointer-events: none; // Отключаем клики
-    cursor: not-allowed; // Меняем курсор
+    opacity: 0.8; 
+    pointer-events: none; 
+    cursor: not-allowed;
   }
 
   &_not-submitted {
