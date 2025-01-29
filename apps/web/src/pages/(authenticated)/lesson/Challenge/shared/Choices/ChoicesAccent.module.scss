@@ -40,6 +40,11 @@
     --text-color: var(--success-primary);
     --background-color: var(--success-background);
   }
+  &_disabled {
+    opacity: 0.5; // Снижаем прозрачность
+    pointer-events: none; // Отключаем клики
+    cursor: not-allowed; // Меняем курсор
+  }
 
   &_not-submitted {
     cursor: pointer;
