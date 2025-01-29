@@ -134,6 +134,7 @@ input[type="range"]::-webkit-slider-thumb {
   transition: background 0.3s;
   z-index: 2;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Добавляем тень для лучшей видимости */
+  border: 2px solid var(--ds-background-100); /* Добавляем границу для лучшей видимости */
 }
 
 input[type="range"]::-moz-range-thumb {
@@ -145,6 +146,7 @@ input[type="range"]::-moz-range-thumb {
   transition: background 0.3s;
   z-index: 2;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Добавляем тень для лучшей видимости */
+  border: 2px solid var(--ds-background-100); /* Добавляем границу для лучшей видимости */
 }
 
 input[type="range"]::-ms-thumb {
@@ -156,6 +158,7 @@ input[type="range"]::-ms-thumb {
   transition: background 0.3s;
   z-index: 2;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Добавляем тень для лучшей видимости */
+  border: 2px solid var(--ds-background-100); /* Добавляем границу для лучшей видимости */
 }
 
 /* Активный слайдер */
