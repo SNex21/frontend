@@ -36,6 +36,7 @@ const LessonHeader: React.FC<LessonHeaderProps> = ({ stats, session }) => {
       await completeSession({
         token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
         id: session.id,
+        is_aborted: true,
         wastedTime: new Date().getTime() - session.startDate,
         guesses: session.guesses,
       });   
