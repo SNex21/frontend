@@ -8,7 +8,10 @@ interface NumberWheelProps {
 }
 
 const NumberWheel: React.FC<NumberWheelProps> = ({ values, initialValue, onChange }) => {
-  const [selectedValue, setSelectedValue] = useState<number>(initialValue);
+  // Убедимся, что initialValue есть в values или возьмем первое значение по умолчанию
+  const initialValidValue = values.includes(initialValue) ? initialValue : values[0];
+  
+  const [selectedValue, setSelectedValue] = useState<number>(initialValidValue);
   const [translateY, setTranslateY] = useState<number>(0);
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
@@ -16,12 +19,13 @@ const NumberWheel: React.FC<NumberWheelProps> = ({ values, initialValue, onChang
     const delta = Math.sign(e.deltaY);
     let newValue = selectedValue;
 
+    const currentIndex = values.indexOf(selectedValue);
     if (delta > 0) {
       // Прокрутка вниз
-      newValue = values[Math.min(values.indexOf(selectedValue) + 1, values.length - 1)];
+      newValue = values[Math.min(currentIndex + 1, values.length - 1)];
     } else {
       // Прокрутка вверх
-      newValue = values[Math.max(values.indexOf(selectedValue) - 1, 0)];
+      newValue = values[Math.max(currentIndex - 1, 0)];
     }
 
     setSelectedValue(newValue);
