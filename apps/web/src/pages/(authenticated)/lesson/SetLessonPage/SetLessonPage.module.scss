@@ -100,14 +100,15 @@ body[data-theme="light"] {
   margin-top: var(--spacing-2);
   width: 100%; /* Увеличиваем ширину до 100% */
   padding: 0 10px;
+  overflow-x: auto; /* Позволяем прокручивать метки при необходимости */
 }
 
 .slider__mark {
   font-size: 12px; /* Уменьшаем размер текста меток */
   color: var(--ds-gray-alpha-700);
-  position: relative;
-  transform: translateX(-50%);
   white-space: nowrap; /* Запрещаем перенос строк */
+  transform: translateX(-50%);
+  min-width: 20px; /* Минимальная ширина для меток */
 }
 
 .slider__mark--active {
@@ -184,6 +185,7 @@ input[type="range"]:active::-ms-thumb {
   .slider__marks {
     width: 100%; /* Расширяем метки на всю ширину */
     margin-top: var(--spacing-1); /* Уменьшаем отступы для мобильных */
+    overflow-x: scroll; /* Разрешаем прокрутку меток */
   }
 
   .slider {

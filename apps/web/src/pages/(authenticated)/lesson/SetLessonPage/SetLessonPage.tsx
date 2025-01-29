@@ -1,7 +1,7 @@
 import { Button } from "@repo/ui";
 import { AnimatePresence } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./SetLessonPage.module.scss";
 import { BackButton } from "@/lib/twa/components/BackButton";
 
@@ -10,6 +10,7 @@ export default function SetLessonPage() {
   const navigate = useNavigate();
   // Состояние для выбора количества заданий
   const [taskAmount, setTaskAmount] = useState<number>(15);
+  const [visibleMarks, setVisibleMarks] = useState<number[]>([]);
   // Определение ссылки для навигации
   const linkPath = params.topicId
     ? `/lesson/topic/${params.topicId}?amount=${taskAmount}`
@@ -18,6 +19,23 @@ export default function SetLessonPage() {
     : `/lesson/mistakes?amount=${taskAmount}`;
   // Возможные значения для ползунка
   const sliderValues = [10, 15, 30, 50, 80, 100];
+
+  useEffect(() => {
+    const updateVisibleMarks = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth <= 480) {
+        // На маленьких экранах показываем только некоторые метки
+        setVisibleMarks([10, 30, 50, 80, 100]);
+      } else {
+        setVisibleMarks(sliderValues);
+      }
+    };
+
+    updateVisibleMarks();
+    window.addEventListener('resize', updateVisibleMarks);
+    return () => window.removeEventListener('resize', updateVisibleMarks);
+  }, []);
+
   // Функция для обновления значения слайдера, округляя до ближайшего значения из массива
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
@@ -53,17 +71,19 @@ export default function SetLessonPage() {
               />
               <div className={styles.slider__marks}>
                 {sliderValues.map((value) => (
-                  <span
-                    key={value}
-                    className={`${styles.slider__mark} ${
-                      value === taskAmount ? styles["slider__mark--active"] : ""
-                    }`}
-                    style={{
-                      left: `calc(${((value - 10) / (100 - 10)) * 100}% - 10px)`,
-                    }}
-                  >
-                    {value}
-                  </span>
+                  visibleMarks.includes(value) && (
+                    <span
+                      key={value}
+                      className={`${styles.slider__mark} ${
+                        value === taskAmount ? styles["slider__mark--active"] : ""
+                      }`}
+                      style={{
+                        left: `calc(${((value - 10) / (100 - 10)) * 100}% - 10px)`,
+                      }}
+                    >
+                      {value}
+                    </span>
+                  )
                 ))}
               </div>
             </div>
