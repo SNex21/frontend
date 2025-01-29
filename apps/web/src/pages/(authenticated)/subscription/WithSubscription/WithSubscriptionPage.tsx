@@ -60,6 +60,7 @@ export const WithSubscriptionPage: FC = () =>  {
 
 const WithSubscriptionCard: FC<WithSubscriptionCardProps> = ({ title, description, price,  isSm = false, href = "" }) => {
 return (
+  <>
     <Haptic type="impact" value="medium" asChild>
     <Link to={href} className={styles.card}>
         <div className={styles.card__content}>
@@ -77,6 +78,9 @@ return (
         </div>
     </Link>
     </Haptic>
+    
+  </>
+
 );
 };
 

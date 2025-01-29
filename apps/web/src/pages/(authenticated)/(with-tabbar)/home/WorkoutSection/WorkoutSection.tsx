@@ -36,16 +36,16 @@ const WorkoutSection: FC = () => {
           title="Начать тренировку"
           description="по всем заданиям"
           icon={<FlexedBicepsEmoji size={25} />}
-          href={"/lesson"}
+          href={"/set/lesson"}
         />
         <div className={styles.row}>
-          <WorkoutCard title="Практика ошибок" icon={<WarningEmoji size={25} />} isSm href={"/lesson/mistakes"} />
+          <WorkoutCard title="Практика ошибок" icon={<WarningEmoji size={25} />} isSm href={"/set//lesson/mistakes"} />
           {showHardLessonButton && (
             <WorkoutCard
               title="Самые сложные"
               icon={<PersonLiftingWeightsEmoji size={25} />}
               isSm
-              href={"/lesson/hard"}
+              href={"/set/lesson/hard"}
             />
           )}
         </div>

@@ -1,0 +1,180 @@
+.page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: var(--ds-background-100);
+
+  &__header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    padding: var(--spacing-4);
+    background-color: var(--ds-background-100);
+    z-index: 10;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; /* Центрируем содержимое */
+    padding: 0 10px; /* Добавляем отступы для мобильных устройств */
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+    padding: 0 var(--spacing-4);
+    padding-bottom: calc(20px + var(--lvh, 100vh) - var(--tg-viewport-height, 100vh));
+  }
+
+  &__button {
+    width: 100%; /* Кнопка будет растягиваться на всю ширину */
+  }
+
+  button {
+    width: 100%; /* Сам элемент <Button> растягивается */
+  }
+}
+
+.section {
+  &__heading {
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 34px;
+    text-align: center;
+  }
+}
+
+.slider__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центрируем метку и слайдер */
+  width: 100%; /* Сделаем слайдер на всю ширину */
+  max-width: 500px; /* Ограничиваем максимальную ширину слайдера для мобильных устройств */
+}
+
+.slider__label {
+  font-size: 16px;
+  margin-bottom: var(--spacing-2);
+  text-align: center;
+}
+
+.slider {
+  width: 100%;
+  margin: var(--spacing-4) 0;
+  appearance: none;
+  background: var(--ds-gray-alpha-300);
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  transition: background 0.3s;
+  max-width: 370px; /* Ограничим максимальную ширину слайдера */
+}
+
+.slider__marks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-2);
+  width: 80%; /* Уменьшаем ширину, чтобы метки были ближе друг к другу */
+  padding: 0 10px;
+}
+
+.slider__mark {
+  font-size: 12px; /* Уменьшаем размер текста меток */
+  color: var(--ds-gray-alpha-700);
+  position: relative;
+  transform: translateX(-50%);
+}
+
+.slider__mark--active {
+  color: var(--ds-primary);
+  font-weight: bold;
+}
+
+.slider__mark--active::after {
+  content: ' •'; /* Добавляем символ после активной метки */
+}
+
+.slider__mark--inactive {
+  color: var(--ds-gray-alpha-500);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--ds-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 2;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--ds-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 2;
+}
+
+input[type="range"]::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--ds-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 2;
+}
+
+/* Активный слайдер */
+input[type="range"]:active::-webkit-slider-thumb {
+  background: var(--ds-primary-dark);
+}
+
+input[type="range"]:active::-moz-range-thumb {
+  background: var(--ds-primary-dark);
+}
+
+input[type="range"]:active::-ms-thumb {
+  background: var(--ds-primary-dark);
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 480px) {
+  .slider__container {
+    width: 100%;
+    max-width: 280px; /* Ограничиваем максимальную ширину слайдера на маленьких экранах */
+  }
+
+  .slider__mark {
+    font-size: 10px; /* Еще меньше размер текста на мобильных */
+  }
+
+  .slider__marks {
+    padding: 0 5px; /* Уменьшаем отступы на мобильных */
+    width: 100%; /* Метки растягиваются на всю ширину экрана */
+  }
+
+  /* Добавим настройки для слайдера, чтобы он умещался на экране */
+  .slider {
+    max-width: 100%; /* Ограничиваем ширину слайдера на экранах меньше 480px */
+    margin: 20px auto; /* Центрируем слайдер */
+  }
+
+  .slider__marks {
+    width: 100%; /* Расширяем метки на всю ширину */
+    margin-top: var(--spacing-1); /* Уменьшаем отступы для мобильных */
+  }
+}

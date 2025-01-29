@@ -104,6 +104,82 @@
   }
 }
 
+
+.subscription_card {
+  display: flex;
+  align-items: center;
+
+  flex: 1;
+
+  min-height: 78px;
+
+  cursor: pointer;
+
+  border: 1px solid var(--ds-gray-alpha-400);
+  border-radius: var(--rounded-2xl);
+
+  background-color: #4900DC;
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 58px;
+    height: 100%;
+
+    color: #FFFFFF; /* Цвет стрелки */
+    font-size: 18px; /* Размер стрелки */
+    padding-right: 15px; /* Отступ справа */
+  }
+
+  &__emoji {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 40px;
+    margin-left: 12px;
+    height: 100%;
+  }
+  
+  &__icon_arrow {
+    font-weight: bold;
+  }
+
+  &__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--spacing-3);
+
+    &__title {
+      color: #FFFFFF;
+
+      font-size: 15px;
+      font-weight: 700;
+      // margin-top: 20px; /* Отступ сверху */
+      // margin-bottom: 10px; /* Отступ снизу */
+      margin-left: 15px; /* Отступ слева */
+      margin-right: 0; /* Отступ справа */
+    }
+
+    &__title_sm {
+      font-size: 16px;
+    }
+
+    &__description {
+      color: #FFFFFF;
+
+      font-size: 14px;
+      margin-left: 15px; /* Отступ слева */
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+  }
+}
+
+
 .blocked_logo {
   position: absolute;
   top: 40%;

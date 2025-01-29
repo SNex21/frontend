@@ -115,7 +115,9 @@
     &__heading {
       display: flex;
       gap: var(--spacing-3);
-
+      &__p{
+        font-size: 150%;
+      }
       align-items: center;
 
       &__title {

@@ -7,7 +7,7 @@ import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
 import React from "react";
 import { LessonComplete } from "./LessonComplete";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Guess } from "@/models/Session";
 
 const defaultStats = {
@@ -19,27 +19,32 @@ const defaultStats = {
 
 export default function LessonPage() {
   const params = useParams();
+  const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
   const cloudStorage = useCloudStorage();
 
   const [completed, setCompleted] = React.useState(false);
   const [startDate, setStartDate] = React.useState<number | null>(null);
   const [stats, setStats] = React.useState(defaultStats);
+  const [sessionKey, setSessionKey] = React.useState(Date.now());
 
-  const { data: session, isLoading } = useQuery({
-    queryKey: ["tasks"],
+  const taskAmount = Number(searchParams.get("amount")) || 10; // Получаем значение amount из параметров
+
+  const { data: session, isLoading, refetch } = useQuery({
+    queryKey: ["tasks", sessionKey],
     queryFn: async () =>
       getTasks({
         token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
         topic_id: params.topicId ? Number(params.topicId) : undefined,
         isHard: params["*"] === "hard",
         isWorkOnMistakes: params["*"] === "mistakes",
-        // isWorkOnMistakes: false,
+        amount: taskAmount, // Передаем amount в запрос
       }),
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     gcTime: 0,
   });
+
   const complete = React.useCallback(
     async ({ guesses }: { guesses: Guess[] }) => {
       if (session && startDate) {
@@ -56,8 +61,15 @@ export default function LessonPage() {
       }
       setCompleted(true);
     },
-    [session, session?.id, startDate],
+    [session, startDate],
   );
+
+  const restartSession = React.useCallback(() => {
+    setSessionKey(Date.now());
+    setCompleted(false);
+    setStartDate(new Date().getTime());
+    setStats(defaultStats);
+  }, [refetch]);
 
   React.useEffect(() => {
     if (!startDate) {
@@ -77,9 +89,22 @@ export default function LessonPage() {
     <AnimatePresence>
       {isLoading && <LessonPageLoading initial key="loading" />}
       {session && !completed && (
-        <SessionBuilder key="session" session={session} stats={stats} setStats={setStats} onComplete={complete} startDate={startDate ?? Date.now()}/>
+        <SessionBuilder
+          key="session"
+          session={session}
+          stats={stats}
+          setStats={setStats}
+          onComplete={complete}
+          startDate={startDate ?? Date.now()}
+        />
       )}
-      {completed && <LessonComplete startDate={startDate ?? Date.now()} correctPercentage={correctPercentage} />}
+      {completed && (
+        <LessonComplete
+          startDate={startDate ?? Date.now()}
+          correctPercentage={correctPercentage}
+          onRestart={restartSession}
+        />
+      )}
     </AnimatePresence>
   );
 }

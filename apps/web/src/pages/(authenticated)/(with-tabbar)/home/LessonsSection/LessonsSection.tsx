@@ -4,6 +4,7 @@ import { Haptic } from "@/lib/twa/components/Haptic";
 import cn from "classnames";
 import { useQuery } from "@tanstack/react-query";
 import { useCloudStorage } from "@/lib/twa/hooks";
+import { ArrowIcon } from "@repo/ui/icons";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { Topic } from "@/models/Topic.ts";
 import { Skeleton } from "@repo/ui";
@@ -21,6 +22,15 @@ const LessonsSection: FC = () => {
     </section>
   );
 };
+
+interface SubscriptionCardProps {
+  emoji?: React.ReactNode;
+  title: string;
+  icon: React.ReactNode;
+  description?: string;
+  isSm?: boolean;
+  href?: string;
+}
 
 const LessonCards: FC = () => {
   const cloudStorage = useCloudStorage();
@@ -45,7 +55,15 @@ const LessonCards: FC = () => {
   const user = useUser();
 
   return (
-    <div className={styles.cards}>
+      <>
+        {!user.subscription ? (
+            <SubscriptionCard
+            title="Открывай доступ ко всем заданиям вместе с подпиской!"
+            href={"/subscription"}
+            icon={<ArrowIcon size={25} />}
+          />
+          ) : null}
+      <div className={styles.cards}>
       {data.map((topic) => (
         topic.private && !user.subscription ? (
           <LessonCardBlocked key={topic.slug} {...topic} />
@@ -54,13 +72,14 @@ const LessonCards: FC = () => {
         )
       ))}
     </div>
+    </>
   );
 };
 
 const LessonCard: FC<Topic> = ({id, title, ege_number }) => {
   return (
     <Haptic type="impact" value="medium" asChild>
-      <Link to={`/lesson/topic/${id}`}>
+      <Link to={`/set/lesson/${id}`}>
         <div className={styles.card}>
           <div className={styles.card__content}>
             {ege_number && <span className={styles.card__content__number}>№{ege_number}</span>}
@@ -85,6 +104,28 @@ const LessonCardBlocked: FC<Topic> = ({title, ege_number }) => {
           <h3 className={styles.blocked_card__content__title}>{title}</h3>
         </div>
       </div>
+    </Haptic>
+  );
+};
+
+const SubscriptionCard: FC<SubscriptionCardProps> = ({ emoji, title, description, icon, isSm = false, href = "" }) => {
+  return (
+    <Haptic type="impact" value="medium" asChild>
+      <Link to={href} className={styles.subscription_card}>
+      {emoji && <div className={styles.subscription_card__emoji}>{emoji}</div>}
+        <div className={styles.subscription_card__content}>
+          <h3
+            className={cn(styles.subscription_card__content__title, {
+              [styles.subscription_card__content__title_sm!]: isSm,
+            })}>
+            {title}
+          </h3>
+          {description && <p className={styles.subscription_card__content__description}>{description}</p>}
+        </div>
+        <div className={styles.subscription_card__icon}>
+          <span className={styles.subscription_card__icon_arrow}>{icon}</span>
+        </div>
+      </Link>
     </Haptic>
   );
 };

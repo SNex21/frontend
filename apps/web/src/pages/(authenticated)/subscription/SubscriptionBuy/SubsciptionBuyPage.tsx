@@ -2,12 +2,15 @@ import Telegram from '@twa-dev/sdk';
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCloudStorage } from "@/lib/twa/hooks";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { getPaymentUrl } from "@/services/api/subscriptions";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import styles from "./SubscriptionBuy.module.scss";
+import { BackButton } from "@/lib/twa/components/BackButton";
 
 export default function SubscriptionBuyPage() {
+  const navigate = useNavigate();
   const params = useParams();
   const cloudStorage = useCloudStorage();
   const [email, setEmail] = useState("");
@@ -46,6 +49,7 @@ export default function SubscriptionBuyPage() {
 
   return (
     <div className={styles.container}>
+      <BackButton onClick={() => navigate("/subscription")} />
       <div className={styles.formContainer}>
         <label htmlFor="email" className={styles.label}>Для оплаты необходимо ввести email для отправки чека:</label>
         <input

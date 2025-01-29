@@ -4,11 +4,14 @@ import React from "react";
 import styles from "./Lesson.module.scss";
 import dayjs from "dayjs";
 import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
+import { Haptic } from "@/lib/twa/components/Haptic.tsx";
 import { Link } from "react-router-dom";
+import { Xmark } from "@repo/ui/icons";
 
 interface LessonCompleteProps {
   startDate: number | null;
   correctPercentage: number;
+  onRestart: () => void; // Новый пропс для перезапуска сессии
 }
 
 interface SummaryCardProps {
@@ -16,7 +19,7 @@ interface SummaryCardProps {
   icon?: React.ReactNode;
 }
 
-const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPercentage }) => {
+const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPercentage, onRestart }) => {
   const wastedTime = React.useMemo(() => (startDate ? new Date().getTime() - startDate : null), [startDate]);
 
   return (
@@ -26,6 +29,13 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
       animate={{ opacity: 1, transform: "translateX(0)", transition: { delay: 0.2, duration: 0.4, ease: "ease" } }}
       exit={{ opacity: 0, transform: "translateX(0)" }}
     >
+      <Haptic type={"impact"} value={"light"} asChild>
+        <Link to="/">
+          <button className={styles.complete__out_button}>
+            <Xmark size={20} />
+          </button>
+        </Link>
+      </Haptic>
       <div className={styles.complete__content}>
         <div className={styles.complete__info}>
           <h1 className={styles.complete__info__title}>Урок завершен</h1>
@@ -45,9 +55,7 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
         </div>
       </div>
       <div className={styles.complete__buttons}>
-        <Button asChild>
-          <Link to="/">ЗАВЕРШИТЬ</Link>
-        </Button>
+        <Button onClick={onRestart}>РЕШАТЬ ЕЩЁ!</Button> {/* Кнопка для начала новой сессии */}
       </div>
     </motion.div>
   );

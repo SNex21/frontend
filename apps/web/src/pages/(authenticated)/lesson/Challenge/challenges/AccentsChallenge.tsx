@@ -11,52 +11,56 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
   const [, notification] = useHapticFeedback();
   const [choice, setChoice] = React.useState<Choice | null>(null);
   const [state, setState] = React.useState<ChallengeState>({ submitted: false, wrong: false });
+  const [correctAnswer, setCorrectAnswer] = React.useState<Choice | null>(null); // Новое состояние
 
   function onSubmit() {
     if (!choice) {
       return;
     }
-
+  
+    // Проверяем, что choices существует
+    if (!challenge.choices) {
+      console.error("Choices are undefined");
+      return;
+    }
+  
+    // Находим правильный ответ
+    const correct = challenge.choices.find((c) => c.isCorrect);
+    setCorrectAnswer(correct || null);
+  
     setState({
       submitted: true,
       wrong: !choice.isCorrect,
     });
-
+  
     updateStats(choice.isCorrect);
-
     notification(choice.isCorrect ? "success" : "error");
   }
 
-  const correctChoice = React.useMemo(() => {
-    return (
-      <>
-        {challenge.choices?.map((choice) => {
-          if (choice.isCorrect) {
-            return `${choice.text}\u0301`;
-          }
-
-          return choice.text;
-        })}
-      </>
-    );
-  }, [challenge.choices]);
   const prompt = challenge.prompt ?? '';
+
   return (
     <>
       <ChallengeHeading challenge={challenge}>Выбери букву под ударением</ChallengeHeading>
       <ChallengeMain>
-      {formatPrompt(
-        prompt,
-        <ChoicesAccent choices={challenge.choices} currentChoice={choice} setChoice={setChoice} state={state} />,
-      )}
-        </ChallengeMain>
+        {formatPrompt(
+          prompt,
+          <ChoicesAccent
+            choices={challenge.choices}
+            currentChoice={choice}
+            setChoice={setChoice}
+            state={state}
+            correctAnswer={correctAnswer} // Передаем правильный ответ
+          />,
+        )}
+      </ChallengeMain>
       <ChallengeSubmit
         onSubmit={onSubmit}
         challenge={challenge}
         next={next}
         disabled={!choice}
         state={state}
-        correctText={correctChoice}
+        correctText={correctAnswer?.text + "\u0301"} // Правильная буква с ударением
         explanation={challenge.explanation}
       />
     </>
@@ -75,6 +79,7 @@ function formatPrompt(prompt: string, GapFillComponent: ReactNode): ReactNode {
       <h3>{parts[1] && <span>{parts[1].trim()}</span>}</h3>
     </>
   );
+
 }
 
 export { AccentsChallenge };
