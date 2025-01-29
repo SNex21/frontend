@@ -69,7 +69,7 @@ body[data-theme="light"] {
   }
 }
 
-.counter__container {
+.wheel__container {
   display: flex;
   flex-direction: column;
   align-items: center; /* Центрируем метку и счетчик */
@@ -77,25 +77,45 @@ body[data-theme="light"] {
   max-width: 500px; /* Ограничиваем максимальную ширину счетчика для мобильных устройств */
 }
 
-.counter__label {
+.wheel__label {
   font-size: 16px;
   margin-bottom: var(--spacing-2);
   text-align: center;
   color: var(--ds-primary); /* Убедитесь, что текст имеет правильный цвет */
 }
 
-.counter__input {
+.wheel__wrapper {
+  position: relative;
   width: 100%;
-  padding: var(--spacing-2);
-  border: 1px solid var(--ds-gray-alpha-300);
-  border-radius: 4px;
-  font-size: 16px;
-  text-align: center;
-  appearance: none;
-  outline: none;
-  transition: border-color 0.3s;
+  max-width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border: 2px solid var(--ds-gray-alpha-300);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  &:focus {
-    border-color: var(--ds-primary);
-  }
+.wheel__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-out;
+}
+
+.wheel__item {
+  font-size: 24px;
+  padding: var(--spacing-2) 0;
+  text-align: center;
+  color: var(--ds-primary);
+  pointer-events: none;
+}
+
+.wheel__value {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--ds-primary);
 }

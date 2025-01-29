@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./SetLessonPage.module.scss";
 import { BackButton } from "@/lib/twa/components/BackButton";
+import NumberWheel from "./NumberWheel"; // Импортируем наш компонент NumberWheel
 
 export default function SetLessonPage() {
   const params = useParams();
@@ -25,17 +26,9 @@ export default function SetLessonPage() {
     document.body.setAttribute('data-theme', isDarkTheme ? 'dark' : 'light');
   }, []);
 
-  // Функция для обновления значения счетчика, округляя до ближайшего значения из массива
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = Number(e.target.value);
-    if (isNaN(value)) {
-      value = 10; // Значение по умолчанию, если введено некорректное значение
-    }
-    // Округляем значение до ближайшей точки из массива значений
-    const closestValue = sliderValues.reduce((prev, curr) =>
-      Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
-    );
-    setTaskAmount(closestValue);
+  // Функция для обновления значения счетчика
+  const handleValueChange = (newValue) => {
+    setTaskAmount(newValue);
   };
 
   return (
@@ -46,21 +39,15 @@ export default function SetLessonPage() {
           <h2 className={styles.section__heading}>Настрой свою тренировку</h2>
         </header>
         <div className={styles.page__content}>
-          <div className={styles.counter__container}>
-            <label htmlFor="taskAmount" className={styles.counter__label}>
+          <div className={styles.wheel__container}>
+            <label htmlFor="taskAmount" className={styles.wheel__label}>
               Количество заданий:
             </label>
-            <input
-              id="taskAmount"
-              type="number"
-              min={10}
-              max={100}
-              step={1}
-              value={taskAmount}
-              onChange={handleInputChange}
-              className={styles.counter__input}
+            <NumberWheel
+              values={sliderValues}
+              initialValue={taskAmount}
+              onChange={handleValueChange}
             />
-            <span className={styles.counter__value}>{taskAmount}</span>
           </div>
         </div>
         <footer className={styles.page__footer}>
@@ -70,4 +57,3 @@ export default function SetLessonPage() {
     </AnimatePresence>
   );
 }
- 
