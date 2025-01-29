@@ -7,7 +7,7 @@ import { BackButton } from "@/lib/twa/components/BackButton";
 import NumberWheel from "./NumberWheel"; // Импортируем наш компонент NumberWheel
 
 export default function SetLessonPage() {
-  const params = useParams();
+  const params = useParams<{ topicId?: string; "*": string }>();
   const navigate = useNavigate();
   // Состояние для выбора количества заданий
   const [taskAmount, setTaskAmount] = useState<number>(15);
@@ -27,7 +27,7 @@ export default function SetLessonPage() {
   }, []);
 
   // Функция для обновления значения счетчика
-  const handleValueChange = (newValue) => {
+  const handleValueChange = (newValue: number) => {
     setTaskAmount(newValue);
   };
 

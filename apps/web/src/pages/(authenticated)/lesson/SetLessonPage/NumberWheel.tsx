@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import styles from "./SetLessonPage.module.scss";
 
-const NumberWheel = ({ values, initialValue, onChange }) => {
-  const [selectedValue, setSelectedValue] = useState(initialValue);
-  const [translateY, setTranslateY] = useState(0);
+interface NumberWheelProps {
+  values: number[];
+  initialValue: number;
+  onChange: (newValue: number) => void;
+}
 
-  const handleWheel = (e) => {
+const NumberWheel: React.FC<NumberWheelProps> = ({ values, initialValue, onChange }) => {
+  const [selectedValue, setSelectedValue] = useState<number>(initialValue);
+  const [translateY, setTranslateY] = useState<number>(0);
+
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     e.preventDefault();
     const delta = Math.sign(e.deltaY);
     let newValue = selectedValue;
 
     if (delta > 0) {
       // Прокрутка вниз
-      newValue = values[Math.max(values.indexOf(selectedValue) + 1, 0)];
+      newValue = values[Math.min(values.indexOf(selectedValue) + 1, values.length - 1)];
     } else {
       // Прокрутка вверх
       newValue = values[Math.max(values.indexOf(selectedValue) - 1, 0)];
@@ -28,7 +34,7 @@ const NumberWheel = ({ values, initialValue, onChange }) => {
       <div
         className={styles.wheel__wrapper}
         onWheel={handleWheel}
-        tabIndex="0"
+        tabIndex={0}
         style={{ transform: `translateY(${translateY}px)` }}
       >
         <ul className={styles.wheel__list}>
