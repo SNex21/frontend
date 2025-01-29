@@ -46,6 +46,12 @@ export default function SetLessonPage() {
     setTaskAmount(closestValue);
   };
 
+  // Логика для определения текущей темы
+  useEffect(() => {
+    const isDarkTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.body.setAttribute('data-theme', isDarkTheme ? 'dark' : 'light');
+  }, []);
+
   return (
     <AnimatePresence>
       <BackButton onClick={() => navigate("/")} />
