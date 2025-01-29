@@ -19,7 +19,7 @@ const ChallengeLayout: FC<PropsWithChildren> = ({ children }) => {
         transform: "translateX(-100%)",
       }}
       transition={{
-        duration: 2.0,
+        duration: 0.4,
         ease: "ease",
       }}
     >
