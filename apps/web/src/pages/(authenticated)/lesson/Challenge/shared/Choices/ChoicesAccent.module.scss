@@ -12,8 +12,7 @@
   --size: 40px;
   --border-color: var(--ds-gray-alpha-400);
   --text-color: var(--ds-gray-1000);
-  --background-color: var(--ds-background-200);
-
+  --background-color: var(--ds-violet-300-value);
   position: relative;
 
   display: flex;
@@ -41,6 +40,7 @@
     --background-color: var(--success-background);
   }
   &_disabled {
+    --background-color: var(--ds-background-200);
     opacity: 0.8; 
     pointer-events: none; 
     cursor: not-allowed;
