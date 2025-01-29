@@ -72,6 +72,7 @@ function formatPrompt(prompt: string, GapFillComponent: ReactNode): ReactNode {
     <>
       <h3>{parts[0] && <span>{parts[0].trim()}</span> && <span>ABUBA</span>}</h3>
       {GapFillComponent}
+      <h3>ABUBA</h3>
       <h3>{parts[1] && <span>{parts[1].trim()}</span> && <span>ABIBA</span>}</h3>
     </>
   );
