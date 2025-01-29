@@ -3,7 +3,6 @@ import { Button } from "@repo/ui";
 import styles from "../Challenge.module.scss";
 import { ChallengeState } from "@/pages/(authenticated)/lesson/Challenge/Challenge.tsx";
 import cn from "classnames";
-import { CrossMarkEmoji } from "@repo/ui/emojis";
 import { Haptic } from "@/lib/twa/components/Haptic.tsx";
 import { Challenge } from "@/models/Session";
 
