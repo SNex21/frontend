@@ -8,9 +8,9 @@ import { useHapticFeedback } from "@/lib/twa/hooks";
 import { ChoicesAccent } from "@/pages/(authenticated)/lesson/Challenge/shared/Choices/ChoicesAccent.tsx";
 
 const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateStats, next }) => {
-  const [, notification] = useHapticFeedback();
-  const [choice, setChoice] = React.useState<Choice | null>(null);
-  const [state, setState] = React.useState<ChallengeState>({ submitted: false, wrong: false });
+  const [, notification] = useHapticFeedback(); //вибрация при ответе
+  const [choice, setChoice] = React.useState<Choice | null>(null); //ответ пользователя, изначально 0
+  const [state, setState] = React.useState<ChallengeState>({ submitted: false, wrong: false }); // состояние задачи
 
   function onSubmit() {
     if (!choice) {
@@ -70,11 +70,12 @@ function formatPrompt(prompt: string, GapFillComponent: ReactNode): ReactNode {
   // Возвращаем отформатированный JSX
   return (
     <>
-      <h3>{parts[0] && <span>{parts[0].trim()}</span>}</h3>
+      <h3>{parts[0] && <span>{parts[0].trim()}</span> && <span>ABUBA</span>}</h3>
       {GapFillComponent}
-      <h3>{parts[1] && <span>{parts[1].trim()}</span>}</h3>
+      <h3>{parts[1] && <span>{parts[1].trim()}</span> && <span>ABIBA</span>}</h3>
     </>
   );
+
 }
 
 export { AccentsChallenge };
