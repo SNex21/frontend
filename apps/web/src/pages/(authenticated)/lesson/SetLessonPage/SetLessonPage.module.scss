@@ -1,8 +1,8 @@
 :root {
-  --ds-primary-light: #000000; /* Цвет ползунка для светлой темы */
-  --ds-primary-dark: #ffffff; /* Цвет ползунка для темной темы */
-  --ds-background-light: #ffffff; /* Фон для светлой темы */
-  --ds-background-dark: #000000; /* Фон для темной темы */
+  --ds-primary-light: #ff00d9; /* Цвет ползунка для светлой темы */
+  --ds-primary-dark: #d60000; /* Цвет ползунка для темной темы */
+  --ds-background-light: #bf00ff; /* Фон для светлой темы */
+  --ds-background-dark: #62ff00; /* Фон для темной темы */
 }
 
 body[data-theme="dark"] {
