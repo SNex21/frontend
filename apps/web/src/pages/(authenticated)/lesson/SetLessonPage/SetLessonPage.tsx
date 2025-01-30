@@ -4,7 +4,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./SetLessonPage.module.scss";
 import { BackButton } from "@/lib/twa/components/BackButton";
-import HorizontalWheelSelector from "./HorizontalWheelSelector";
 
 export default function SetLessonPage() {
   const params = useParams();
@@ -31,18 +30,20 @@ export default function SetLessonPage() {
         setVisibleMarks(sliderValues);
       }
     };
+
     updateVisibleMarks();
     window.addEventListener('resize', updateVisibleMarks);
     return () => window.removeEventListener('resize', updateVisibleMarks);
   }, []);
 
-  const wheelItems = sliderValues.map(value => ({
-    value,
-    label: value.toString(),
-  }));
-
-  const handleWheelChange = (value: number) => {
-    setTaskAmount(value);
+  // Функция для обновления значения слайдера, округляя до ближайшего значения из массива
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    // Округляем значение ползунка до ближайшей точки
+    const closestValue = sliderValues.reduce((prev, curr) =>
+      Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
+    );
+    setTaskAmount(closestValue);
   };
 
   return (
@@ -57,7 +58,35 @@ export default function SetLessonPage() {
             <label htmlFor="taskAmount" className={styles.slider__label}>
               Количество заданий: <span>{taskAmount}</span>
             </label>
-            <HorizontalWheelSelector items={wheelItems} onChange={handleWheelChange} />
+            <div style={{ position: "relative", width: "100%" }}>
+              <input
+                id="taskAmount"
+                type="range"
+                min={10}
+                max={100}
+                step={1}
+                value={taskAmount}
+                onChange={handleSliderChange}
+                className={styles.slider}
+              />
+              <div className={styles.slider__marks}>
+                {sliderValues.map((value) => (
+                  visibleMarks.includes(value) && (
+                    <span
+                      key={value}
+                      className={`${styles.slider__mark} ${
+                        value === taskAmount ? styles["slider__mark--active"] : ""
+                      }`}
+                      style={{
+                        left: `calc(${((value - 10) / (100 - 10)) * 100}% - 10px)`,
+                      }}
+                    >
+                      {value}
+                    </span>
+                  )
+                ))}
+              </div>
+            </div>
           </div>
         </div>
         <footer className={styles.page__footer}>
@@ -67,3 +96,4 @@ export default function SetLessonPage() {
     </AnimatePresence>
   );
 }
+
