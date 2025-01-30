@@ -1,6 +1,6 @@
 :root {
-  --ds-primary-light: #000000; /* Цвет ползунка для светлой темы */
-  --ds-primary-dark: #ffffff; /* Цвет ползунка для темной темы */
+  --ds-primary-light: #000000; /* Цвет текста для светлой темы */
+  --ds-primary-dark: #ffffff; /* Цвет текста для темной темы */
   --ds-background-light: #ffffff; /* Фон для светлой темы */
   --ds-background-dark: #000000; /* Фон для темной темы */
 }
@@ -8,11 +8,13 @@
 body[data-theme="dark"] {
   --ds-primary: var(--ds-primary-dark);
   --ds-background-100: var(--ds-background-dark);
+  --slider-thumb-color: var(--ds-primary-dark); /* Белый цвет для темной темы */
 }
 
 body[data-theme="light"] {
   --ds-primary: var(--ds-primary-light);
   --ds-background-100: var(--ds-background-light);
+  --slider-thumb-color: var(--ds-primary-light); /* Черный цвет для светлой темы */
 }
 
 .page {
@@ -128,7 +130,7 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 20px;
   height: 20px;
-  background: var(--ds-primary); /* Используем переменную для цвета */
+  background: var(--slider-thumb-color); /* Используем переменную для цвета */
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.3s;
@@ -140,7 +142,7 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background: var(--ds-primary); /* Используем переменную для цвета */
+  background: var(--slider-thumb-color); /* Используем переменную для цвета */
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.3s;
@@ -152,7 +154,7 @@ input[type="range"]::-moz-range-thumb {
 input[type="range"]::-ms-thumb {
   width: 20px;
   height: 20px;
-  background: var(--ds-primary); /* Используем переменную для цвета */
+  background: var(--slider-thumb-color); /* Используем переменную для цвета */
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.3s;
@@ -163,15 +165,15 @@ input[type="range"]::-ms-thumb {
 
 /* Активный слайдер */
 input[type="range"]:active::-webkit-slider-thumb {
-  background: var(--ds-primary);
+  background: var(--slider-thumb-color);
 }
 
 input[type="range"]:active::-moz-range-thumb {
-  background: var(--ds-primary);
+  background: var(--slider-thumb-color);
 }
 
 input[type="range"]:active::-ms-thumb {
-  background: var(--ds-primary);
+  background: var(--slider-thumb-color);
 }
 
 /* Стили для мобильных устройств */
@@ -196,4 +198,3 @@ input[type="range"]:active::-ms-thumb {
     margin: 20px auto; /* Центрируем слайдер */
   }
 }
-
