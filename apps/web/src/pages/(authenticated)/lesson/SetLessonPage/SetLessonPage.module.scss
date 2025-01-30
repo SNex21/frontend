@@ -8,13 +8,13 @@
 body[data-theme="dark"] {
   --ds-primary: var(--ds-primary-dark);
   --ds-background-100: var(--ds-background-dark);
-  --slider-thumb-color: var(--ds-primary-dark); /* Белый цвет для темной темы */
+  --slider-thumb-color: #ff0000; /* Белый цвет для темной темы */
 }
 
 body[data-theme="light"] {
   --ds-primary: var(--ds-primary-light);
   --ds-background-100: var(--ds-background-light);
-  --slider-thumb-color: var(--ds-primary-light); /* Черный цвет для светлой темы */
+  --slider-thumb-color: #ff0000; /* Черный цвет для светлой темы */
 }
 
 .page {
