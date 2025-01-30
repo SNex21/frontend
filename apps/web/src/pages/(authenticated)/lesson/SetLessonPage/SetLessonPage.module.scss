@@ -8,13 +8,15 @@
 body[data-theme="dark"] {
   --ds-primary: var(--ds-primary-dark);
   --ds-background-100: var(--ds-background-dark);
-  --slider-thumb-color: #ff0000; /* Белый цвет для темной темы */
+  --slider-thumb-color: var(--ds-primary-dark); /* Белый цвет для темной темы */
+  --slider-track-color: rgba(255, 255, 255, 0.3); /* Светло-серый цвет для трека в темной теме */
 }
 
 body[data-theme="light"] {
   --ds-primary: var(--ds-primary-light);
   --ds-background-100: var(--ds-background-light);
-  --slider-thumb-color: #ff0000; /* Черный цвет для светлой темы */
+  --slider-thumb-color: var(--ds-primary-light); /* Черный цвет для светлой темы */
+  --slider-track-color: rgba(0, 0, 0, 0.3); /* Темно-серый цвет для трека в светлой теме */
 }
 
 .page {
@@ -88,7 +90,7 @@ body[data-theme="light"] {
   width: 100%;
   margin: var(--spacing-4) 0;
   appearance: none;
-  background: var(--ds-gray-alpha-300);
+  background: var(--slider-track-color); /* Используем переменную для цвета трека */
   height: 6px;
   border-radius: 3px;
   outline: none;
