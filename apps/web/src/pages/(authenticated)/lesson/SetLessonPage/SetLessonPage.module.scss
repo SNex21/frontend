@@ -6,13 +6,13 @@
 }
 
 body[data-theme="dark"] {
-  --ds-primary: var(--ds-primary-dark);
+  --ds-primary: var(--ds-gray-alpha-800);
   --ds-background-100: var(--ds-gray-alpha-800);
   --slider-thumb-color: #ffffff; /* Белый цвет для темной темы */
 }
 
 body[data-theme="light"] {
-  --ds-primary: var(--ds-primary-light);
+  --ds-primary: var(--ds-gray-alpha-800);
   --ds-background-100: var(--ds-gray-alpha-800);
   --slider-thumb-color: #000000; /* Черный цвет для светлой темы */
 }
@@ -140,7 +140,7 @@ input[type="range"] {
 
 /* Кастомный стиль ползунка (белый в темной, черный в светлой теме) */
 input[type="range"]::-webkit-slider-thumb {
-  // -webkit-appearance: none;
+  -webkit-appearance: none;
   appearance: none;
   width: 20px;
   height: 20px;
