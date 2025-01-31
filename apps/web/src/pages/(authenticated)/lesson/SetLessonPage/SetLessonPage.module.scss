@@ -96,8 +96,8 @@ button {
   color: var(--ds-gray-alpha-700);
   white-space: nowrap;
   min-width: 20px;
+  flex: 1;
   text-align: center;
-  position: relative;
 }
 .slider__mark--active {
   color: var(--ds-primary);
@@ -109,7 +109,6 @@ button {
 .slider__mark--inactive {
   color: var(--ds-gray-alpha-500);
 }
-
 /* Ползунок для разных браузеров */
 input[type="range"] {
   -webkit-appearance: none;
