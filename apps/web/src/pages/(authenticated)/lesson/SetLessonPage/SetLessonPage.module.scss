@@ -89,13 +89,15 @@ button {
   width: 100%;
   padding: 0 10px;
   overflow-x: auto;
+  position: relative;
 }
 .slider__mark {
   font-size: 12px;
   color: var(--ds-gray-alpha-700);
   white-space: nowrap;
-  transform: translateX(-50%);
   min-width: 20px;
+  flex: 1;
+  text-align: center;
 }
 .slider__mark--active {
   color: var(--ds-primary);
