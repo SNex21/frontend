@@ -18,7 +18,7 @@ export default function SetLessonPage() {
     ? `/lesson/mistakes?amount=${taskAmount}`
     : `/lesson/mistakes?amount=${taskAmount}`;
   // Возможные значения для ползунка
-  const sliderValues = [10, 15, 30, 50, 80, 100];
+  const sliderValues = [10, 30, 50, 80, 100];
   
   useEffect(() => {
     const updateVisibleMarks = () => {
