@@ -95,15 +95,25 @@ button {
   font-size: 12px;
   color: var(--ds-gray-alpha-700);
   white-space: nowrap;
-  min-width: 20px;
   text-align: center;
   flex: 1;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.slider__mark:first-child {
+.slider__mark--first {
+  flex: 0.5;
+  justify-content: flex-start;
+}
+.slider__mark--last {
+  flex: 0.5;
+  justify-content: flex-end;
+}
+.slider__mark-text--left {
   margin-left: 0;
 }
-.slider__mark:last-child {
+.slider__mark-text--right {
   margin-right: 0;
 }
 .slider__mark--active {

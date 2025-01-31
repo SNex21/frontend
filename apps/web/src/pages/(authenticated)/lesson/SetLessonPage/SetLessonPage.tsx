@@ -74,13 +74,18 @@ export default function SetLessonPage() {
                       key={value}
                       className={`${styles.slider__mark} ${
                         value === taskAmount ? styles["slider__mark--active"] : ""
-                      }`}
+                      } ${index === 0 ? styles["slider__mark--first"] : ""} ${index === sliderValues.length - 1 ? styles["slider__mark--last"] : ""}`}
                       style={{
-                        marginLeft: index === 0 ? '0' : '',
-                        marginRight: index === sliderValues.length - 1 ? '0' : '',
+                        flex: index === 0 || index === sliderValues.length - 1 ? '0.5' : '1',
                       }}
                     >
-                      {value}
+                      {index === 0 ? (
+                        <span className={styles["slider__mark-text--left"]}>{value}</span>
+                      ) : index === sliderValues.length - 1 ? (
+                        <span className={styles["slider__mark-text--right"]}>{value}</span>
+                      ) : (
+                        value
+                      )}
                     </span>
                   )
                 ))}
