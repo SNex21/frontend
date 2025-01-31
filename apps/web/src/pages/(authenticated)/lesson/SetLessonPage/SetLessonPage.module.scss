@@ -140,7 +140,7 @@ input[type="range"] {
 
 /* Кастомный стиль ползунка (белый в темной, черный в светлой теме) */
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
+  // -webkit-appearance: none;
   appearance: none;
   width: 20px;
   height: 20px;
