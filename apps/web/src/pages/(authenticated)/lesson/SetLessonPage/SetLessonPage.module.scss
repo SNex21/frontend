@@ -73,7 +73,6 @@ button {
 .slider {
   width: 100%;
   margin: var(--spacing-4) 0;
-  appearance: none;
   background: var(--ds-gray-alpha-300);
   height: 6px;
   border-radius: 3px;
@@ -128,8 +127,6 @@ button {
 }
 /* Ползунок для разных браузеров */
 input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
   width: 100%;
   background: var(--ds-gray-alpha-300);
   height: 6px;
@@ -140,8 +137,6 @@ input[type="range"] {
 }
 /* Кастомный стиль ползунка (белый в темной, черный в светлой теме) */
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
   width: 20px;
   height: 20px;
   background-color: var(--slider-thumb-color) !important;
