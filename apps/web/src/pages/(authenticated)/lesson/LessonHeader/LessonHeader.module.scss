@@ -1,5 +1,6 @@
 .header {
   width: 100%;
+  position: relative;
 }
 
 .content {
@@ -7,53 +8,40 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-1);
-
+  padding: var(--spacing-4); /* Добавьте отступы, если это необходимо */
   &__button {
     --icon-primary: var(--ds-gray-alpha-800);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    height: 100%;
-
-    padding: var(--spacing-4);
-
+    height: 40px; /* Фиксированная высота */
+    width: 40px; /* Фиксированная ширина */
     cursor: pointer;
-
     border: none;
     background: none;
+    position: absolute; /* Позиционирование относительно родителя */
+    top: 0;
+    left: 0;
   }
-  
 
   &__progress {
     overflow: hidden;
-
     width: 100%;
     max-width: 250px;
     height: 20px;
-
     border-radius: var(--rounded-full);
-
     background-color: var(--ds-gray-alpha-100);
-
     &__line {
       --gradient-start: #b700c7;
       --gradient-end: var(--ds-violet-700);
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       height: 100%;
-
       border-radius: var(--rounded-full);
-
       background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
-
       span {
         color: #fff;
-
         font-size: 14px;
       }
     }
@@ -68,10 +56,8 @@
   position: fixed;
   top: 0;
   left: 0;
-
   width: 100dvw;
   height: 100dvh;
-
   background-color: var(--tint);
 }
 
@@ -79,42 +65,33 @@
   position: fixed;
   bottom: 0;
   left: 0;
-
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
-
   width: 100dvw;
-
   height: 100%;
   max-height: 70%;
   padding: var(--spacing-7) var(--spacing-4);
   padding-bottom: calc(20px + var(--lvh, 100vh) - var(--tg-viewport-height, 100vh));
-
   border-radius: 40px 40px 0 0;
-
   background-color: var(--ds-background-200);
 
   &__info {
     display: flex;
     align-items: center;
     flex-direction: column;
-
     text-align: center;
 
     &__title {
       margin-top: 30px;
-
       font-size: 24px;
       font-weight: 700;
     }
 
     &__subtitle {
       margin-top: 12px;
-
       color: var(--ds-gray-900);
-
       font-size: 18px;
       font-weight: 500;
       line-height: 24px;
@@ -126,7 +103,6 @@
     align-items: center;
     flex-direction: column;
     gap: var(--spacing-2);
-
     width: 100%;
 
     &__destructive {
