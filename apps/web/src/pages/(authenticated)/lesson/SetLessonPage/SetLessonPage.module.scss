@@ -83,8 +83,7 @@ button {
 }
 /* Метки под ползунком */
 .slider__marks {
-  display: flex;
-  justify-content: space-between; /* Используем Flexbox для распределения меток */
+  position: relative;
   width: 100%;
   padding: 0 10px;
   overflow-x: auto;
@@ -94,15 +93,18 @@ button {
   color: var(--ds-gray-alpha-700);
   white-space: nowrap;
   min-width: 20px;
-  text-align: center; /* Выравниваем текст по центру */
+  position: absolute;
+  transform: translateX(-50%);
 }
 .slider__mark--active {
   color: var(--ds-primary);
   font-weight: bold;
 }
+
 .slider__mark--active::after {
   content: ' •';
 }
+
 .slider__mark--inactive {
   color: var(--ds-gray-alpha-500);
 }
