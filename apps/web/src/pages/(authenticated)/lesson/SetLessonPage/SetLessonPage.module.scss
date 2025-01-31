@@ -145,9 +145,8 @@ input[type="range"]::-webkit-slider-thumb {
   width: 20px;
   height: 20px;
   background-color: var(--slider-thumb-color) !important;
-  border-radius: 50%;
+  border-radius: 100%;
   cursor: pointer;
-  // transition: background-color 0.3s;
   border: 2px solid var(--ds-gray-alpha-800);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   background-clip: padding-box;
@@ -157,9 +156,8 @@ input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
   background-color: var(--slider-thumb-color) !important;
-  border-radius: 50%;
+  border-radius: 100%;
   cursor: pointer;
-  // transition: background-color 0.3s;
   border: 2px solid var(--ds-gray-alpha-800);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
@@ -170,7 +168,6 @@ input[type="range"]::-ms-thumb {
   background-color: var(--slider-thumb-color) !important;
   border-radius: 100%;
   cursor: pointer;
-  // transition: background-color 0.3s;
   border: 2px solid var(--ds-gray-alpha-800);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
