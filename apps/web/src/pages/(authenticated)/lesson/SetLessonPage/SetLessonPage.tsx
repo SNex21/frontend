@@ -37,12 +37,11 @@ export default function SetLessonPage() {
   
   // Функция для обновления значения слайдера, округляя до ближайшего значения из массива
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    // Округляем значение ползунка до ближайшей точки
-    const closestValue = sliderValues.reduce((prev, curr) =>
-      Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
-    );
-    setTaskAmount(closestValue);
+    const index = parseInt(e.target.value, 10);
+    const value = sliderValues[index];
+    if (value !== undefined) {
+      setTaskAmount(value);
+    }
   };
 
   return (
@@ -65,10 +64,7 @@ export default function SetLessonPage() {
                 max={sliderValues.length - 1}
                 step={1}
                 value={sliderValues.indexOf(taskAmount)}
-                onChange={(e) => {
-                  const index = parseInt(e.target.value, 10);
-                  setTaskAmount(sliderValues[index]);
-                }}
+                onChange={handleSliderChange} // Используем функцию здесь
                 className={styles.slider}
               />
               <div className={styles.slider__marks}>
