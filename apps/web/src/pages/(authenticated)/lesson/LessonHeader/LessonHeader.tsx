@@ -26,6 +26,7 @@ const LessonHeader: React.FC<LessonHeaderProps> = ({ stats, session }) => {
   const openDrawer = React.useCallback(() => {
     setOpened(true);
   }, []);
+
   const closeDrawer = React.useCallback(() => {
     setOpened(false);
   }, []);
@@ -50,7 +51,6 @@ const LessonHeader: React.FC<LessonHeaderProps> = ({ stats, session }) => {
     if (!progressBarRef.current || stats.total === 0) {
       return 0;
     }
-
     const initial = 0.15 * progressBarRef.current.offsetWidth;
     const solved = (stats.completed / stats.total) * 0.85 * progressBarRef.current.offsetWidth;
     return initial + solved;
@@ -64,6 +64,15 @@ const LessonHeader: React.FC<LessonHeaderProps> = ({ stats, session }) => {
             <Xmark size={20} />
           </button>
         </Haptic>
+
+        <div className={styles.content__progress_container}>
+          <div className={styles.content__progress} ref={progressBarRef}>
+            <motion.div className={styles.content__progress__line} animate={{ width: `${progress}px` }}>
+              <span>{stats.index}/{stats.total}</span>
+            </motion.div>
+          </div>
+        </div>
+
         <AnimatePresence>
           {opened && (
             <>
@@ -108,11 +117,6 @@ const LessonHeader: React.FC<LessonHeaderProps> = ({ stats, session }) => {
             </>
           )}
         </AnimatePresence>
-        <div className={styles.content__progress} ref={progressBarRef}>
-          <motion.div className={styles.content__progress__line} animate={{ width: `${progress}px` }}>
-            <span>{stats.index}/{stats.total}</span>
-          </motion.div>
-        </div>
         <div className={styles.content__empty} />
       </div>
     </header>

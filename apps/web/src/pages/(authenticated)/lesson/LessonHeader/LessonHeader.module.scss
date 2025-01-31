@@ -9,6 +9,8 @@
   justify-content: space-between;
   gap: var(--spacing-1);
   padding: var(--spacing-4); /* Добавьте отступы, если это необходимо */
+  position: relative;
+
   &__button {
     --icon-primary: var(--ds-gray-alpha-800);
     display: flex;
@@ -24,6 +26,13 @@
     left: 0;
   }
 
+  &__progress_container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 40px; /* Отступ для крестика */
+  }
+
   &__progress {
     overflow: hidden;
     width: 100%;
@@ -31,20 +40,22 @@
     height: 20px;
     border-radius: var(--rounded-full);
     background-color: var(--ds-gray-alpha-100);
-    &__line {
-      --gradient-start: #b700c7;
-      --gradient-end: var(--ds-violet-700);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      border-radius: var(--rounded-full);
-      background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
-      span {
-        color: #fff;
-        font-size: 14px;
-      }
-    }
+  }
+
+  &__progress__line {
+    --gradient-start: #b700c7;
+    --gradient-end: var(--ds-violet-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    border-radius: var(--rounded-full);
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+  }
+
+  &__progress__line span {
+    color: #fff;
+    font-size: 14px;
   }
 
   &__empty {
