@@ -39,7 +39,7 @@ const WorkoutSection: FC = () => {
           href={"/set/lesson"}
         />
         <div className={styles.row}>
-          <WorkoutCard title="Практика ошибок" icon={<WarningEmoji size={25} />} isSm href={"/set//lesson/mistakes"} />
+          <WorkoutCard title="Практика ошибок" icon={<WarningEmoji size={25} />} isSm href={"/set/lesson/mistakes"} />
           {showHardLessonButton && (
             <WorkoutCard
               title="Самые сложные"

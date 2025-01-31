@@ -89,6 +89,7 @@ button {
   width: 100%;
   padding: 0 10px;
   overflow-x: auto;
+  position: relative;
 }
 .slider__mark {
   font-size: 12px;
@@ -96,6 +97,7 @@ button {
   white-space: nowrap;
   transform: translateX(-50%);
   min-width: 20px;
+  position: absolute;
 }
 .slider__mark--active {
   color: var(--ds-primary);
