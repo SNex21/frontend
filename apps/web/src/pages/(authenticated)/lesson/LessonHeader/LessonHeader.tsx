@@ -120,3 +120,4 @@ const LessonHeader: React.FC<LessonHeaderProps> = ({ stats, session }) => {
 };
 
 export { LessonHeader };
+
