@@ -168,7 +168,7 @@ input[type="range"]::-ms-thumb {
   width: 20px;
   height: 20px;
   background-color: var(--slider-thumb-color) !important;
-  border-radius: 50%;
+  border-radius: 100%;
   cursor: pointer;
   transition: background-color 0.3s;
   border: 2px solid var(--ds-gray-alpha-800);
