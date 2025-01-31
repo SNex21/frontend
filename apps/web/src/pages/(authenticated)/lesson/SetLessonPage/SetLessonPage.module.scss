@@ -7,13 +7,13 @@
 
 body[data-theme="dark"] {
   --ds-primary: var(--ds-primary-dark);
-  --ds-background-100: var(--ds-background-dark);
+  --ds-background-100: var(--ds-gray-alpha-800);
   --slider-thumb-color: #ffffff; /* Белый цвет для темной темы */
 }
 
 body[data-theme="light"] {
   --ds-primary: var(--ds-primary-light);
-  --ds-background-100: var(--ds-background-light);
+  --ds-background-100: var(--ds-gray-alpha-800);
   --slider-thumb-color: #000000; /* Черный цвет для светлой темы */
 }
 
