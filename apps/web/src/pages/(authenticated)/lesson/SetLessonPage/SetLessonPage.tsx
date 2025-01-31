@@ -76,6 +76,9 @@ export default function SetLessonPage() {
                       className={`${styles.slider__mark} ${
                         value === taskAmount ? styles["slider__mark--active"] : ""
                       }`}
+                      style={{
+                        left: `calc(${((value - 10) / (100 - 10)) * 100}% - 10px)`,
+                      }}
                     >
                       {value}
                     </span>
