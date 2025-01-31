@@ -19,7 +19,7 @@ export default function SetLessonPage() {
     : `/lesson/mistakes?amount=${taskAmount}`;
   // Возможные значения для ползунка
   const sliderValues = [10, 15, 30, 50, 80, 100];
-
+  
   useEffect(() => {
     const updateVisibleMarks = () => {
       const screenWidth = window.innerWidth;
@@ -30,7 +30,6 @@ export default function SetLessonPage() {
         setVisibleMarks(sliderValues);
       }
     };
-
     updateVisibleMarks();
     window.addEventListener('resize', updateVisibleMarks);
     return () => window.removeEventListener('resize', updateVisibleMarks);
@@ -77,9 +76,6 @@ export default function SetLessonPage() {
                       className={`${styles.slider__mark} ${
                         value === taskAmount ? styles["slider__mark--active"] : ""
                       }`}
-                      style={{
-                        left: `calc(${((value - 10) / (100 - 10)) * 100}% - 10px)`,
-                      }}
                     >
                       {value}
                     </span>
@@ -96,5 +92,3 @@ export default function SetLessonPage() {
     </AnimatePresence>
   );
 }
-
-
