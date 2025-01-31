@@ -34,7 +34,7 @@ export default function SetLessonPage() {
     window.addEventListener('resize', updateVisibleMarks);
     return () => window.removeEventListener('resize', updateVisibleMarks);
   }, []);
-
+  
   // Функция для обновления значения слайдера, округляя до ближайшего значения из массива
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
@@ -69,7 +69,7 @@ export default function SetLessonPage() {
                 className={styles.slider}
               />
               <div className={styles.slider__marks}>
-                {sliderValues.map((value) => (
+                {sliderValues.map((value, index) => (
                   visibleMarks.includes(value) && (
                     <span
                       key={value}
@@ -77,7 +77,7 @@ export default function SetLessonPage() {
                         value === taskAmount ? styles["slider__mark--active"] : ""
                       }`}
                       style={{
-                        left: `calc(${((value - 10) / (100 - 10)) * 100}% - 10px)`,
+                        left: `${(index / (sliderValues.length - 1)) * 100}%`,
                       }}
                     >
                       {value}
