@@ -94,6 +94,7 @@ button {
   max-width: 100%;
 }
 
+/* Метки под ползунком */
 .slider__marks {
   display: flex;
   justify-content: space-between;
@@ -124,17 +125,32 @@ button {
   color: var(--ds-gray-alpha-500);
 }
 
-/* Ползунок (thumb) для разных браузеров */
+/* Ползунок для разных браузеров */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  background: var(--ds-gray-alpha-300);
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  transition: background 0.3s;
+  max-width: 100%;
+}
+
+/* Кастомный стиль ползунка (белый в темной, черный в светлой теме) */
 input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
   appearance: none;
   width: 20px;
   height: 20px;
-  background-color: var(--slider-thumb-color) !important; /* Исправленный цвет */
+  background-color: var(--slider-thumb-color) !important;
   border-radius: 50%;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s ease-in-out;
-  border: 2px solid var(--ds-background-100); /* Добавлена граница */
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); /* Улучшенная видимость */
+  transition: background-color 0.3s;
+  border: 2px solid var(--ds-background-100);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  background-clip: padding-box;
 }
 
 input[type="range"]::-moz-range-thumb {
@@ -143,9 +159,9 @@ input[type="range"]::-moz-range-thumb {
   background-color: var(--slider-thumb-color) !important;
   border-radius: 50%;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s ease-in-out;
+  transition: background-color 0.3s;
   border: 2px solid var(--ds-background-100);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 input[type="range"]::-ms-thumb {
@@ -154,14 +170,20 @@ input[type="range"]::-ms-thumb {
   background-color: var(--slider-thumb-color) !important;
   border-radius: 50%;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s ease-in-out;
+  transition: background-color 0.3s;
   border: 2px solid var(--ds-background-100);
-  box-shadow: 0 0 8px rgba(255, 0, 255, 0.9);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Анимация при нажатии */
-input[type="range"]:active::-webkit-slider-thumb,
-input[type="range"]:active::-moz-range-thumb,
+/* Активное состояние ползунка */
+input[type="range"]:active::-webkit-slider-thumb {
+  transform: scale(1.1);
+}
+
+input[type="range"]:active::-moz-range-thumb {
+  transform: scale(1.1);
+}
+
 input[type="range"]:active::-ms-thumb {
   transform: scale(1.1);
 }
