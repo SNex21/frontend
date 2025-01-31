@@ -61,11 +61,14 @@ export default function SetLessonPage() {
               <input
                 id="taskAmount"
                 type="range"
-                min={10}
-                max={100}
+                min={0}
+                max={sliderValues.length - 1}
                 step={1}
-                value={taskAmount}
-                onChange={handleSliderChange}
+                value={sliderValues.indexOf(taskAmount)}
+                onChange={(e) => {
+                  const index = parseInt(e.target.value, 10);
+                  setTaskAmount(sliderValues[index]);
+                }}
                 className={styles.slider}
               />
               <div className={styles.slider__marks}>
