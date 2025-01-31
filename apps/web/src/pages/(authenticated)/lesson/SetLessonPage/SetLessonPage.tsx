@@ -76,7 +76,8 @@ export default function SetLessonPage() {
                         value === taskAmount ? styles["slider__mark--active"] : ""
                       }`}
                       style={{
-                        left: `${(index / (sliderValues.length - 1)) * 100}%`,
+                        marginLeft: index === 0 ? '0' : '',
+                        marginRight: index === sliderValues.length - 1 ? '0' : '',
                       }}
                     >
                       {value}
@@ -94,4 +95,3 @@ export default function SetLessonPage() {
     </AnimatePresence>
   );
 }
-
