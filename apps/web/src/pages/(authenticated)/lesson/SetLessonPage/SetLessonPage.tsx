@@ -9,7 +9,7 @@ export default function SetLessonPage() {
   const params = useParams();
   const navigate = useNavigate();
   // Состояние для выбора количества заданий
-  const [taskAmount, setTaskAmount] = useState<number>(15);
+  const [taskAmount, setTaskAmount] = useState<number>(10);
   const [visibleMarks, setVisibleMarks] = useState<number[]>([]);
   // Определение ссылки для навигации
   const linkPath = params.topicId
