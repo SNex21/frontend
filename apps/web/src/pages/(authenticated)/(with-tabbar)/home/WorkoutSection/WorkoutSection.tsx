@@ -1,11 +1,10 @@
 import { Haptic } from "@/lib/twa/components/Haptic";
 import { FlexedBicepsEmoji, PersonLiftingWeightsEmoji, WarningEmoji, PhoneEmoji } from "@repo/ui/emojis";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styles from "./WorkoutSection.module.scss";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 import { useUser } from "@/providers/AuthProvider/AuthProvider";
-import { useEffect, useState } from "react";
 import { useFeatureFlagEnabled } from "posthog-js/react";
 
 interface WorkoutCardProps {
@@ -24,7 +23,7 @@ interface WorkoutCardBlockedProps {
   isSm?: boolean;
 }
 
-declare let Telegram: any; 
+declare let Telegram: any;
 
 const WorkoutSection: FC = () => {
   const [showAddToHomeButton, setShowAddToHomeButton] = useState<boolean>(false);
@@ -39,6 +38,7 @@ const WorkoutSection: FC = () => {
       if (tg.ready) {
         tg.ready();
       }
+
       // Отключаем вертикальные свайпы на этой странице
       tg.disableVerticalSwipes();
 
@@ -48,10 +48,21 @@ const WorkoutSection: FC = () => {
       // Проверяем статус добавления на главный экран
       checkHomeScreenStatus(tg);
 
+      // Подписываемся на событие homeScreenAdded
+      if (typeof tg.onEvent === "function") {
+        tg.onEvent("homeScreenAdded", () => {
+          console.log("Mini App успешно добавлен на главный экран!");
+          setShowAddToHomeButton(false); // Скрываем кнопку после добавления
+        });
+      }
+
       // Очистка эффекта при размонтировании компонента
       return () => {
         tg.enableVerticalSwipes(); // Включаем вертикальные свайпы
         tg.disableClosingConfirmation(); // Отключаем подтверждение закрытия
+        if (typeof tg.offEvent === "function") {
+          tg.offEvent("homeScreenAdded"); // Отписываемся от события
+        }
       };
     }
   }, []);
@@ -62,23 +73,21 @@ const WorkoutSection: FC = () => {
         // Вызываем метод checkHomeScreenStatus и проверяем результат
         tg.checkHomeScreenStatus((result: string) => {
           // Убеждаемся, что result имеет допустимое значение
-          if (
-            result === "missed"
-          ) {
-            setShowAddToHomeButton(true); 
+          if (result === "missed") {
+            setShowAddToHomeButton(true); // Показываем кнопку, если ярлык не добавлен
           } else {
-            setShowAddToHomeButton(false);  
+            setShowAddToHomeButton(false); // Скрываем кнопку в остальных случаях
           }
         });
       } catch (error) {
         console.error("Ошибка при проверке статуса добавления на главный экран:", error);
-        setShowAddToHomeButton(false);
+        setShowAddToHomeButton(false); // По умолчанию скрываем кнопку при ошибке
       }
+    } else {
+      setShowAddToHomeButton(false); // Если метод недоступен, скрываем кнопку
     }
-    setShowAddToHomeButton(false);
   };
 
-  
   // Функция для вызова addToHomeScreen
   const handleAddToHomeScreen = () => {
     if (Telegram && typeof Telegram.WebApp.addToHomeScreen === "function") {
@@ -122,13 +131,13 @@ const WorkoutSection: FC = () => {
             </div>
             {/* Новая кнопка для добавления на главный экран */}
             {showAddToHomeButton && (
-                <WorkoutCard
-                  title="Добавить на главный экран"
-                  icon={<PhoneEmoji size={32.5} />}
-                  isSm
-                  onClick={handleAddToHomeScreen} // Добавляем обработчик onClick
-                />
-              )}
+              <WorkoutCard
+                title="Добавить на главный экран"
+                icon={<PhoneEmoji size={32.5} />}
+                isSm
+                onClick={handleAddToHomeScreen} // Добавляем обработчик onClick
+              />
+            )}
           </div>
         </section>
       ) : (
@@ -150,13 +159,13 @@ const WorkoutSection: FC = () => {
               )}
             </div>
             {showAddToHomeButton && (
-                <WorkoutCard
-                  title="Добавить на главный экран"
-                  icon={<PhoneEmoji size={32.5} />}
-                  isSm
-                  onClick={handleAddToHomeScreen} // Добавляем обработчик onClick
-                />
-              )}
+              <WorkoutCard
+                title="Добавить на главный экран"
+                icon={<PhoneEmoji size={32.5} />}
+                isSm
+                onClick={handleAddToHomeScreen} // Добавляем обработчик onClick
+              />
+            )}
           </div>
         </section>
       )}
