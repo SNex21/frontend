@@ -101,8 +101,9 @@ const WorkoutSection: FC = () => {
                   href={"/set/lesson/hard"}
                 />
               )}
-              {/* Новая кнопка для добавления на главный экран */}
-              {showAddToHomeButton && (
+            </div>
+            {/* Новая кнопка для добавления на главный экран */}
+            {showAddToHomeButton && (
                 <WorkoutCard
                   title="Добавить на главный экран"
                   icon={<FlexedBicepsEmoji size={25} />}
@@ -110,7 +111,6 @@ const WorkoutSection: FC = () => {
                   onClick={handleAddToHomeScreen} // Добавляем обработчик onClick
                 />
               )}
-            </div>
           </div>
         </section>
       ) : (
