@@ -32,7 +32,6 @@ const WorkoutSection: FC = () => {
   // Функция для проверки статуса добавления на главный экран
   const checkHomeScreenStatus = (): "missed" | "added" | "unknown" | "unsupported" => {
     if (Telegram && typeof Telegram.WebApp.checkHomeScreenStatus === "function") {
-      let status: "missed" | "added" | "unknown" | "unsupported" = "";
 
       try {
         // Вызываем метод checkHomeScreenStatus и проверяем результат
@@ -50,8 +49,6 @@ const WorkoutSection: FC = () => {
         console.error("Ошибка при проверке статуса добавления на главный экран:", error);
         return "unsupported"; // При ошибке считаем статус "unsupported"
       }
-
-      return status;
     }
 
     return "unsupported"; // Если метод недоступен, считаем статус "unsupported"
