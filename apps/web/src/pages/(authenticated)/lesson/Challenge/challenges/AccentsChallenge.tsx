@@ -12,7 +12,7 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
   const [choice, setChoice] = React.useState<Choice | null>(null);
   const [state, setState] = React.useState<ChallengeState>({ submitted: false, wrong: false });
   //const [correctAnswer, setCorrectAnswer] = React.useState<Choice | null>(null); // Новое состояние
-  const [correctIndex, setCorrectAnswerId] = React.useState<Choice | null>(null); // Новое состояние
+  const [correctIndex, setCorrectAnswerId] = React.useState<Number | null>(null); // Новое состояние
 
   function onSubmit() {
     if (!choice) {
