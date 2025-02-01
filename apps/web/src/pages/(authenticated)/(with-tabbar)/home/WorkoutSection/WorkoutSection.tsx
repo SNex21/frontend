@@ -1,6 +1,6 @@
 import { Haptic } from "@/lib/twa/components/Haptic";
 import { FlexedBicepsEmoji, PersonLiftingWeightsEmoji, WarningEmoji } from "@repo/ui/emojis";
-import React, { FC } from "react"; // Удаляем unused imports
+import React, { FC } from "react";
 import styles from "./WorkoutSection.module.scss";
 import cn from "classnames";
 import { Link } from "react-router-dom";
@@ -34,17 +34,26 @@ const WorkoutSection: FC = () => {
       let status: "missed" | "added" | "unknown" | "unsupported" = "unsupported";
 
       try {
+        // Вызываем метод checkHomeScreenStatus и проверяем результат
         Telegram.checkHomeScreenStatus((result: string) => {
-          status = result;
+          // Убеждаемся, что result имеет допустимое значение
+          if (
+            ["missed", "added", "unknown", "unsupported"].includes(result)
+          ) {
+            status = result as "missed" | "added" | "unknown" | "unsupported";
+          } else {
+            status = "unsupported"; // Если результат неизвестен, считаем его "unsupported"
+          }
         });
       } catch (error) {
         console.error("Ошибка при проверке статуса добавления на главный экран:", error);
+        status = "unsupported"; // При ошибке считаем статус "unsupported"
       }
 
       return status;
     }
 
-    return "unsupported";
+    return "unsupported"; // Если метод недоступен, считаем статус "unsupported"
   };
 
   // Флаг для отображения кнопки "Добавить на главный экран"
