@@ -17,11 +17,36 @@ export default function HomePage() {
       }
 
       // Включаем подтверждение перед закрытием приложения
-      tg.isClosingConfirmationEnabled = true;
+      tg.enableClosingConfirmation();
 
-      // Опционально: Отключаем подтверждение при размонтировании компонента
+      // Отключаем вертикальные свайпы для закрытия/минимизации приложения
+      tg.disableVerticalSwipes();
+
+      // Устанавливаем цвета интерфейса согласно теме Telegram
+      document.body.style.backgroundColor = tg.themeParams.bg_color;
+      document.body.style.color = tg.themeParams.text_color;
+
+      // Логирование информации о платформе и версии
+      console.log("Telegram Web App Info:");
+      console.log("Version:", tg.version);
+      console.log("Platform:", tg.platform);
+      console.log("Color Scheme:", tg.colorScheme);
+
+      // Обработка изменения высоты видимой области
+      const handleViewportChanged = (event: { isStateStable: boolean }) => {
+        if (event.isStateStable) {
+          console.log("Stable Viewport Height:", tg.viewportStableHeight);
+        }
+      };
+
+      // Подписываемся на событие изменения высоты видимой области
+      tg.onEvent("viewportChanged", handleViewportChanged);
+
+      // Очистка эффекта при размонтировании компонента
       return () => {
-        tg.isClosingConfirmationEnabled = false;
+        tg.disableClosingConfirmation(); // Отключаем подтверждение закрытия
+        tg.enableVerticalSwipes(); // Включаем вертикальные свайпы
+        tg.offEvent("viewportChanged", handleViewportChanged); // Отписываемся от события
       };
     }
   }, []);
@@ -36,4 +61,3 @@ export default function HomePage() {
     </div>
   );
 }
-
