@@ -124,7 +124,7 @@ const WorkoutSection: FC = () => {
             {showAddToHomeButton && (
                 <WorkoutCard
                   title="Добавить на главный экран"
-                  icon={<PhoneEmoji size={30} />}
+                  icon={<PhoneEmoji size={32.5} />}
                   isSm
                   onClick={handleAddToHomeScreen} // Добавляем обработчик onClick
                 />
