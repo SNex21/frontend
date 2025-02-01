@@ -4,18 +4,16 @@ import styles from "./Home.module.scss";
 import { LessonsSection } from "./LessonsSection";
 import { WorkoutSection } from "./WorkoutSection";
 import { useEffect } from "react";
-import { Telegram } from "@twa-dev/sdk"; // Импортируем типы из @twa-dev/sdk
+import Telegram from "@twa-dev/sdk"; // Используем дефолтный импорт
 
 export default function HomePage() {
-  // Используем useEffect для выполнения кода при монтировании компонента
   useEffect(() => {
-    // Проверяем, существует ли экземпляр Telegram.WebApp
     if (Telegram?.WebApp) {
       const tg = Telegram.WebApp;
 
       // Проверяем, готов ли Web App
       if (tg.ready) {
-        tg.ready(); // Вызываем ready(), чтобы убедиться, что API загружено
+        tg.ready();
       }
 
       // Включаем подтверждение перед закрытием приложения
@@ -26,7 +24,7 @@ export default function HomePage() {
         tg.isClosingConfirmationEnabled = false;
       };
     }
-  }, []); // Пустой массив зависимостей означает, что код выполнится только один раз при загрузке
+  }, []);
 
   return (
     <div className={pageStyles.main}>
@@ -38,3 +36,4 @@ export default function HomePage() {
     </div>
   );
 }
+
