@@ -29,7 +29,7 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
   explanation,
 }) => {
   const [nextCalled, setNextCalled] = useState(false);
-
+  // ПОТОМ УБРАТЬ ПРАВИЛЬНЫЙ ОТВЕТ
   const next = useCallback(async () => {
     await nextLegacy(challenge, !state.wrong);
     setNextCalled(true);
@@ -51,7 +51,7 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
           {!state.submitted ? "ПРОВЕРИТЬ" : state.wrong ? "ПОНЯТНО" : "ДАЛЬШЕ"}
         </Button>
       </Haptic>
-
+      
       <div className={cn(styles.submit__panel, { [styles.submit__panel_closed!]: !state.submitted })}>
         <div className={styles.submit__panel__content}>
           {state.wrong ? (
@@ -63,7 +63,7 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
               {correctText && (
                 <div className={styles["submit__panel__error-info"]}>
                   <span className={styles["submit__panel__error-info__title"]}>Правильный ответ:</span>
-                  <span className={styles["submit__panel__error-info__text"]}>{correctText}</span>
+                  <span className={styles["submit__panel__error-info__text"]}>{correctText}</span> 
                 </div>
               )}
               {explanation && (

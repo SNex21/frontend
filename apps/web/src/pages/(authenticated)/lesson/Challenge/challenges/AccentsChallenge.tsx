@@ -60,7 +60,7 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
         next={next}
         disabled={!choice}
         state={state}
-        correctText={correctAnswer?.text + "\u0301"} // Правильная буква с ударением
+        correctText={} // убираем из сабмита правильное слово
         explanation={challenge.explanation}
       />
     </>
