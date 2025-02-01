@@ -5,3 +5,9 @@
 
   padding-top: var(--spacing-3\.5);
 }
+
+body {
+  overflow: hidden; /* Блокировка прокрутки */
+  touch-action: none; /* Отключение жестов */
+}
+
