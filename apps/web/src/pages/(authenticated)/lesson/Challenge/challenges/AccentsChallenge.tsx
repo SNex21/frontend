@@ -12,6 +12,7 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
   const [choice, setChoice] = React.useState<Choice | null>(null);
   const [state, setState] = React.useState<ChallengeState>({ submitted: false, wrong: false });
   const [correctAnswer, setCorrectAnswer] = React.useState<Choice | null>(null); // Новое состояние
+  const [correctIndex, setCorrectAnswerId] = React.useState<Choice | null>(null); // Новое состояние
 
   function onSubmit() {
     if (!choice) {
@@ -27,6 +28,9 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
     // Находим правильный ответ
     const correct = challenge.choices.find((c) => c.isCorrect);
     setCorrectAnswer(correct || null);
+
+    const correctId= challenge.choices.find((c) => c.isCorrect);
+    setCorrectAnswerId(correctId || null);
   
     setState({
       submitted: true,
@@ -50,7 +54,7 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
             currentChoice={choice}
             setChoice={setChoice}
             state={state}
-            correctAnswer={correctAnswer} // Передаем правильный ответ
+            correctAnswerId={correctIndex} // Передаем правильный ответ
           />,
         )}
       </ChallengeMain>

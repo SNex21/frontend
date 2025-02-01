@@ -21,7 +21,7 @@ interface ChoiceAccentProps {
   isCorrect?: boolean; // Новое свойство
 }
 
-const ChoicesAccent: React.FC<ManyChoicesAccentProps> = ({ choices, currentChoice, setChoice, state, correctAnswer }) => {
+const ChoicesAccent: React.FC<ManyChoicesAccentProps> = ({ choices, currentChoice, setChoice, state, correctAnswerId }) => {
   if (!choices) {
     return null;
   }
@@ -35,7 +35,7 @@ const ChoicesAccent: React.FC<ManyChoicesAccentProps> = ({ choices, currentChoic
         // Проверяем, является ли буква гласной
         const isVowel = choice?.text && vowels.includes(choice.text.toLowerCase());
         // Проверяем, является ли буква правильной
-        const isCorrect = correctAnswer?.text === choice.text;
+        const isCorrect = correctAnswerId === i;
 
         return (
           <ChoiceAccent
