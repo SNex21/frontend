@@ -39,9 +39,9 @@ const WorkoutSection: FC = () => {
         Telegram.WebApp.checkHomeScreenStatus((result: string) => {
           // Убеждаемся, что result имеет допустимое значение
           if (
-            ["missed", "added", "unknown", "unsupported"].includes(result)
+            result === "missed"
           ) {
-            status = result as "missed" | "added" | "unknown" | "unsupported";
+            status ="missed";
           } else {
             status = "unsupported"; // Если результат неизвестен, считаем его "unsupported"
           }
