@@ -29,7 +29,7 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
     const correct = challenge.choices.find((c) => c.isCorrect);
     setCorrectAnswer(correct || null);
 
-    const correctId= challenge.choices.find((c) => c.isCorrect);
+    const correctId= challenge.choices.findIndex((c) => c.isCorrect);
     setCorrectAnswerId(correctId || null);
   
     setState({
