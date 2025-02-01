@@ -76,7 +76,7 @@ export default function HomePage() {
         <LessonsSection />
 
         {/* Кнопка для добавления на главный экран */}
-        {Telegram && Telegram.WebApp && typeof Telegram.WebApp.addToHomeScreen === "function" && (
+        {Telegram && Telegram.WebApp && typeof Telegram.addToHomeScreen === "function" && (
           <button
             onClick={handleAddToHomeScreen}
             className={styles.add_to_home_button}
