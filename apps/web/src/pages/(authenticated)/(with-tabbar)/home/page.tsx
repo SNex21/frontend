@@ -15,16 +15,36 @@ export default function HomePage() {
       if (tg.ready) {
         tg.ready();
       }
-      tg.disableVerticalSwipes();
-      tg.enableClosingConfirmation();
 
       // Отключаем вертикальные свайпы на этой странице
+      tg.disableVerticalSwipes();
+
+      // Включаем подтверждение закрытия приложения
+      tg.enableClosingConfirmation();
+
+      // Подписываемся на событие successful addition to home screen
+      tg.onEvent("homeScreenAdded", () => {
+        console.log("Mini App успешно добавлен на главный экран!");
+        alert("Mini App успешно добавлен на главный экран!");
+      });
+
+      // Очистка эффекта при размонтировании компонента
       return () => {
-        tg.disableVerticalSwipes();
-        tg.enableClosingConfirmation();
+        tg.enableVerticalSwipes(); // Включаем вертикальные свайпы
+        tg.disableClosingConfirmation(); // Отключаем подтверждение закрытия
+        tg.offEvent("homeScreenAdded"); // Отписываемся от события
       };
     }
   }, []);
+
+  // Функция для вызова addToHomeScreen
+  const handleAddToHomeScreen = () => {
+    if (Telegram?.addToHomeScreen) {
+      Telegram.addToHomeScreen();
+    } else {
+      alert("Метод добавления на главный экран недоступен.");
+    }
+  };
 
   return (
     <div className={pageStyles.main}>
@@ -32,6 +52,28 @@ export default function HomePage() {
         <GreetingSection />
         <WorkoutSection />
         <LessonsSection />
+
+        {/* Кнопка для добавления на главный экран */}
+        {Telegram?.addToHomeScreen && (
+          <button
+            onClick={handleAddToHomeScreen}
+            className={styles.add_to_home_button}
+            style={{
+              display: "block",
+              margin: "20px auto",
+              padding: "10px 20px",
+              backgroundColor: "var(--ds-primary)",
+              color: "var(--ds-background-light)",
+              border: "none",
+              borderRadius: "5px",
+              fontSize: "16px",
+              cursor: "pointer",
+              textAlign: "center",
+            }}
+          >
+            Добавить на главный экран
+          </button>
+        )}
       </div>
     </div>
   );
