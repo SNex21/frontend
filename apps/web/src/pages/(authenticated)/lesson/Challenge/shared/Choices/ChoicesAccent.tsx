@@ -73,7 +73,13 @@ const ChoiceAccent: React.FC<ChoiceAccentProps> = ({ choice, onSelect, state, is
       >
         <span className={styles.choice__text}>
           {choice?.text}
-          {isCorrect && "\u0301"} {/* Добавляем ударение для правильной буквы */}
+          {isCorrect && (
+          <div className={styles.choice__accent}>
+            <svg width="7" height="11" viewBox="0 0 7 11" fill="green" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 0L3.05825 11H0L2.32767 0H7Z" />
+            </svg>
+          </div>
+        )}
         </span>
         {isSelected && (
           <div className={styles.choice__accent}>
