@@ -1,5 +1,5 @@
 import { Haptic } from "@/lib/twa/components/Haptic";
-import { FlexedBicepsEmoji, PersonLiftingWeightsEmoji, WarningEmoji } from "@repo/ui/emojis";
+import { FlexedBicepsEmoji, PersonLiftingWeightsEmoji, WarningEmoji, PhoneEmoji } from "@repo/ui/emojis";
 import React, { FC } from "react";
 import styles from "./WorkoutSection.module.scss";
 import cn from "classnames";
@@ -125,7 +125,7 @@ const WorkoutSection: FC = () => {
             {showAddToHomeButton && (
                 <WorkoutCard
                   title="Добавить на главный экран"
-                  icon={<FlexedBicepsEmoji size={25} />}
+                  icon={<PhoneEmoji size={25} />}
                   isSm
                   onClick={handleAddToHomeScreen} // Добавляем обработчик onClick
                 />
