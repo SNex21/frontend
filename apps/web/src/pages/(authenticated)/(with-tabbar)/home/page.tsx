@@ -13,12 +13,17 @@ export default function HomePage() {
     if (Telegram?.WebApp) {
       const tg = Telegram.WebApp;
 
-      // Запрещаем закрытие приложения через жесты
-      tg.MainButton.preventClosing();
+      // Проверяем, готов ли Web App
+      if (tg.ready) {
+        tg.ready(); // Вызываем ready(), чтобы убедиться, что API загружено
+      }
 
-      // Опционально: Разрешаем закрытие при размонтировании компонента
+      // Включаем подтверждение перед закрытием приложения
+      tg.isClosingConfirmationEnabled = true;
+
+      // Опционально: Отключаем подтверждение при размонтировании компонента
       return () => {
-        tg.MainButton.allowClosing();
+        tg.isClosingConfirmationEnabled = false;
       };
     }
   }, []); // Пустой массив зависимостей означает, что код выполнится только один раз при загрузке
