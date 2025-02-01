@@ -1,11 +1,12 @@
 import { Haptic } from "@/lib/twa/components/Haptic";
 import { FlexedBicepsEmoji, PersonLiftingWeightsEmoji, WarningEmoji } from "@repo/ui/emojis";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import styles from "./WorkoutSection.module.scss";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 import { useUser } from "@/providers/AuthProvider/AuthProvider";
 import { useFeatureFlagEnabled } from "posthog-js/react";
+import { Telegram } from "@twa-dev/sdk"; // Используем дефолтный импорт
 
 interface WorkoutCardProps {
   icon?: React.ReactNode;
@@ -13,6 +14,7 @@ interface WorkoutCardProps {
   description?: string;
   isSm?: boolean;
   href?: string;
+  onClick?: () => void; // Добавляем обработчик onClick
 }
 
 interface WorkoutCardBlockedProps {
@@ -22,81 +24,144 @@ interface WorkoutCardBlockedProps {
   isSm?: boolean;
 }
 
-
 const WorkoutSection: FC = () => {
   const showHardLessonButton = useFeatureFlagEnabled("hard-lesson-button");
   const user = useUser();
 
+  // Функция для вызова addToHomeScreen
+  const handleAddToHomeScreen = () => {
+    if (Telegram && typeof Telegram.addToHomeScreen === "function") {
+      try {
+        Telegram.addToHomeScreen();
+      } catch (error) {
+        alert("Метод добавления на главный экран недоступен.");
+        console.error("Ошибка вызова addToHomeScreen:", error);
+      }
+    } else {
+      alert("Метод добавления на главный экран не поддерживается.");
+    }
+  };
+
   return (
     <>
-    {user.subscription ? 
-    (<section className="wrapper">
-      <div className={styles.section}>
-        <WorkoutCard
-          title="Начать тренировку"
-          description="по всем заданиям"
-          icon={<FlexedBicepsEmoji size={25} />}
-          href={"/set/lesson"}
-        />
-        <div className={styles.row}>
-          <WorkoutCard title="Практика ошибок" icon={<WarningEmoji size={25} />} isSm href={"/set/lesson/mistakes"} />
-          {showHardLessonButton && (
+      {user.subscription ? (
+        <section className="wrapper">
+          <div className={styles.section}>
             <WorkoutCard
-              title="Самые сложные"
-              icon={<PersonLiftingWeightsEmoji size={25} />}
-              isSm
-              href={"/set/lesson/hard"}
+              title="Начать тренировку"
+              description="по всем заданиям"
+              icon={<FlexedBicepsEmoji size={25} />}
+              href={"/set/lesson"}
             />
-          )}
-        </div>
-      </div>
-    </section>) : (
-      <section className="wrapper">
-      <div className={styles.section}>
-        <WorkoutCardBlocked
-          title="Начать тренировку"
-          description="по всем заданиям"
-          icon={<FlexedBicepsEmoji size={25} />}
-        />
-        <div className={styles.row}>
-          <WorkoutCardBlocked title="Практика ошибок" icon={<WarningEmoji size={25} />} isSm />
-          {showHardLessonButton && (
+            <div className={styles.row}>
+              <WorkoutCard
+                title="Практика ошибок"
+                icon={<WarningEmoji size={25} />}
+                isSm
+                href={"/set/lesson/mistakes"}
+              />
+              {showHardLessonButton && (
+                <WorkoutCard
+                  title="Самые сложные"
+                  icon={<PersonLiftingWeightsEmoji size={25} />}
+                  isSm
+                  href={"/set/lesson/hard"}
+                />
+              )}
+              {/* Новая кнопка для добавления на главный экран */}
+              <WorkoutCard
+                title="Добавить на главный экран"
+                icon={<FlexedBicepsEmoji size={25} />}
+                isSm
+                onClick={handleAddToHomeScreen} // Добавляем обработчик onClick
+              />
+            </div>
+          </div>
+        </section>
+      ) : (
+        <section className="wrapper">
+          <div className={styles.section}>
             <WorkoutCardBlocked
-              title="Самые сложные"
-              icon={<PersonLiftingWeightsEmoji size={25} />}
-              isSm
+              title="Начать тренировку"
+              description="по всем заданиям"
+              icon={<FlexedBicepsEmoji size={25} />}
             />
-          )}
-        </div>
-      </div>
-    </section>
-    )
-}
-  </>
+            <div className={styles.row}>
+              <WorkoutCardBlocked title="Практика ошибок" icon={<WarningEmoji size={25} />} isSm />
+              {showHardLessonButton && (
+                <WorkoutCardBlocked
+                  title="Самые сложные"
+                  icon={<PersonLiftingWeightsEmoji size={25} />}
+                  isSm
+                />
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+    </>
   );
 };
 
-const WorkoutCard: FC<WorkoutCardProps> = ({ icon, title, description, isSm = false, href = "" }) => {
+const WorkoutCard: FC<WorkoutCardProps> = ({
+  icon,
+  title,
+  description,
+  isSm = false,
+  href = "",
+  onClick, // Принимаем обработчик onClick
+}) => {
   return (
     <Haptic type="impact" value="medium" asChild>
-      <Link to={href} className={styles.card}>
-        {icon && <div className={styles.card__icon}>{icon}</div>}
-        <div className={styles.card__content}>
-          <h3
-            className={cn(styles.card__content__title, {
-              [styles.card__content__title_sm!]: isSm,
-            })}
-          >
-            {title}
-          </h3>
-          {description && <p className={styles.card__content__description}>{description}</p>}
+      {onClick ? (
+        // Если есть onClick, используем div с обработчиком
+        <div
+          className={styles.card}
+          onClick={onClick}
+          style={{ cursor: "pointer" }}
+        >
+          {icon && <div className={styles.card__icon}>{icon}</div>}
+          <div className={styles.card__content}>
+            <h3
+              className={cn(styles.card__content__title, {
+                [styles.card__content__title_sm!]: isSm,
+              })}
+            >
+              {title}
+            </h3>
+            {description && (
+              <p className={styles.card__content__description}>{description}</p>
+            )}
+          </div>
         </div>
-      </Link>
+      ) : (
+        // Иначе используем Link
+        <Link to={href} className={styles.card}>
+          {icon && <div className={styles.card__icon}>{icon}</div>}
+          <div className={styles.card__content}>
+            <h3
+              className={cn(styles.card__content__title, {
+                [styles.card__content__title_sm!]: isSm,
+              })}
+            >
+              {title}
+            </h3>
+            {description && (
+              <p className={styles.card__content__description}>{description}</p>
+            )}
+          </div>
+        </Link>
+      )}
     </Haptic>
   );
 };
 
-const WorkoutCardBlocked: FC<WorkoutCardBlockedProps> = ({ icon, title, description, isSm = false}) => {
+const WorkoutCardBlocked: FC<WorkoutCardBlockedProps> = ({
+  icon,
+  title,
+  description,
+  isSm = false,
+}) => {
   return (
     <Haptic type="impact" value="medium" asChild>
       <div className={styles.card}>
@@ -109,7 +174,9 @@ const WorkoutCardBlocked: FC<WorkoutCardBlockedProps> = ({ icon, title, descript
           >
             {title}
           </h3>
-          {description && <p className={styles.blocked_card__content__description}>{description}</p>}
+          {description && (
+            <p className={styles.blocked_card__content__description}>{description}</p>
+          )}
         </div>
       </div>
     </Haptic>
