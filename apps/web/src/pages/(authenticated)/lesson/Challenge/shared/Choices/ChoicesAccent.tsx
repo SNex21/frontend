@@ -10,7 +10,7 @@ interface ManyChoicesAccentProps {
   currentChoice: Choice | null;
   setChoice: React.Dispatch<React.SetStateAction<Choice | null>>;
   state?: ChallengeState;
-  correctAnswer?: Choice | null; // Новое свойство
+  correctAnswerId?: Number | null; // Новое свойство
 }
 
 interface ChoiceAccentProps {
