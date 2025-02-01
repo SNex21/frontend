@@ -15,9 +15,12 @@ export default function HomePage() {
       if (tg.ready) {
         tg.ready();
       }
+      tg.disableVerticalSwipes();
+      tg.enableClosingConfirmation();
 
       // Отключаем вертикальные свайпы на этой странице
       return () => {
+        // Включаем вертикальные свайпы, когда пользователь покидает страницу
         tg.disableVerticalSwipes();
         tg.enableClosingConfirmation();
       };
