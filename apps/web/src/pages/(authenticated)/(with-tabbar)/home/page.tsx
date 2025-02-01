@@ -17,11 +17,9 @@ export default function HomePage() {
       }
 
       // Отключаем вертикальные свайпы на этой странице
-      tg.disableVerticalSwipes();
-      // Очистка эффекта при размонтировании компонента
       return () => {
-        // Включаем вертикальные свайпы, когда пользователь покидает страницу
         tg.disableVerticalSwipes();
+        tg.enableClosingConfirmation();
       };
     }
   }, []);
