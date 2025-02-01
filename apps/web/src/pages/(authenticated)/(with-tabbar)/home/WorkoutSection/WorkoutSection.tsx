@@ -30,7 +30,7 @@ const WorkoutSection: FC = () => {
 
   // Функция для проверки статуса добавления на главный экран
   const checkHomeScreenStatus = (): "missed" | "added" | "unknown" | "unsupported" => {
-    if (Telegram && typeof Telegram.checkHomeScreenStatus === "function") {
+    if (Telegram && typeof Telegram.WebApp.checkHomeScreenStatus === "function") {
       let status: "missed" | "added" | "unknown" | "unsupported" = "unsupported";
 
       try {
@@ -62,9 +62,9 @@ const WorkoutSection: FC = () => {
 
   // Функция для вызова addToHomeScreen
   const handleAddToHomeScreen = () => {
-    if (Telegram && typeof Telegram.addToHomeScreen === "function") {
+    if (Telegram && typeof Telegram.WebApp.addToHomeScreen === "function") {
       try {
-        Telegram.addToHomeScreen();
+        Telegram.WebApp.addToHomeScreen();
       } catch (error) {
         alert("Метод добавления на главный экран недоступен.");
         console.error("Ошибка вызова addToHomeScreen:", error);
