@@ -11,7 +11,7 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
   const [, notification] = useHapticFeedback();
   const [choice, setChoice] = React.useState<Choice | null>(null);
   const [state, setState] = React.useState<ChallengeState>({ submitted: false, wrong: false });
-  const [correctAnswer, setCorrectAnswer] = React.useState<Choice | null>(null); // Новое состояние
+  //const [correctAnswer, setCorrectAnswer] = React.useState<Choice | null>(null); // Новое состояние
   const [correctIndex, setCorrectAnswerId] = React.useState<Choice | null>(null); // Новое состояние
 
   function onSubmit() {
@@ -26,8 +26,8 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
     }
   
     // Находим правильный ответ
-    const correct = challenge.choices.find((c) => c.isCorrect);
-    setCorrectAnswer(correct || null);
+    //const correct = challenge.choices.find((c) => c.isCorrect);
+    //setCorrectAnswer(correct || null);
 
     const correctId= challenge.choices.findIndex((c) => c.isCorrect);
     setCorrectAnswerId(correctId || null);
