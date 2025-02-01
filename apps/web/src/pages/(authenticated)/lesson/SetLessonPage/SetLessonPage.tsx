@@ -45,7 +45,7 @@ export default function SetLessonPage() {
 
   // Функция для обновления значения слайдера
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawValue = parseInt(e.target.value, 10);
+    const rawValue = parseInt(e.target.value, 10); // e.target безопасно, так как тип указан в сигнатуре функции
     const closestValue = findClosestValue(rawValue);
 
     // Обновляем состояние taskAmount только если значение окончательно выбрано
@@ -75,22 +75,25 @@ export default function SetLessonPage() {
                 step={1}
                 value={taskAmount}
                 onChange={(e) => {
-                  // Обновляем значение в реальном времени
-                  const rawValue = parseInt(e.target.value, 10);
-                  e.target.value = rawValue.toString(); // Позволяет ползунку двигаться плавно
+                  // Проверяем тип e.target
+                  const inputElement = e.target as HTMLInputElement;
+                  const rawValue = parseInt(inputElement.value, 10);
+                  inputElement.value = rawValue.toString(); // Позволяет ползунку двигаться плавно
                   handleSliderChange(e);
                 }}
                 onInput={(e) => {
-                  // Обновляем значение в реальном времени
-                  const rawValue = parseInt(e.target.value, 10);
-                  e.target.value = rawValue.toString(); // Позволяет ползунку двигаться плавно
+                  // Проверяем тип e.target
+                  const inputElement = e.target as HTMLInputElement;
+                  const rawValue = parseInt(inputElement.value, 10);
+                  inputElement.value = rawValue.toString(); // Позволяет ползунку двигаться плавно
                 }}
                 onBlur={(e) => {
-                  // Округляем значение до ближайшего при потере фокуса
-                  const rawValue = parseInt(e.target.value, 10);
+                  // Проверяем тип e.target
+                  const inputElement = e.target as HTMLInputElement;
+                  const rawValue = parseInt(inputElement.value, 10);
                   const closestValue = findClosestValue(rawValue);
                   setTaskAmount(closestValue);
-                  e.target.value = closestValue.toString();
+                  inputElement.value = closestValue.toString();
                 }}
                 className={styles.slider}
               />
