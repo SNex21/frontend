@@ -4,12 +4,14 @@ import styles from "./Home.module.scss";
 import { LessonsSection } from "./LessonsSection";
 import { WorkoutSection } from "./WorkoutSection";
 import { useEffect } from "react";
-import Telegram from "@twa-dev/sdk"; // Используем дефолтный импорт
+
+// Используем дефолтный импорт Telegram Web App API
+declare let Telegram: any; // Объявляем глобальный объект Telegram
 
 export default function HomePage() {
   useEffect(() => {
-    if (Telegram) {
-      const tg = Telegram;
+    if (Telegram && Telegram.WebApp) {
+      const tg = Telegram.WebApp;
 
       // Проверяем, готов ли Web App
       if (tg.ready) {
@@ -22,13 +24,16 @@ export default function HomePage() {
       // Включаем подтверждение закрытия приложения
       tg.enableClosingConfirmation();
 
-      // Проверяем, поддерживается ли событие "homeScreenAdded"
-      if (tg.isVersionAtLeast("8.0") && typeof tg.onEvent === "function") {
+      // Проверяем поддержку метода addToHomeScreen
+      if (tg.isVersionAtLeast("8.0") && typeof tg.addToHomeScreen === "function") {
         try {
-          tg.onEvent("homeScreenAdded", () => {
-            console.log("Mini App успешно добавлен на главный экран!");
-            alert("Mini App успешно добавлен на главный экран!");
-          });
+          // Подписываемся на событие homeScreenAdded, если оно доступно
+          if (typeof tg.onEvent === "function") {
+            tg.onEvent("homeScreenAdded", () => {
+              console.log("Mini App успешно добавлен на главный экран!");
+              alert("Mini App успешно добавлен на главный экран!");
+            });
+          }
         } catch (error) {
           console.error("Событие homeScreenAdded не поддерживается:", error);
         }
@@ -51,9 +56,9 @@ export default function HomePage() {
 
   // Функция для вызова addToHomeScreen
   const handleAddToHomeScreen = () => {
-    if (Telegram?.addToHomeScreen) {
+    if (Telegram && Telegram.WebApp && typeof Telegram.WebApp.addToHomeScreen === "function") {
       try {
-        Telegram.addToHomeScreen();
+        Telegram.WebApp.addToHomeScreen();
       } catch (error) {
         alert("Метод добавления на главный экран недоступен.");
         console.error("Ошибка вызова addToHomeScreen:", error);
@@ -71,7 +76,7 @@ export default function HomePage() {
         <LessonsSection />
 
         {/* Кнопка для добавления на главный экран */}
-        {Telegram?.addToHomeScreen && (
+        {Telegram && Telegram.WebApp && typeof Telegram.WebApp.addToHomeScreen === "function" && (
           <button
             onClick={handleAddToHomeScreen}
             className={styles.add_to_home_button}
