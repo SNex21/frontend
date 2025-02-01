@@ -4,12 +4,14 @@ import styles from "./Home.module.scss";
 import { LessonsSection } from "./LessonsSection";
 import { WorkoutSection } from "./WorkoutSection";
 import { useEffect } from "react";
+import { Telegram } from "@twa-dev/sdk"; // Импортируем типы из @twa-dev/sdk
 
 export default function HomePage() {
   // Используем useEffect для выполнения кода при монтировании компонента
   useEffect(() => {
-    if (window.Telegram?.WebApp) {
-      const tg = window.Telegram.WebApp;
+    // Проверяем, существует ли экземпляр Telegram.WebApp
+    if (Telegram?.WebApp) {
+      const tg = Telegram.WebApp;
 
       // Запрещаем закрытие приложения через жесты
       tg.MainButton.preventClosing();
