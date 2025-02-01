@@ -39,7 +39,6 @@ const WorkoutSection: FC = () => {
       if (tg.ready) {
         tg.ready();
       }
-
       // Отключаем вертикальные свайпы на этой странице
       tg.disableVerticalSwipes();
 
@@ -125,7 +124,7 @@ const WorkoutSection: FC = () => {
             {showAddToHomeButton && (
                 <WorkoutCard
                   title="Добавить на главный экран"
-                  icon={<PhoneEmoji size={25} />}
+                  icon={<PhoneEmoji size={30} />}
                   isSm
                   onClick={handleAddToHomeScreen} // Добавляем обработчик onClick
                 />
