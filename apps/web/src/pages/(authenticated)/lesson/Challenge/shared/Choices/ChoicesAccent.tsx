@@ -5,7 +5,7 @@ import styles from "./ChoicesAccent.module.scss";
 import cn from "classnames";
 import { Haptic } from "@/lib/twa/components/Haptic.tsx";
 
-interface ChoicesAccentProps {
+interface ManyChoicesAccentProps {
   choices?: Choice[];
   currentChoice: Choice | null;
   setChoice: React.Dispatch<React.SetStateAction<Choice | null>>;
@@ -21,7 +21,7 @@ interface ChoiceAccentProps {
   isCorrect?: boolean; // Новое свойство
 }
 
-const ChoicesAccent: React.FC<ChoicesAccentProps> = ({ choices, currentChoice, setChoice, state, correctAnswer }) => {
+const ChoicesAccent: React.FC<ManyChoicesAccentProps> = ({ choices, currentChoice, setChoice, state, correctAnswer }) => {
   if (!choices) {
     return null;
   }
@@ -86,4 +86,4 @@ const ChoiceAccent: React.FC<ChoiceAccentProps> = ({ choice, onSelect, state, is
     </Haptic>
   );
 };
-export { ChoicesAccent, ChoiceAccent };
+export { ChoicesAccent };
