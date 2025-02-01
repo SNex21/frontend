@@ -23,10 +23,6 @@ export default function HomePage() {
       // Отключаем вертикальные свайпы для закрытия/минимизации приложения
       tg.disableVerticalSwipes();
 
-      // Устанавливаем цвета интерфейса согласно теме Telegram
-      document.body.style.backgroundColor = tg.themeParams.bg_color;
-      document.body.style.color = tg.themeParams.text_color;
-
       // Логирование информации о платформе и версии
       console.log("Telegram Web App Info:");
       console.log("Version:", tg.version);
