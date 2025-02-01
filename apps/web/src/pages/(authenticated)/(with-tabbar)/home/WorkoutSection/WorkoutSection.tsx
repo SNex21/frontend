@@ -92,6 +92,7 @@ const WorkoutSection: FC = () => {
                 isSm
                 href={"/set/lesson/mistakes"}
               />
+              <p>{checkHomeScreenStatus()}</p>
               {showHardLessonButton && (
                 <WorkoutCard
                   title="Самые сложные"
