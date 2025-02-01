@@ -6,8 +6,6 @@ import cn from "classnames";
 import { Link } from "react-router-dom";
 import { useUser } from "@/providers/AuthProvider/AuthProvider";
 import { useFeatureFlagEnabled } from "posthog-js/react";
-import Telegram from "@twa-dev/sdk"; // Используем дефолтный импорт
-
 interface WorkoutCardProps {
   icon?: React.ReactNode;
   title: string;
@@ -23,6 +21,8 @@ interface WorkoutCardBlockedProps {
   description?: string;
   isSm?: boolean;
 }
+
+declare let Telegram: any; 
 
 const WorkoutSection: FC = () => {
   const showHardLessonButton = useFeatureFlagEnabled("hard-lesson-button");
