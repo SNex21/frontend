@@ -20,7 +20,6 @@ export default function HomePage() {
 
       // Отключаем вертикальные свайпы на этой странице
       return () => {
-        // Включаем вертикальные свайпы, когда пользователь покидает страницу
         tg.disableVerticalSwipes();
         tg.enableClosingConfirmation();
       };
