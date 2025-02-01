@@ -1,12 +1,12 @@
 import { Haptic } from "@/lib/twa/components/Haptic";
 import { FlexedBicepsEmoji, PersonLiftingWeightsEmoji, WarningEmoji } from "@repo/ui/emojis";
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react"; // Удаляем unused imports
 import styles from "./WorkoutSection.module.scss";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 import { useUser } from "@/providers/AuthProvider/AuthProvider";
 import { useFeatureFlagEnabled } from "posthog-js/react";
-import { Telegram } from "@twa-dev/sdk"; // Используем дефолтный импорт
+import Telegram from "@twa-dev/sdk"; // Используем дефолтный импорт
 
 interface WorkoutCardProps {
   icon?: React.ReactNode;
@@ -27,6 +27,29 @@ interface WorkoutCardBlockedProps {
 const WorkoutSection: FC = () => {
   const showHardLessonButton = useFeatureFlagEnabled("hard-lesson-button");
   const user = useUser();
+
+  // Функция для проверки статуса добавления на главный экран
+  const checkHomeScreenStatus = (): "missed" | "added" | "unknown" | "unsupported" => {
+    if (Telegram && typeof Telegram.checkHomeScreenStatus === "function") {
+      let status: "missed" | "added" | "unknown" | "unsupported" = "unsupported";
+
+      try {
+        Telegram.checkHomeScreenStatus((result: string) => {
+          status = result;
+        });
+      } catch (error) {
+        console.error("Ошибка при проверке статуса добавления на главный экран:", error);
+      }
+
+      return status;
+    }
+
+    return "unsupported";
+  };
+
+  // Флаг для отображения кнопки "Добавить на главный экран"
+  const showAddToHomeButton =
+    checkHomeScreenStatus() === "missed" && user.subscription;
 
   // Функция для вызова addToHomeScreen
   const handleAddToHomeScreen = () => {
@@ -69,12 +92,14 @@ const WorkoutSection: FC = () => {
                 />
               )}
               {/* Новая кнопка для добавления на главный экран */}
-              <WorkoutCard
-                title="Добавить на главный экран"
-                icon={<FlexedBicepsEmoji size={25} />}
-                isSm
-                onClick={handleAddToHomeScreen} // Добавляем обработчик onClick
-              />
+              {showAddToHomeButton && (
+                <WorkoutCard
+                  title="Добавить на главный экран"
+                  icon={<FlexedBicepsEmoji size={25} />}
+                  isSm
+                  onClick={handleAddToHomeScreen} // Добавляем обработчик onClick
+                />
+              )}
             </div>
           </div>
         </section>
