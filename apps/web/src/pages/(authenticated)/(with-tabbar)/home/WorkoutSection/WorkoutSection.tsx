@@ -32,6 +32,7 @@ const WorkoutSection: FC = () => {
   const checkHomeScreenStatus = (): "missed" | "added" | "unknown" | "unsupported" => {
     if (Telegram && typeof Telegram.WebApp.checkHomeScreenStatus === "function") {
       let status: "missed" | "added" | "unknown" | "unsupported" = "unsupported";
+      console.log(Telegram.WebApp.checkHomeScreenStatus)
 
       try {
         // Вызываем метод checkHomeScreenStatus и проверяем результат
@@ -57,8 +58,7 @@ const WorkoutSection: FC = () => {
   };
 
   // Флаг для отображения кнопки "Добавить на главный экран"
-  const showAddToHomeButton =
-    checkHomeScreenStatus() === "missed" && user.subscription;
+  const showAddToHomeButton = checkHomeScreenStatus() === "missed";
 
   // Функция для вызова addToHomeScreen
   const handleAddToHomeScreen = () => {
