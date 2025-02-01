@@ -9,7 +9,6 @@ import Telegram from "@twa-dev/sdk"; // Используем дефолтный 
 export default function HomePage() {
   useEffect(() => {
     if (Telegram) {
-      // Telegram уже является экземпляром API, нет необходимости обращаться через .WebApp
       const tg = Telegram;
 
       // Проверяем, готов ли Web App
@@ -17,33 +16,13 @@ export default function HomePage() {
         tg.ready();
       }
 
-      // Включаем подтверждение перед закрытием приложения
-      tg.enableClosingConfirmation();
-
-      // Отключаем вертикальные свайпы для закрытия/минимизации приложения
+      // Отключаем вертикальные свайпы на этой странице
       tg.disableVerticalSwipes();
-
-      // Логирование информации о платформе и версии
-      console.log("Telegram Web App Info:");
-      console.log("Version:", tg.version);
-      console.log("Platform:", tg.platform);
-      console.log("Color Scheme:", tg.colorScheme);
-
-      // Обработка изменения высоты видимой области
-      const handleViewportChanged = (event: { isStateStable: boolean }) => {
-        if (event.isStateStable) {
-          console.log("Stable Viewport Height:", tg.viewportStableHeight);
-        }
-      };
-
-      // Подписываемся на событие изменения высоты видимой области
-      tg.onEvent("viewportChanged", handleViewportChanged);
 
       // Очистка эффекта при размонтировании компонента
       return () => {
-        tg.disableClosingConfirmation(); // Отключаем подтверждение закрытия
-        tg.enableVerticalSwipes(); // Включаем вертикальные свайпы
-        tg.offEvent("viewportChanged", handleViewportChanged); // Отписываемся от события
+        // Включаем вертикальные свайпы, когда пользователь покидает страницу
+        tg.enableVerticalSwipes();
       };
     }
   }, []);
