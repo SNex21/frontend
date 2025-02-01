@@ -22,17 +22,29 @@ export default function HomePage() {
       // Включаем подтверждение закрытия приложения
       tg.enableClosingConfirmation();
 
-      // Подписываемся на событие successful addition to home screen
-      tg.onEvent("homeScreenAdded", () => {
-        console.log("Mini App успешно добавлен на главный экран!");
-        alert("Mini App успешно добавлен на главный экран!");
-      });
+      // Проверяем, поддерживается ли событие "homeScreenAdded"
+      if (tg.isVersionAtLeast("8.0") && typeof tg.onEvent === "function") {
+        try {
+          tg.onEvent("homeScreenAdded", () => {
+            console.log("Mini App успешно добавлен на главный экран!");
+            alert("Mini App успешно добавлен на главный экран!");
+          });
+        } catch (error) {
+          console.error("Событие homeScreenAdded не поддерживается:", error);
+        }
+      }
 
       // Очистка эффекта при размонтировании компонента
       return () => {
         tg.enableVerticalSwipes(); // Включаем вертикальные свайпы
         tg.disableClosingConfirmation(); // Отключаем подтверждение закрытия
-        tg.offEvent("homeScreenAdded"); // Отписываемся от события
+        if (typeof tg.offEvent === "function") {
+          try {
+            tg.offEvent("homeScreenAdded");
+          } catch (error) {
+            console.error("Ошибка отписки от события homeScreenAdded:", error);
+          }
+        }
       };
     }
   }, []);
@@ -40,9 +52,14 @@ export default function HomePage() {
   // Функция для вызова addToHomeScreen
   const handleAddToHomeScreen = () => {
     if (Telegram?.addToHomeScreen) {
-      Telegram.addToHomeScreen();
+      try {
+        Telegram.addToHomeScreen();
+      } catch (error) {
+        alert("Метод добавления на главный экран недоступен.");
+        console.error("Ошибка вызова addToHomeScreen:", error);
+      }
     } else {
-      alert("Метод добавления на главный экран недоступен.");
+      alert("Метод добавления на главный экран не поддерживается.");
     }
   };
 
