@@ -8,18 +8,21 @@ import { BackButton } from "@/lib/twa/components/BackButton";
 export default function SetLessonPage() {
   const params = useParams();
   const navigate = useNavigate();
+
   // Состояние для выбора количества заданий
   const [taskAmount, setTaskAmount] = useState<number>(10);
   const [visibleMarks, setVisibleMarks] = useState<number[]>([]);
+
   // Определение ссылки для навигации
   const linkPath = params.topicId
     ? `/lesson/topic/${params.topicId}?amount=${taskAmount}`
     : params["*"] === "mistakes"
     ? `/lesson/mistakes?amount=${taskAmount}`
     : `/lesson/mistakes?amount=${taskAmount}`;
+
   // Возможные значения для ползунка
   const sliderValues = [10, 30, 50, 80, 100];
-  
+
   useEffect(() => {
     const updateVisibleMarks = () => {
       const screenWidth = window.innerWidth;
@@ -31,16 +34,23 @@ export default function SetLessonPage() {
       }
     };
     updateVisibleMarks();
-    window.addEventListener('resize', updateVisibleMarks);
-    return () => window.removeEventListener('resize', updateVisibleMarks);
+    window.addEventListener("resize", updateVisibleMarks);
+    return () => window.removeEventListener("resize", updateVisibleMarks);
   }, []);
-  
-  // Функция для обновления значения слайдера, округляя до ближайшего значения из массива
+
+  // Функция для определения ближайшего значения из массива sliderValues
+  const findClosestValue = (value: number): number => {
+    return sliderValues.reduce((prev, curr) => (Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev));
+  };
+
+  // Функция для обновления значения слайдера
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const index = parseInt(e.target.value, 10);
-    const value = sliderValues[index];
-    if (value !== undefined) {
-      setTaskAmount(value);
+    const rawValue = parseInt(e.target.value, 10);
+    const closestValue = findClosestValue(rawValue);
+
+    // Обновляем состояние taskAmount только если значение окончательно выбрано
+    if (!e.nativeEvent || e.nativeEvent.type === "change") {
+      setTaskAmount(closestValue);
     }
   };
 
@@ -60,23 +70,42 @@ export default function SetLessonPage() {
               <input
                 id="taskAmount"
                 type="range"
-                min={0}
-                max={sliderValues.length - 1}
+                min={sliderValues[0]}
+                max={sliderValues[sliderValues.length - 1]}
                 step={1}
-                value={sliderValues.indexOf(taskAmount)}
-                onChange={handleSliderChange} // Используем функцию здесь
+                value={taskAmount}
+                onChange={(e) => {
+                  // Обновляем значение в реальном времени
+                  const rawValue = parseInt(e.target.value, 10);
+                  e.target.value = rawValue.toString(); // Позволяет ползунку двигаться плавно
+                  handleSliderChange(e);
+                }}
+                onInput={(e) => {
+                  // Обновляем значение в реальном времени
+                  const rawValue = parseInt(e.target.value, 10);
+                  e.target.value = rawValue.toString(); // Позволяет ползунку двигаться плавно
+                }}
+                onBlur={(e) => {
+                  // Округляем значение до ближайшего при потере фокуса
+                  const rawValue = parseInt(e.target.value, 10);
+                  const closestValue = findClosestValue(rawValue);
+                  setTaskAmount(closestValue);
+                  e.target.value = closestValue.toString();
+                }}
                 className={styles.slider}
               />
               <div className={styles.slider__marks}>
-                {sliderValues.map((value, index) => (
+                {sliderValues.map((value, index) =>
                   visibleMarks.includes(value) && (
                     <span
                       key={value}
                       className={`${styles.slider__mark} ${
                         value === taskAmount ? styles["slider__mark--active"] : ""
-                      } ${index === 0 ? styles["slider__mark--first"] : ""} ${index === sliderValues.length - 1 ? styles["slider__mark--last"] : ""}`}
+                      } ${index === 0 ? styles["slider__mark--first"] : ""} ${
+                        index === sliderValues.length - 1 ? styles["slider__mark--last"] : ""
+                      }`}
                       style={{
-                        flex: index === 0 || index === sliderValues.length - 1 ? '0.5' : '1',
+                        flex: index === 0 || index === sliderValues.length - 1 ? "0.5" : "1",
                       }}
                     >
                       {index === 0 ? (
@@ -88,7 +117,7 @@ export default function SetLessonPage() {
                       )}
                     </span>
                   )
-                ))}
+                )}
               </div>
             </div>
           </div>
