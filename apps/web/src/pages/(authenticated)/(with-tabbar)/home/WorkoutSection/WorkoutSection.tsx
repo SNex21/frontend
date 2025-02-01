@@ -42,7 +42,7 @@ const WorkoutSection: FC = () => {
           ) {
             return "missed"
           } else {
-            return result; // Если результат неизвестен, считаем его "unsupported"
+            return "unsupported"; // Если результат неизвестен, считаем его "unsupported"
           }
         });
       } catch (error) {
