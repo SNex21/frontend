@@ -3,12 +3,14 @@ import { GreetingSection } from "./GreetingSection";
 import styles from "./Home.module.scss";
 import { LessonsSection } from "./LessonsSection";
 import { WorkoutSection } from "./WorkoutSection";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // Используем дефолтный импорт Telegram Web App API
 declare let Telegram: any; // Объявляем глобальный объект Telegram
 
 export default function HomePage() {
+  const [showAddToHomeButton, setShowAddToHomeButton] = useState<boolean>(false);
+
   useEffect(() => {
     if (Telegram && Telegram.WebApp) {
       const tg = Telegram.WebApp;
@@ -24,35 +26,38 @@ export default function HomePage() {
       // Включаем подтверждение закрытия приложения
       tg.enableClosingConfirmation();
 
-      // Проверяем поддержку метода addToHomeScreen
-      if (tg.isVersionAtLeast("8.0") && typeof tg.addToHomeScreen === "function") {
-        try {
-          // Подписываемся на событие homeScreenAdded, если оно доступно
-          if (typeof tg.onEvent === "function") {
-            tg.onEvent("homeScreenAdded", () => {
-              console.log("Mini App успешно добавлен на главный экран!");
-              alert("Mini App успешно добавлен на главный экран!");
-            });
-          }
-        } catch (error) {
-          console.error("Событие homeScreenAdded не поддерживается:", error);
-        }
-      }
+      // Проверяем статус добавления на главный экран
+      checkHomeScreenStatus(tg);
 
       // Очистка эффекта при размонтировании компонента
       return () => {
         tg.enableVerticalSwipes(); // Включаем вертикальные свайпы
         tg.disableClosingConfirmation(); // Отключаем подтверждение закрытия
-        if (typeof tg.offEvent === "function") {
-          try {
-            tg.offEvent("homeScreenAdded");
-          } catch (error) {
-            console.error("Ошибка отписки от события homeScreenAdded:", error);
-          }
-        }
       };
     }
   }, []);
+
+  // Функция для проверки статуса добавления на главный экран
+  const checkHomeScreenStatus = (tg: any) => {
+    if (tg.isVersionAtLeast("8.0") && typeof tg.checkHomeScreenStatus === "function") {
+      try {
+        tg.checkHomeScreenStatus((status: string) => {
+          console.log("Статус добавления на главный экран:", status);
+
+          // Определяем, показывать ли кнопку
+          if (status === "missed") {
+            setShowAddToHomeButton(true); // Показываем кнопку, если ярлык не добавлен
+          } else {
+            setShowAddToHomeButton(false); // Скрываем кнопку в остальных случаях
+          }
+        });
+      } catch (error) {
+        console.error("Ошибка при проверке статуса добавления на главный экран:", error);
+      }
+    } else {
+      console.warn("Метод checkHomeScreenStatus не поддерживается.");
+    }
+  };
 
   // Функция для вызова addToHomeScreen
   const handleAddToHomeScreen = () => {
@@ -76,7 +81,7 @@ export default function HomePage() {
         <LessonsSection />
 
         {/* Кнопка для добавления на главный экран */}
-        {Telegram && typeof Telegram.WebApp.addToHomeScreen === "function" && (
+        {showAddToHomeButton && (
           <button
             onClick={handleAddToHomeScreen}
             className={styles.add_to_home_button}
