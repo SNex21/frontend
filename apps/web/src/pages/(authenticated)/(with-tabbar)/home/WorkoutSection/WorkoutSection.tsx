@@ -68,16 +68,15 @@ const WorkoutSection: FC = () => {
           ) {
             setShowAddToHomeButton(true); 
           } else {
-            setShowAddToHomeButton(false);  // Если результат неизвестен, считаем его "unsupported"
+            setShowAddToHomeButton(false);  
           }
         });
       } catch (error) {
         console.error("Ошибка при проверке статуса добавления на главный экран:", error);
-        setShowAddToHomeButton(false); // При ошибке считаем статус "unsupported"
+        setShowAddToHomeButton(false);
       }
     }
-
-    setShowAddToHomeButton(false); // Если метод недоступен, считаем статус "unsupported"
+    setShowAddToHomeButton(false);
   };
 
   
