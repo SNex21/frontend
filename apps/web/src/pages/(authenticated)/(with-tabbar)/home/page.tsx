@@ -8,8 +8,9 @@ import Telegram from "@twa-dev/sdk"; // Используем дефолтный 
 
 export default function HomePage() {
   useEffect(() => {
-    if (Telegram?.WebApp) {
-      const tg = Telegram.WebApp;
+    if (Telegram) {
+      // Telegram уже является экземпляром API, нет необходимости обращаться через .WebApp
+      const tg = Telegram;
 
       // Проверяем, готов ли Web App
       if (tg.ready) {
