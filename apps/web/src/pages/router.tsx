@@ -19,6 +19,7 @@ const SubsciptionBuyPage = lazy(() => import("@/pages/(authenticated)/subscripti
 const LessonPage = lazy(() => import("@/pages/(authenticated)/lesson/page.tsx"));
 const SetLessonPage = lazy(() => import("@/pages/(authenticated)/lesson/SetLessonPage/SetLessonPage.tsx"));
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<RootLayout />}>
