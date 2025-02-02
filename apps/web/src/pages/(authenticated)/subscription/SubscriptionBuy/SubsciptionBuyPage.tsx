@@ -1,5 +1,5 @@
 import Telegram from '@twa-dev/sdk';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ export default function SubscriptionBuyPage() {
   const [initialEndDate, setInitialEndDate] = useState<string | null>(null);
 
   // Запрос информации о подписке
-  const { data: subscription, isLoading: isLoadingSubInfo } = useQuery({
+  const { data: subscription, isLoading: _ } = useQuery({
     queryKey: ["subscription"],
     queryFn: async () =>
       getSubscriptionInfo({
