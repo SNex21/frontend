@@ -85,9 +85,17 @@
 
 /* Стили для экрана успешной оплаты */
 .successContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  max-width: 1000px;
-  margin-bottom: var(--spacing-6);
+  height: 10%;
+  background-color: var(--ds-background-100);
+  padding: var(--spacing-4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
 }
 
 .confettiContainer {
@@ -99,10 +107,9 @@
 
 .success_button {
   background-color: #4900DC;
-  width: 200%;
+  width: 100%;
   color: #fff;
   font-size: 20px;
-  bottom: 0;
   font-weight: bold;
   border: none;
   border-radius: var(--rounded-2xl);
