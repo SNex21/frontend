@@ -85,13 +85,9 @@
 
 /* Стили для экрана успешной оплаты */
 .successContainer {
-  max-width: 1000px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
   width: 100%;
+  max-width: 1000px;
+  margin-bottom: var(--spacing-6);
 }
 
 .confettiContainer {
