@@ -1,70 +1,130 @@
+/* Общий контейнер страницы */
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: var(--spacing-6);
-    margin-top: 50%;
-  }
-  
-  .formContainer {
-    width: 100%;
-    max-width: 1000px;
-    margin-bottom: var(--spacing-6);
-  }
-  
-  .label {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: var(--spacing-2);
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .input {
-    width: 100%;
-    padding: var(--spacing-3);
-    border: 1px solid var(--ds-border-200);
-    border-radius: var(--rounded-lg);
-    font-size: 16px;
-    outline: none;
-  }
-  
-  .input:focus {
-    border-color: var(--ds-primary-500);
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-6);
+  margin-top: 50%;
+}
 
-  .complete {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 10%;
-  
-    background-color: var(--ds-background-100);
-    padding: var(--spacing-4);
-  
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  
-    z-index: 10;
-  }
-  
-  .button {
-    background-color: #4900DC;
-    width: 100%;
-    color: #fff;
-    font-size: 20px;
-    font-weight: bold;
-    border: none;
-    border-radius: var(--rounded-2xl);
-    padding: var(--spacing-3) var(--spacing-6);
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .buttonInactive {
-    background-color: #280078;
-    color: #a5a5a5;
-    cursor: not-allowed;
-  }
+/* Форма ввода email */
+.formContainer {
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: var(--spacing-6);
+}
+
+.label {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: var(--spacing-2);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.input {
+  width: 100%;
+  padding: var(--spacing-3);
+  border: 1px solid var(--ds-border-200);
+  border-radius: var(--rounded-lg);
+  font-size: 16px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--ds-primary-500);
+}
+
+.complete {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 10%;
+  background-color: var(--ds-background-100);
+  padding: var(--spacing-4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.button {
+  background-color: #4900DC;
+  width: 100%;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: var(--rounded-2xl);
+  padding: var(--spacing-3) var(--spacing-6);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buttonInactive {
+  background-color: #280078;
+  color: #a5a5a5;
+  cursor: not-allowed;
+}
+
+/* Стили для экрана ожидания оплаты */
+.waitingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.waitingMessage {
+  font-size: 18px;
+  color: #333;
+  text-align: center;
+}
+
+/* Стили для экрана успешной оплаты */
+.successContainer {
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: var(--spacing-6);
+}
+
+.emojiContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--spacing-4); /* Отступ между эмоджи и текстом */
+}
+
+.success_button {
+  background-color: #4900DC;
+  width: 100%;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: var(--rounded-2xl);
+  padding: var(--spacing-3) var(--spacing-6);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+
+.successMessage {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.clockGif {
+  width: 100%; /* Гарантирует, что GIF растягивается на всю ширину контейнера */
+  max-width: 110px; /* Ограничивает максимальную ширину GIF (по желанию) */
+  height: auto; /* Сохраняет пропорции изображения */
+}
+
+.confettiGif {
+  width: 100%; /* Гарантирует, что GIF растягивается на всю ширину контейнера */
+  max-width: 110px; /* Ограничивает максимальную ширину GIF (по желанию) */
+  height: auto; /* Сохраняет пропорции изображения */
+}

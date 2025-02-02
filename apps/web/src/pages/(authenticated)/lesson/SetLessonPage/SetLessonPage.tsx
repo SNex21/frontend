@@ -1,35 +1,47 @@
 import { Button } from "@repo/ui";
 import { AnimatePresence } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./SetLessonPage.module.scss";
 import { BackButton } from "@/lib/twa/components/BackButton";
 
 export default function SetLessonPage() {
   const params = useParams();
   const navigate = useNavigate();
-
   // Состояние для выбора количества заданий
-  const [taskAmount, setTaskAmount] = useState<number>(15);
-
+  const [taskAmount, setTaskAmount] = useState<number>(10);
+  const [visibleMarks, setVisibleMarks] = useState<number[]>([]);
   // Определение ссылки для навигации
   const linkPath = params.topicId
     ? `/lesson/topic/${params.topicId}?amount=${taskAmount}`
     : params["*"] === "mistakes"
     ? `/lesson/mistakes?amount=${taskAmount}`
     : `/lesson/mistakes?amount=${taskAmount}`;
-
   // Возможные значения для ползунка
-  const sliderValues = [10, 15, 30, 50, 80, 100];
-
+  const sliderValues = [10, 30, 50, 80, 100];
+  
+  useEffect(() => {
+    const updateVisibleMarks = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth <= 480) {
+        // На маленьких экранах показываем только некоторые метки
+        setVisibleMarks([10, 30, 50, 80, 100]);
+      } else {
+        setVisibleMarks(sliderValues);
+      }
+    };
+    updateVisibleMarks();
+    window.addEventListener('resize', updateVisibleMarks);
+    return () => window.removeEventListener('resize', updateVisibleMarks);
+  }, []);
+  
   // Функция для обновления значения слайдера, округляя до ближайшего значения из массива
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    // Округляем значение ползунка до ближайшей точки
-    const closestValue = sliderValues.reduce((prev, curr) =>
-      Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
-    );
-    setTaskAmount(closestValue);
+    const index = parseInt(e.target.value, 10);
+    const value = sliderValues[index];
+    if (value !== undefined) {
+      setTaskAmount(value);
+    }
   };
 
   return (
@@ -48,26 +60,34 @@ export default function SetLessonPage() {
               <input
                 id="taskAmount"
                 type="range"
-                min={10}
-                max={100}
+                min={0}
+                max={sliderValues.length - 1}
                 step={1}
-                value={taskAmount}
-                onChange={handleSliderChange}
+                value={sliderValues.indexOf(taskAmount)}
+                onChange={handleSliderChange} // Используем функцию здесь
                 className={styles.slider}
               />
               <div className={styles.slider__marks}>
-                {sliderValues.map((value) => (
-                  <span
-                    key={value}
-                    className={`${styles.slider__mark} ${
-                      value === taskAmount ? styles["slider__mark--active"] : ""
-                    }`}
-                    style={{
-                      left: `calc(${((value - 10) / (100 - 10)) * 100}% - 10px)`,
-                    }}
-                  >
-                    {value}
-                  </span>
+                {sliderValues.map((value, index) => (
+                  visibleMarks.includes(value) && (
+                    <span
+                      key={value}
+                      className={`${styles.slider__mark} ${
+                        value === taskAmount ? styles["slider__mark--active"] : ""
+                      } ${index === 0 ? styles["slider__mark--first"] : ""} ${index === sliderValues.length - 1 ? styles["slider__mark--last"] : ""}`}
+                      style={{
+                        flex: index === 0 || index === sliderValues.length - 1 ? '0.5' : '1',
+                      }}
+                    >
+                      {index === 0 ? (
+                        <span className={styles["slider__mark-text--left"]}>{value}</span>
+                      ) : index === sliderValues.length - 1 ? (
+                        <span className={styles["slider__mark-text--right"]}>{value}</span>
+                      ) : (
+                        value
+                      )}
+                    </span>
+                  )
                 ))}
               </div>
             </div>
@@ -80,3 +100,4 @@ export default function SetLessonPage() {
     </AnimatePresence>
   );
 }
+
