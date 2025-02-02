@@ -9,6 +9,8 @@ import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import styles from "./SubscriptionBuy.module.scss";
 import { BackButton } from "@/lib/twa/components/BackButton";
 import { СonfettiEmoji } from "@repo/ui/emojis";
+import { Link } from "react-router-dom";
+import { Button } from "@repo/ui";
 
 export default function SubscriptionBuyPage() {
   const navigate = useNavigate();
@@ -102,12 +104,19 @@ export default function SubscriptionBuyPage() {
       <BackButton onClick={() => navigate("/subscription")} />
       {isPaymentSuccessful ? (
         // Если оплата успешна, показываем сообщение с эмоджи
-        <div className={styles.successContainer}>
-          <div className={styles.confettiContainer}>
-            <СonfettiEmoji size={70} />
+        <>
+          <div className={styles.successContainer}>
+            <div className={styles.confettiContainer}>
+              <СonfettiEmoji size={80} />
+            </div>
+            <p className={styles.successMessage}>Оплата прошла успешно!</p>
           </div>
-          <p className={styles.successMessage}>Оплата прошла успешно!</p>
-        </div>
+          <footer className={styles.page__footer}>
+            <Link to="/">
+              <Button>К ЗАДАНИЯМ!</Button>
+            </Link>
+          </footer>
+        </>
       ) : isWaitingForPayment ? (
         // Если ожидаем оплату, показываем это сообщение
         <div className={styles.waitingContainer}>
