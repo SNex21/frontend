@@ -1,5 +1,5 @@
 import Telegram from '@twa-dev/sdk';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useNavigate } from "react-router-dom";
