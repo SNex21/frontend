@@ -67,7 +67,6 @@ export default function SubscriptionBuyPage() {
       mutate();
     }
   };
-  
 
   // Функция для запуска циклических запросов
   const startPolling = () => {
@@ -89,13 +88,13 @@ export default function SubscriptionBuyPage() {
     };
 
     // Запускаем цикл запросов каждые 30 секунд
-    intervalId = setInterval(pollSubscription, 30 * 1000);
+    intervalId = setInterval(pollSubscription, 5 * 1000);
 
-    // Останавливаем запросы через 5 минут
+    // Останавливаем запросы через 10 минут
     setTimeout(() => {
       clearInterval(intervalId);
       setIsPaymentSuccessful(false); // Можно добавить сообщение об ошибке или таймауте
-    }, 5 * 60 * 1000);
+    }, 10 * 60 * 1000);
   };
 
   return (
