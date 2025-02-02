@@ -112,7 +112,7 @@ export default function SubscriptionBuyPage() {
           </div>
           <Link to="/">
           <button
-              className={styles.button}
+              className={styles.success_button}
             >
               К заданиям!
           </button>
