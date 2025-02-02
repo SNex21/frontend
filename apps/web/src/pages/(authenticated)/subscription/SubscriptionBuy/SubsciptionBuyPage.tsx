@@ -112,7 +112,7 @@ export default function SubscriptionBuyPage() {
           </div>
           <Link to="/">
           <button
-              className={styles.buttonInactive}
+              className={styles.button}
             >
               К заданиям!
           </button>
