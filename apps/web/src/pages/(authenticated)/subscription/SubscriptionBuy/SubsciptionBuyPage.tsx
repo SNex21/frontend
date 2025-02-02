@@ -8,7 +8,7 @@ import { getPaymentUrl, getSubscriptionInfo } from "@/services/api/subscriptions
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import styles from "./SubscriptionBuy.module.scss";
 import { BackButton } from "@/lib/twa/components/BackButton";
-import { ConfettiEmoji } from "@repo/ui/emojis";
+import { СonfettiEmoji } from "@repo/ui/emojis";
 
 export default function SubscriptionBuyPage() {
   const navigate = useNavigate();
@@ -104,7 +104,7 @@ export default function SubscriptionBuyPage() {
         // Если оплата успешна, показываем сообщение с эмоджи
         <div className={styles.successContainer}>
           <div className={styles.confettiContainer}>
-            <ConfettiEmoji size={38} />
+            <СonfettiEmoji size={38} />
           </div>
           <p className={styles.successMessage}>Оплата прошла успешно!</p>
         </div>
