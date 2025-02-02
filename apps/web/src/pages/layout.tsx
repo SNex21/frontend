@@ -37,10 +37,10 @@ export default function RootLayout() {
       // Очистка эффекта при размонтировании компонента
       return () => {
         if (typeof tg.enableVerticalSwipes === "function") {
-          tg.enableVerticalSwipes();
+          tg.disableVerticalSwipes();
         }
         if (typeof tg.disableClosingConfirmation === "function") {
-          tg.disableClosingConfirmation();
+          tg.enableClosingConfirmation();
         }
       };
     }
