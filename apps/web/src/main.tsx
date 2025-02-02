@@ -41,11 +41,11 @@ const initializeTelegramWebApp = () => {
     // Очистка эффекта при размонтировании или выходе из приложения
     return () => {
       if (typeof tg.enableVerticalSwipes === "function") {
-        tg.enableVerticalSwipes(); // Включаем вертикальные свайпы
+        tg.disableVerticalSwipes(); // Включаем вертикальные свайпы
       }
 
       if (typeof tg.disableClosingConfirmation === "function") {
-        tg.disableClosingConfirmation(); // Отключаем подтверждение закрытия
+        tg.enableClosingConfirmation(); // Отключаем подтверждение закрытия
       }
     };
   }
