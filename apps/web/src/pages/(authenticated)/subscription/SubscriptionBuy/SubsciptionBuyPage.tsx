@@ -23,7 +23,7 @@ export default function SubscriptionBuyPage() {
   const [initialEndDate, setInitialEndDate] = useState<string | null>(null);
 
   // Запрос информации о подписке
-  const { data: subscription, isLoading: isLoadingSubInfo } = useQuery({
+  const { data: subscription, isLoading: _ } = useQuery({
     queryKey: ["subscription"],
     queryFn: async () =>
       getSubscriptionInfo({
