@@ -111,11 +111,13 @@ export default function SubscriptionBuyPage() {
             </div>
             <p className={styles.successMessage}>Оплата прошла успешно!</p>
           </div>
-          <footer className={styles.page__footer}>
-            <Link to="/">
-              <Button>К ЗАДАНИЯМ!</Button>
-            </Link>
-          </footer>
+          <Link to="/">
+          <button
+              className={styles.buttonInactive}
+            >
+              К заданиям!
+          </button>
+          </Link>
         </>
       ) : isWaitingForPayment ? (
         // Если ожидаем оплату, показываем это сообщение
