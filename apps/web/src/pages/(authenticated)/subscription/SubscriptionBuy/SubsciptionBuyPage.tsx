@@ -9,7 +9,7 @@ import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import styles from "./SubscriptionBuy.module.scss";
 import { BackButton } from "@/lib/twa/components/BackButton";
 import { СonfettiEmoji } from "@repo/ui/emojis";
-import { Link } from "react-router-dom"
+// import { Link } from "react-router-dom"
 
 export default function SubscriptionBuyPage() {
   const navigate = useNavigate();
