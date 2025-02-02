@@ -100,15 +100,39 @@
 }
 
 .page__footer {
+  position: fixed; /* Фиксированное положение внизу экрана */
+  bottom: 0; /* Прикрепление к нижней части экрана */
+  left: 0; /* Прикрепление к левой стороне */
+  width: 100%; /* Занимает всю ширину экрана */
+  background-color: var(--ds-background-100); /* Цвет фона */
+  padding: var(--spacing-4); /* Отступы внутри футера */
   display: flex;
-  justify-content: center;
-  padding: 0 var(--spacing-4);
-  padding-bottom: calc(20px + var(--lvh, 100vh) - var(--tg-viewport-height, 100vh));
+  justify-content: center; /* Центрирование содержимого по горизонтали */
+  align-items: center; /* Центрирование содержимого по вертикали */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Добавляем тень для лучшего визуального разделения */
+  z-index: 10; /* Убедимся, что футер находится поверх других элементов */
+}
+
+.page__footer .Button {
+  width: 100%; /* Кнопка занимает всю доступную ширину */
+  height: 56px; /* Высота кнопки */
+  font-size: 18px; /* Размер шрифта */
+  font-weight: bold; /* Жирный шрифт */
+  border-radius: var(--rounded-lg); /* Скругление углов */
+  background-color: #4900DC; /* Цвет фона кнопки */
+  color: #fff; /* Цвет текста */
+  border: none; /* Без границ */
+  cursor: pointer; /* Изменение курсора при наведении */
+  transition: background-color 0.3s; /* Плавный переход цвета */
+
+  /* Эффект при наведении */
+  &:hover {
+    background-color: #3C00B3;
+  }
 }
 
 .successMessage {
   font-size: 20px;
   font-weight: 600;
-  font-weight: bold;
   text-align: center;
 }
