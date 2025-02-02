@@ -9,7 +9,7 @@ import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import styles from "./SubscriptionBuy.module.scss";
 import { BackButton } from "@/lib/twa/components/BackButton";
 import { СonfettiEmoji } from "@repo/ui/emojis";
-// import { Link } from "react-router-dom"
+import Clock from "../../../../assets/fonts/gifs/clock.gif";
 
 export default function SubscriptionBuyPage() {
   const navigate = useNavigate();
@@ -130,7 +130,7 @@ export default function SubscriptionBuyPage() {
           <div className={styles.successContainer}>
             <div className={styles.confettiContainer}>
               <СonfettiEmoji size={120} />
-              <img src="clock.gif" alt="Confetti" />
+              <img src={Clock} alt="Confetti" />
             </div>
             <p className={styles.successMessage}>Ожидаем оплату...</p>
           </div>
