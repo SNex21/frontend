@@ -69,6 +69,10 @@ export default function SubscriptionBuyPage() {
     }
   };
 
+  const handleConfirmationClick = () => {
+    navigate(`/subscription/${selectedPlanId}`);
+  };
+
   // Функция для запуска циклических запросов
   const startPolling = () => {
     let intervalId: NodeJS.Timeout;
@@ -113,6 +117,7 @@ export default function SubscriptionBuyPage() {
           <div className={styles.complete}>
             <button
                 className={styles.success_button}
+                onClick={handleConfirmationClick}
               >
                 К заданиям!
             </button>
