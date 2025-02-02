@@ -67,6 +67,7 @@ export default function SubscriptionBuyPage() {
       mutate();
     }
   };
+  
 
   // Функция для запуска циклических запросов
   const startPolling = () => {
