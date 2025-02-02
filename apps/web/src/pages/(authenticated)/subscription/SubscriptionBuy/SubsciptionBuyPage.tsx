@@ -130,7 +130,7 @@ export default function SubscriptionBuyPage() {
           <div className={styles.successContainer}>
             <div className={styles.confettiContainer}>
               <СonfettiEmoji size={120} />
-              <img src="/path/to/your/clock.gif" alt="Confetti" />
+              <img src="clock.gif" alt="Confetti" />
             </div>
             <p className={styles.successMessage}>Ожидаем оплату...</p>
           </div>
