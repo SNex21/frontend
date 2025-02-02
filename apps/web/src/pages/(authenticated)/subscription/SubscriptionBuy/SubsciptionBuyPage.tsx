@@ -107,7 +107,7 @@ export default function SubscriptionBuyPage() {
         <>
           <div className={styles.successContainer}>
             <div className={styles.confettiContainer}>
-              <СonfettiEmoji size={80} />
+              <СonfettiEmoji size={100} />
             </div>
             <p className={styles.successMessage}>Оплата прошла успешно!</p>
           </div>
