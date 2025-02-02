@@ -68,7 +68,6 @@ const renderApp = () => {
 
 // Инициализация Telegram Web App и рендеринг приложения
 if (WebApp) {
-  const tg = WebApp;
 
   // Используем useEffect-подобную логику через обычный useEffect заменитель
   const cleanup = initializeTelegramWebApp();
