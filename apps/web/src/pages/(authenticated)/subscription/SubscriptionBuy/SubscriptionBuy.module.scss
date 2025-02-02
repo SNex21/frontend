@@ -90,7 +90,7 @@
   margin-bottom: var(--spacing-6);
 }
 
-.confettiContainer {
+.emojiContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -119,6 +119,12 @@
 
 .clockGif {
   width: 100%; /* Гарантирует, что GIF растягивается на всю ширину контейнера */
-  max-width: 80px; /* Ограничивает максимальную ширину GIF (по желанию) */
+  max-width: 110px; /* Ограничивает максимальную ширину GIF (по желанию) */
+  height: auto; /* Сохраняет пропорции изображения */
+}
+
+.confettiGif {
+  width: 100%; /* Гарантирует, что GIF растягивается на всю ширину контейнера */
+  max-width: 110px; /* Ограничивает максимальную ширину GIF (по желанию) */
   height: auto; /* Сохраняет пропорции изображения */
 }

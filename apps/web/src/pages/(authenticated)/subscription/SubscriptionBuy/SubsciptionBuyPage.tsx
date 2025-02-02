@@ -8,8 +8,9 @@ import { getPaymentUrl, getSubscriptionInfo } from "@/services/api/subscriptions
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import styles from "./SubscriptionBuy.module.scss";
 import { BackButton } from "@/lib/twa/components/BackButton";
-import { СonfettiEmoji } from "@repo/ui/emojis";
 import Clock from "../../../../assets/fonts/gifs/clock.gif";
+import Confetti from "../../../../assets/fonts/gifs/confetti.gif";
+
 
 export default function SubscriptionBuyPage() {
   const navigate = useNavigate();
@@ -109,8 +110,8 @@ export default function SubscriptionBuyPage() {
         // Если оплата успешна, показываем сообщение с эмоджи
         <>
           <div className={styles.successContainer}>
-            <div className={styles.confettiContainer}>
-              <СonfettiEmoji size={120} />
+            <div className={styles.emojiContainer}>
+              <img src={Confetti} alt="Confetti" className={styles.confettiGif} />
             </div>
             <p className={styles.successMessage}>Оплата прошла успешно!</p>
           
@@ -128,7 +129,7 @@ export default function SubscriptionBuyPage() {
         // Если ожидаем оплату, показываем это сообщение
         <>
           <div className={styles.successContainer}>
-            <div className={styles.confettiContainer}>
+            <div className={styles.emojiContainer}>
               <img src={Clock} alt="Clock" className={styles.clockGif} />
             </div>
             <p className={styles.successMessage}>Ожидаем оплату...</p>
