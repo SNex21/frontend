@@ -109,7 +109,7 @@ export default function SubscriptionBuyPage() {
               <СonfettiEmoji size={100} />
             </div>
             <p className={styles.successMessage}>Оплата прошла успешно!</p>
-          </div>
+          
           <div className={styles.complete}>
             <Link to="/">
             <button
@@ -118,6 +118,7 @@ export default function SubscriptionBuyPage() {
                 К заданиям!
             </button>
             </Link>
+          </div>
           </div>
         </>
       ) : isWaitingForPayment ? (
