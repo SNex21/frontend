@@ -1,5 +1,5 @@
 import Telegram from '@twa-dev/sdk';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { getPaymentUrl, getSubscriptionInfo } from "@/services/api/subscriptions
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import styles from "./SubscriptionBuy.module.scss";
 import { BackButton } from "@/lib/twa/components/BackButton";
+import { ConfettiEmoji } from "@repo/ui/emojis";
 
 export default function SubscriptionBuyPage() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function SubscriptionBuyPage() {
   const [initialEndDate, setInitialEndDate] = useState<string | null>(null);
 
   // Запрос информации о подписке
-  const { data: subscription, isLoading: _ } = useQuery({
+  const { data: subscription, isLoading: isLoadingSubInfo } = useQuery({
     queryKey: ["subscription"],
     queryFn: async () =>
       getSubscriptionInfo({
@@ -87,7 +88,7 @@ export default function SubscriptionBuyPage() {
     };
 
     // Запускаем цикл запросов каждые 30 секунд
-    intervalId = setInterval(pollSubscription, 10 * 1000);
+    intervalId = setInterval(pollSubscription, 30 * 1000);
 
     // Останавливаем запросы через 5 минут
     setTimeout(() => {
@@ -100,8 +101,11 @@ export default function SubscriptionBuyPage() {
     <div className={styles.container}>
       <BackButton onClick={() => navigate("/subscription")} />
       {isPaymentSuccessful ? (
-        // Если оплата успешна, показываем сообщение
+        // Если оплата успешна, показываем сообщение с эмоджи
         <div className={styles.successContainer}>
+          <div className={styles.confettiContainer}>
+            <ConfettiEmoji size={38} />
+          </div>
           <p className={styles.successMessage}>Оплата прошла успешно!</p>
         </div>
       ) : isWaitingForPayment ? (
