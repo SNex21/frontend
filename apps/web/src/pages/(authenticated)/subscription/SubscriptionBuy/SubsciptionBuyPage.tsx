@@ -129,7 +129,7 @@ export default function SubscriptionBuyPage() {
         <>
           <div className={styles.successContainer}>
             <div className={styles.confettiContainer}>
-              <img src={Clock} alt="Clock" className={styles.confettiGif} />
+              <img src={Clock} alt="Clock" className={styles.clockGif} />
             </div>
             <p className={styles.successMessage}>Ожидаем оплату...</p>
           </div>
