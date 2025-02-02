@@ -87,7 +87,7 @@ export default function SubscriptionBuyPage() {
     };
 
     // Запускаем цикл запросов каждые 30 секунд
-    intervalId = setInterval(pollSubscription, 30 * 1000);
+    intervalId = setInterval(pollSubscription, 10 * 1000);
 
     // Останавливаем запросы через 5 минут
     setTimeout(() => {
