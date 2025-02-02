@@ -90,6 +90,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  width: 100%;
 }
 
 .confettiContainer {
@@ -114,7 +115,6 @@
 }
 
 .page__footer .Button {
-  display: flex;
   width: 100%; /* Кнопка занимает всю доступную ширину */
   height: 56px; /* Высота кнопки */
   font-size: 18px; /* Размер шрифта */
