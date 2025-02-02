@@ -15,6 +15,7 @@ export default function SubscriptionBuyPage() {
   const cloudStorage = useCloudStorage();
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isWaitingForPayment, setIsWaitingForPayment] = useState(false); // Новое состояние
 
   const { mutate } = useMutation({
     mutationFn: async () => {
@@ -28,6 +29,7 @@ export default function SubscriptionBuyPage() {
     onSuccess: (paymentUrl) => {
       if (paymentUrl?.url) {
         Telegram.openLink(paymentUrl.url); // Редирект на полученный URL
+        setIsWaitingForPayment(true); // Устанавливаем флаг ожидания оплаты
       }
     },
     onError: (error) => {
@@ -50,26 +52,36 @@ export default function SubscriptionBuyPage() {
   return (
     <div className={styles.container}>
       <BackButton onClick={() => navigate("/subscription")} />
-      <div className={styles.formContainer}>
-        <label htmlFor="email" className={styles.label}>Для оплаты необходимо ввести email для отправки чека:</label>
-        <input
-          id="email"
-          type="email"
-          className={styles.input}
-          value={email}
-          onChange={handleEmailChange}
-          placeholder="example@gmail.com"
-        />
-      </div>
-      <div className={styles.complete}>
-        <button
-          className={`${styles.button} ${!isEmailValid ? styles.buttonInactive : ""}`}
-          onClick={handleButtonClick}
-          disabled={!isEmailValid}
-        >
-          Далее
-        </button>
-      </div>
+      {isWaitingForPayment ? (
+        // Если ожидаем оплату, показываем это сообщение
+        <div className={styles.waitingContainer}>
+          <p className={styles.waitingMessage}>Ожидаем оплату...</p>
+        </div>
+      ) : (
+        // Иначе показываем форму ввода email
+        <div className={styles.formContainer}>
+          <label htmlFor="email" className={styles.label}>
+            Для оплаты необходимо ввести email для отправки чека:
+          </label>
+          <input
+            id="email"
+            type="email"
+            className={styles.input}
+            value={email}
+            onChange={handleEmailChange}
+            placeholder="example@gmail.com"
+          />
+          <div className={styles.complete}>
+            <button
+              className={`${styles.button} ${!isEmailValid ? styles.buttonInactive : ""}`}
+              onClick={handleButtonClick}
+              disabled={!isEmailValid}
+            >
+              Далее
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
