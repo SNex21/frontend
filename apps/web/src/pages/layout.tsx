@@ -16,6 +16,8 @@ export default function RootLayout() {
   useEffect(() => {
     WebApp.expand();
     WebApp.ready();
+    WebApp.disableVerticalSwipes();
+    WebApp.enableClosingConfirmation();
   }, []);
 
   return (
