@@ -116,20 +116,6 @@
 
 .page__footer .Button {
   width: 100%; /* Кнопка занимает всю доступную ширину */
-  height: 56px; /* Высота кнопки */
-  font-size: 18px; /* Размер шрифта */
-  font-weight: bold; /* Жирный шрифт */
-  border-radius: var(--rounded-lg); /* Скругление углов */
-  background-color: #4900DC; /* Цвет фона кнопки */
-  color: #fff; /* Цвет текста */
-  border: none; /* Без границ */
-  cursor: pointer; /* Изменение курсора при наведении */
-  transition: background-color 0.3s; /* Плавный переход цвета */
-
-  /* Эффект при наведении */
-  &:hover {
-    background-color: #3C00B3;
-  }
 }
 
 .successMessage {
