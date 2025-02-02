@@ -19,7 +19,7 @@ export default function SubscriptionBuyPage() {
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isWaitingForPayment, setIsWaitingForPayment] = useState(false); // Ожидание оплаты
-  const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false); // Успешная оплата
+  const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(true); // Успешная оплата
 
   // Состояние для хранения начального значения end_date
   const [initialEndDate, setInitialEndDate] = useState<string | null>(null);
