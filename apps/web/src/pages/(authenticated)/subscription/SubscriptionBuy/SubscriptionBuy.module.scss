@@ -106,11 +106,6 @@
   padding: 0 var(--spacing-4);
   padding-bottom: calc(20px + var(--lvh, 100vh) - var(--tg-viewport-height, 100vh));
 }
-
-.page__footer .Button {
-  width: 100%; /* Кнопка занимает всю доступную ширину */
-}
-
 .successMessage {
   font-size: 20px;
   font-weight: 600;
