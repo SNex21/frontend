@@ -126,9 +126,15 @@ export default function SubscriptionBuyPage() {
         </>
       ) : isWaitingForPayment ? (
         // Если ожидаем оплату, показываем это сообщение
-        <div className={styles.waitingContainer}>
-          <p className={styles.waitingMessage}>Ожидаем оплату...</p>
-        </div>
+        <>
+          <div className={styles.successContainer}>
+            <div className={styles.confettiContainer}>
+              <СonfettiEmoji size={120} />
+              <img src="/path/to/your/clock.gif" alt="Confetti" />
+            </div>
+            <p className={styles.successMessage}>Ожидаем оплату...</p>
+          </div>
+        </>
       ) : (
         // Иначе показываем форму ввода email
         <div className={styles.formContainer}>
