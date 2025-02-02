@@ -111,13 +111,11 @@ export default function SubscriptionBuyPage() {
             <p className={styles.successMessage}>Оплата прошла успешно!</p>
           
           <div className={styles.complete}>
-            <Link to="/">
             <button
                 className={styles.success_button}
               >
                 К заданиям!
             </button>
-            </Link>
           </div>
           </div>
         </>
