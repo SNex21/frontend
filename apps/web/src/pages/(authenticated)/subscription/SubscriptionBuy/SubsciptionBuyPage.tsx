@@ -70,7 +70,7 @@ export default function SubscriptionBuyPage() {
   };
 
   const handleConfirmationClick = () => {
-    navigate(`/subscription/${selectedPlanId}`);
+    navigate(`/`);
   };
 
   // Функция для запуска циклических запросов
