@@ -72,8 +72,8 @@ return (
         {description && <p className={styles.card__content__description}>{description}</p>}
         <p className={styles.card__content__description}>
             {price === 0 ? "Бесплатно" : `${price} руб.`} {duration === 7 ? "в неделю": (duration === 30 ? "в месяц": (duration === 30 ? "за 3 месяца" : `за ${duration} дн.`))}
-            
-            <a href="https://t.me/Bug_Hunt_UchiBot">Поддержка</a>
+
+            <a href="https://t.me/Bug_Hunt_UchiBot" target="_blank" rel="noopener noreferrer">Поддержка</a>
         </p>
         </div>
     </div>
