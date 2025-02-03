@@ -1,7 +1,5 @@
 import { type Choice, type DisplayToken } from "@/models/Session.ts";
-
 import React from "react";
-
 import sharedStyles from "./GapFillTokens.module.scss";
 import styles from "./GapFillLetterTokens.module.scss";
 import { ChoiceLetter } from "@/pages/(authenticated)/lesson/Challenge/shared/Choices/ChoicesLetter.tsx";
@@ -36,21 +34,19 @@ const GapFillLetterTokens: React.FC<GapFillLetterTokensProps> = ({
           if (!token.isBlank) {
             return <span key={i}>{token.text}</span>;
           }
-
           if (currentChoice) {
             return (
               <span key={i} className={styles.line}>
                 <ChoiceLetter
                   challengeId={challengeId}
                   text={currentChoice.text}
-                  onSelect={state?.submitted ? undefined : () => setChoice(null)}
-                  state={state}
+                  onSelect={state?.submitted ? () => {} : () => setChoice(null)} // Исправление
+                  state={state ?? { submitted: false, wrong: false }} // Исправление
                   attempt={attempt}
                 />
               </span>
             );
           }
-
           return <span key={i} className={styles.line} />;
         })}
       </div>
