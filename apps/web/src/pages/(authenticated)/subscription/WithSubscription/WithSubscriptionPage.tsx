@@ -57,7 +57,7 @@ export const WithSubscriptionPage: FC = () =>  {
     )
   };
 
-const WithSubscriptionCard: FC<WithSubscriptionCardProps> = ({ title, description, price, duration, isSm = false, href = "" }) => {
+const WithSubscriptionCard: FC<WithSubscriptionCardProps> = ({ title, description, price, duration, isSm = false }) => {
 return (
   <>
   <Haptic type="impact" value="medium" asChild>
