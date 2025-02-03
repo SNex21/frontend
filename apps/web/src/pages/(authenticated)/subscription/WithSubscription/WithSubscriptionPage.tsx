@@ -16,6 +16,7 @@ interface WithSubscriptionCardProps {
     title: string;
     description?: string;
     price?: number;
+    duration?: number;
     isSm?: boolean;
     href?: string;
   }
@@ -51,6 +52,7 @@ export const WithSubscriptionPage: FC = () =>  {
         title={`Подписка "${subscription.plan.title}"`}
         description={`Действует до ${formatDate(subscription.end_date)}`}
         price={subscription.price}
+        duration={subscription.plan.duration}
         href={"/"}
         />
         </section>
@@ -58,7 +60,7 @@ export const WithSubscriptionPage: FC = () =>  {
     )
   };
 
-const WithSubscriptionCard: FC<WithSubscriptionCardProps> = ({ title, description, price,  isSm = false, href = "" }) => {
+const WithSubscriptionCard: FC<WithSubscriptionCardProps> = ({ title, description, price, duration, isSm = false, href = "" }) => {
 return (
   <>
     <Haptic type="impact" value="medium" asChild>
@@ -73,6 +75,7 @@ return (
         {description && <p className={styles.card__content__description}>{description}</p>}
         <p className={styles.card__content__description}>
             {price === 0 ? "Бесплатно" : `${price} руб.`}
+            {duration}
         </p>
         
         </div>
