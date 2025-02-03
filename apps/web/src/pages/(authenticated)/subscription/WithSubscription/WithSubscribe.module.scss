@@ -75,3 +75,20 @@
       }
     }
   }
+
+  .button {
+    padding: 10px 20px;
+    background-color: white;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+  }
+  
