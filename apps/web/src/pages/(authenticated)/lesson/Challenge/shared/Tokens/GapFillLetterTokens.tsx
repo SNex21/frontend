@@ -41,7 +41,7 @@ const GapFillLetterTokens: React.FC<GapFillLetterTokensProps> = ({
                   challengeId={challengeId}
                   text={currentChoice.text}
                   onSelect={state?.submitted ? () => {} : () => setChoice(null)}
-                  state={{ submitted: state?.submitted ?? false, wrong: state?.wrong }} // Исправление
+                  state={{ submitted: state?.submitted ?? false }} // Убираем wrong
                   attempt={attempt}
                 />
               </span>
