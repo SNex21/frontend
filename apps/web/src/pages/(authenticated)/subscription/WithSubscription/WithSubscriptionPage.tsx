@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { Haptic } from "@/lib/twa/components/Haptic";
-import { Link } from "react-router-dom";
 import styles from "./WithSubscribe.module.scss";
 import cn from "classnames";
 import { BackButton } from "@/lib/twa/components/BackButton";
@@ -18,7 +17,6 @@ interface WithSubscriptionCardProps {
     price?: number;
     duration?: number;
     isSm?: boolean;
-    href?: string;
   }
 
 export const WithSubscriptionPage: FC = () =>  {
@@ -53,7 +51,6 @@ export const WithSubscriptionPage: FC = () =>  {
         description={`Действует до ${formatDate(subscription.end_date)}`}
         price={subscription.price}
         duration={subscription.plan.duration}
-        href={"/"}
         />
         </section>
     </div>
@@ -63,22 +60,20 @@ export const WithSubscriptionPage: FC = () =>  {
 const WithSubscriptionCard: FC<WithSubscriptionCardProps> = ({ title, description, price, duration, isSm = false, href = "" }) => {
 return (
   <>
-    <Haptic type="impact" value="medium" asChild>
-    <Link to={href} className={styles.card}>
-        <div className={styles.card__content}>
-        <h3
-            className={cn(styles.card__content__title, {
-            [styles.card__content__title_sm!]: isSm,
-            })}>
-            {title}
-        </h3>
-        {description && <p className={styles.card__content__description}>{description}</p>}
-        <p className={styles.card__content__description}>
-            {price === 0 ? "Бесплатно" : `${price} руб.`} {duration === 7 ? "в неделю": (duration === 30 ? "в месяц": (duration === 30 ? "за 3 месяца" : `за ${duration} дн.`))}
-        </p>
-        
-        </div>
-    </Link>
+  <Haptic type="impact" value="medium" asChild>
+      <div className={styles.card__content}>
+      <h3
+          className={cn(styles.card__content__title, {
+          [styles.card__content__title_sm!]: isSm,
+          })}>
+          {title}
+      </h3>
+      {description && <p className={styles.card__content__description}>{description}</p>}
+      <p className={styles.card__content__description}>
+          {price === 0 ? "Бесплатно" : `${price} руб.`} {duration === 7 ? "в неделю": (duration === 30 ? "в месяц": (duration === 30 ? "за 3 месяца" : `за ${duration} дн.`))}
+      </p>
+      
+      </div>
     </Haptic>
     
   </>
