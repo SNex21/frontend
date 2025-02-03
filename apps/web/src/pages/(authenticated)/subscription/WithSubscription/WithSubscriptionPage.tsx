@@ -74,7 +74,7 @@ return (
             {price === 0 ? "Бесплатно" : `${price} руб.`} {duration === 7 ? "в неделю": (duration === 30 ? "в месяц": (duration === 30 ? "за 3 месяца" : `за ${duration} дн.`))}
         </p>
         <a href="https://t.me/Bug_Hunt_UchiBot" target="_blank" rel="noopener noreferrer">
-            <button className={styles.button}>Перейти в канал</button>
+            <button className={styles.button}>Поддержка</button>
         </a>
         </div>
     </div>
