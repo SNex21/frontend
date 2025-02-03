@@ -40,7 +40,6 @@ const GapFillLetterTokens: React.FC<GapFillLetterTokensProps> = ({
           if (currentChoice) {
             return (
               <span key={i} className={styles.line}>
-                <p>'ABUBA'</p>
                 <ChoiceLetter
                   challengeId={challengeId}
                   text={currentChoice.text}
