@@ -7,65 +7,76 @@ import { Haptic } from "@/lib/twa/components/Haptic.tsx";
 import { motion } from "framer-motion";
 import { ChallengeState } from "@/pages/(authenticated)/lesson/Challenge/Challenge.tsx";
 
+interface ChoiceLetterProps {
+  text: string;
+  challengeId: string;
+  onSelect: () => void;
+  state: { submitted: boolean };
+  attempt?: number;
+  isSelected?: boolean; 
+}
+
 interface ChoicesLetterProps {
   attempt?: number;
   challengeId: string;
-  choices?: Choice[];
-
+  choices: Choice[];
   currentChoice: Choice | null;
   setChoice: React.Dispatch<React.SetStateAction<Choice | null>>;
-
-  state?: ChallengeState;
-}
-
-interface ChoiceLetterProps {
-  challengeId: string;
-  attempt?: number;
-  text: string;
-  onSelect?: () => void;
   state?: ChallengeState;
 }
 
 const ChoicesLetter: React.FC<ChoicesLetterProps> = ({
+  attempt = 0,
   challengeId,
-  attempt,
   choices,
   currentChoice,
   setChoice,
   state,
 }) => {
-  if (!choices) {
-    return null;
-  }
+  const handleSelect = (choice: Choice) => {
+    if (state?.submitted) {
+      return; // Если задание уже отправлено, выбор невозможен
+    }
+
+    // Обновляем выбор без необходимости отменять предыдущий
+    setChoice(choice);
+  };
 
   return (
     <div className={styles.choices}>
-      {choices.map((choice) => (
-        <div className={styles["choice-wrapper"]}>
-          {currentChoice !== choice && (
-            <ChoiceLetter
-              key={choice.text}
-              challengeId={challengeId}
-              text={choice.text}
-              onSelect={() => (currentChoice ? undefined : setChoice(choice))}
-              state={state}
-              attempt={attempt}
-            />
-          )}
-          <div className={styles.choice__skeleton} />
-        </div>
+      {choices.map((choice, index) => (
+        <button
+          key={index}
+          className={`${styles.choice} ${
+            currentChoice?.id === choice.id ? styles.selected : ""
+          }`}
+          onClick={() => handleSelect(choice)}
+          disabled={state?.submitted}
+        >
+          {choice.text}
+        </button>
       ))}
     </div>
   );
 };
 
-const ChoiceLetter: React.FC<ChoiceLetterProps> = ({ text, challengeId, onSelect, state, attempt = 0 }) => {
+const ChoiceLetter: React.FC<ChoiceLetterProps> = ({
+  text,
+  challengeId,
+  onSelect,
+  state,
+  attempt = 0,
+  isSelected = false, 
+}) => {
   return (
     <Haptic type={"impact"} value={"medium"} disabled={state?.submitted} asChild>
       <motion.div
         role={"radio"}
         onClick={onSelect}
-        className={cn(styles.choice, { [styles["choice_not-submitted"]!]: !state?.submitted })}
+        className={cn(styles.choice, {
+          [styles["choice_not-submitted"]!]: !state?.submitted,
+          [styles["choice_selected"]!]: isSelected, // Добавляем стиль для выбранной буквы
+        })}
         layoutId={`choiceLetter-${challengeId}-${text}-${attempt}`}
         transition={{ duration: 0.2 }}
       >
@@ -74,5 +85,4 @@ const ChoiceLetter: React.FC<ChoiceLetterProps> = ({ text, challengeId, onSelect
     </Haptic>
   );
 };
-
 export { ChoicesLetter, ChoiceLetter };

@@ -17,27 +17,25 @@ const GapFillLetterChallenge: React.FC<ChallengeScreenProps> = ({ challenge, upd
     if (!choice) {
       return;
     }
-
     setState({
       submitted: true,
       wrong: !choice.isCorrect,
     });
-
     updateStats(choice.isCorrect);
-
     notification(choice.isCorrect ? "success" : "error");
   }
 
   const correctChoice = React.useMemo(() => {
     return <>{challenge.displayTokens?.map((token) => token.text)}</>;
   }, [challenge.displayTokens]);
+
   const prompt = challenge.prompt ?? '';
+
   return (
     <>
       <ChallengeHeading challenge={challenge}>Заполни пропуск</ChallengeHeading>
       <ChallengeMain>
-      
-      {formatPrompt(
+        {formatPrompt(
           prompt,
           <GapFillLetterTokens
             attempt={challenge.attempt}
@@ -53,7 +51,7 @@ const GapFillLetterChallenge: React.FC<ChallengeScreenProps> = ({ challenge, upd
           challengeId={challenge.id}
           choices={challenge.choices}
           currentChoice={choice}
-          setChoice={setChoice}
+          setChoice={setChoice} // Передаем setChoice для обновления выбора
           state={state}
         />
       </ChallengeMain>
