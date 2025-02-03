@@ -43,16 +43,14 @@ const GapFillLetterChallenge: React.FC<ChallengeScreenProps> = ({ challenge, upd
             currentChoice={choice}
             displayTokens={challenge.displayTokens}
             setChoice={setChoice}
-            state={state}
+            state={state ?? { submitted: false, wrong: false }}
           />
         )}
         <ChoicesLetter
-          attempt={challenge.attempt}
-          challengeId={challenge.id}
-          choices={challenge.choices}
+          choices={challenge.choices ?? []}
           currentChoice={choice}
-          setChoice={setChoice} // Передаем setChoice для обновления выбора
-          state={state}
+          setChoice={setChoice}
+          state={state ?? { submitted: false, wrong: false }}
         />
       </ChallengeMain>
       <ChallengeSubmit
@@ -60,7 +58,7 @@ const GapFillLetterChallenge: React.FC<ChallengeScreenProps> = ({ challenge, upd
         challenge={challenge}
         next={next}
         disabled={!choice}
-        state={state}
+        state={state ?? { submitted: false, wrong: false }}
         correctText={correctChoice}
         explanation={challenge.explanation}
       />

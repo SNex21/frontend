@@ -17,8 +17,6 @@ interface ChoiceLetterProps {
 }
 
 interface ChoicesLetterProps {
-  attempt?: number;
-  challengeId: string;
   choices: Choice[];
   currentChoice: Choice | null;
   setChoice: React.Dispatch<React.SetStateAction<Choice | null>>;
@@ -26,8 +24,6 @@ interface ChoicesLetterProps {
 }
 
 const ChoicesLetter: React.FC<ChoicesLetterProps> = ({
-  attempt = 0,
-  challengeId,
   choices,
   currentChoice,
   setChoice,
@@ -35,10 +31,8 @@ const ChoicesLetter: React.FC<ChoicesLetterProps> = ({
 }) => {
   const handleSelect = (choice: Choice) => {
     if (state?.submitted) {
-      return; // Если задание уже отправлено, выбор невозможен
+      return;
     }
-
-    // Обновляем выбор без необходимости отменять предыдущий
     setChoice(choice);
   };
 
@@ -48,7 +42,7 @@ const ChoicesLetter: React.FC<ChoicesLetterProps> = ({
         <button
           key={index}
           className={`${styles.choice} ${
-            currentChoice?.id === choice.id ? styles.selected : ""
+            currentChoice?.text === choice.text ? styles.selected : ""
           }`}
           onClick={() => handleSelect(choice)}
           disabled={state?.submitted}
