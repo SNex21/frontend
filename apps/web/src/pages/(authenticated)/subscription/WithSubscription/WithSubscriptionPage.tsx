@@ -74,8 +74,7 @@ return (
         </h3>
         {description && <p className={styles.card__content__description}>{description}</p>}
         <p className={styles.card__content__description}>
-            {price === 0 ? "Бесплатно" : `${price} руб.`}
-            {duration}
+            {price === 0 ? "Бесплатно" : `${price} руб.`} {duration === 7 ? "в неделю": (duration === 30 ? "в месяц": (duration === 30 ? "за 3 месяца" : `за ${duration} дн.`))}
         </p>
         
         </div>
