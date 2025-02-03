@@ -57,23 +57,25 @@ export const WithSubscriptionPage: FC = () =>  {
     )
   };
 
-const WithSubscriptionCard: FC<WithSubscriptionCardProps> = ({ title, description, price, duration, isSm = false }) => {
+const WithSubscriptionCard: FC<WithSubscriptionCardProps> = ({ title, description, price, duration, isSm = false}) => {
 return (
   <>
-  <Haptic type="impact" value="medium" asChild>
-      <div className={styles.card__content}>
-      <h3
-          className={cn(styles.card__content__title, {
-          [styles.card__content__title_sm!]: isSm,
-          })}>
-          {title}
-      </h3>
-      {description && <p className={styles.card__content__description}>{description}</p>}
-      <p className={styles.card__content__description}>
-          {price === 0 ? "Бесплатно" : `${price} руб.`} {duration === 7 ? "в неделю": (duration === 30 ? "в месяц": (duration === 30 ? "за 3 месяца" : `за ${duration} дн.`))}
-      </p>
-      
-      </div>
+    <Haptic type="impact" value="medium" asChild>
+    <div className={styles.card}>
+        <div className={styles.card__content}>
+        <h3
+            className={cn(styles.card__content__title, {
+            [styles.card__content__title_sm!]: isSm,
+            })}>
+            {title}
+        </h3>
+        {description && <p className={styles.card__content__description}>{description}</p>}
+        <p className={styles.card__content__description}>
+            {price === 0 ? "Бесплатно" : `${price} руб.`} {duration === 7 ? "в неделю": (duration === 30 ? "в месяц": (duration === 30 ? "за 3 месяца" : `за ${duration} дн.`))}
+        </p>
+        
+        </div>
+    </div>
     </Haptic>
     
   </>
