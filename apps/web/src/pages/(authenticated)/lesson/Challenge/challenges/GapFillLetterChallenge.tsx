@@ -24,6 +24,7 @@ const GapFillLetterChallenge: React.FC<ChallengeScreenProps> = ({ challenge, upd
     updateStats(choice.isCorrect);
     notification(choice.isCorrect ? "success" : "error");
   }
+  
 
   const correctChoice = React.useMemo(() => {
     return <>{challenge.displayTokens?.map((token) => token.text)}</>;
