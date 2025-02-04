@@ -23,6 +23,7 @@ interface ChoicesLetterProps {
   state?: ChallengeState;
 }
 
+
 const ChoicesLetter: React.FC<ChoicesLetterProps> = ({
   choices,
   currentChoice,
