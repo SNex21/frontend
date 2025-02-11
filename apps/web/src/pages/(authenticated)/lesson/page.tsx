@@ -28,7 +28,7 @@ export default function LessonPage() {
   const [sessionKey, setSessionKey] = React.useState(Date.now());
 
   const taskAmount = Number(searchParams.get("amount")) || 10; // Получаем значение amount из параметров
-
+  console.log(params["*"])
   const { data: session, isLoading, refetch } = useQuery({
     queryKey: ["tasks", sessionKey],
     queryFn: async () =>
