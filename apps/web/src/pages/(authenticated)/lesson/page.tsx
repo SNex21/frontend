@@ -35,8 +35,8 @@ export default function LessonPage() {
       getTasks({
         token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
         topic_id: params.topicId ? Number(params.topicId) : undefined,
-        isHard: params["*"] === "hard",
-        isWorkOnMistakes: params["*"] === "mistakes",
+        isHard: params["*"]?.includes("hard"),
+        isWorkOnMistakes: params["*"]?.includes("mistakes"),
         amount: taskAmount, // Передаем amount в запрос
       }),
     refetchOnMount: false,
