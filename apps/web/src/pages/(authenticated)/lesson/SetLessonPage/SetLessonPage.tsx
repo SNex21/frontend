@@ -12,11 +12,11 @@ export default function SetLessonPage() {
   const [taskAmount, setTaskAmount] = useState<number>(10);
   const [visibleMarks, setVisibleMarks] = useState<number[]>([]);
   // Определение ссылки для навигации
-  const linkPath = params.topicId
+  const linkPath = params.topicId && params.topicId !== "mistakes" // Проверяем, что topicId не равен "mistakes"
     ? `/lesson/topic/${params.topicId}?amount=${taskAmount}`
-    : params["*"] === "mistakes"
+    : params["*"] === "mistakes" || params.topicId === "mistakes" // Обрабатываем оба случая
     ? `/lesson/mistakes?amount=${taskAmount}`
-    : `/lesson/mistakes?amount=${taskAmount}`;
+    : `/lesson/hard?amount=${taskAmount}`;
   // Возможные значения для ползунка
   const sliderValues = [10, 30, 50, 80, 100];
   
