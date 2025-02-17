@@ -3,8 +3,29 @@ import pageStyles from "../Page.module.scss";
 import styles from "./Theory.module.scss";
 import Gradient from "../../../../assets/fonts/images/Gradient.png";
 import Vector from "../../../../assets/fonts/images/Vector.png";
+import { useEffect } from "react";
+
+declare let Telegram: any; 
 
 export default function TheoryPage() {
+  useEffect(() => {
+    if (Telegram && Telegram.WebApp) {
+      const tg = Telegram.WebApp;
+
+      // Проверяем, готов ли Web App
+      if (tg.ready) {
+        tg.ready();
+      }
+
+      // Отключаем вертикальные свайпы на этой странице
+      tg.disableVerticalSwipes();
+      tg.enableClosingConfirmation();
+      return () => {
+        tg.disableVerticalSwipes();
+        tg.enableClosingConfirmation();
+      };
+    }
+  }, []);
   return (
     <><div
       className={styles.container}

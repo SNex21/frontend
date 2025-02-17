@@ -9,6 +9,9 @@ import React from "react";
 import { LessonComplete } from "./LessonComplete";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Guess } from "@/models/Session";
+import { useEffect } from "react";
+
+declare let Telegram: any; 
 
 const defaultStats = {
   total: 0,
@@ -18,6 +21,24 @@ const defaultStats = {
 };
 
 export default function LessonPage() {
+  useEffect(() => {
+    if (Telegram && Telegram.WebApp) {
+      const tg = Telegram.WebApp;
+
+      // Проверяем, готов ли Web App
+      if (tg.ready) {
+        tg.ready();
+      }
+
+      // Отключаем вертикальные свайпы на этой странице
+      tg.disableVerticalSwipes();
+      tg.enableClosingConfirmation();
+      return () => {
+        tg.disableVerticalSwipes();
+        tg.enableClosingConfirmation();
+      };
+    }
+  }, []);
   const params = useParams();
   const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
   const cloudStorage = useCloudStorage();
