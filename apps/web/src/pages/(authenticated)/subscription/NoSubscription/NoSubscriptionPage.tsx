@@ -111,6 +111,9 @@ const NoSubscriptionCard: React.FC<NoSubscriptionCardProps> = ({
               </p>
             )}
           </div>
+        <a href="https://t.me/Bug_Hunt_UchiBot" target="_blank" rel="noopener noreferrer">
+          <button className={styles.button_support}>Поддержка</button>
+        </a>
         </div>
       </Haptic>
     </div>
