@@ -5,7 +5,6 @@ import styles from "../Welcome.module.scss";
 import { Haptic } from "@/lib/twa/components/Haptic";
 import { Avatar, AvatarFallback, AvatarImage, Button, LoaderSpinner } from "@repo/ui";
 import cn from "classnames";
-import { useNavigate } from "react-router-dom";
 import { authTelegramMiniApp, checkUsername, login } from "@/services/auth";
 import axios, { AxiosError, CancelTokenSource } from "axios";
 import { ERROR_CODES } from "@/services/api/errors";
@@ -14,9 +13,12 @@ import { CheckmarkCircleIcon, XmarkCircleIcon } from "@repo/ui/icons";
 import { HuggingFaceEmoji } from "@repo/ui/emojis";
 import posthog from "posthog-js";
 
-const SignupScreen: FC = () => {
+interface SignUpScreenProps {
+  onButtonClick: () => void;
+}
+
+const SignupScreen: FC<SignUpScreenProps> = ({ onButtonClick }) => {
   const [initDataUnsafe, initData] = useInitData();
-  const navigate = useNavigate();
 
   const [isFocused, setFocused] = useState(false);
 
@@ -84,7 +86,9 @@ const SignupScreen: FC = () => {
       });
       await login({ token: res.token, userId: res.user.id });
       posthog.capture("user_signed_up");
-      navigate("/home");
+      
+      // Вызов props вместо navigate
+      onButtonClick();
     } catch (e) {
       const error = e as AxiosError;
       setStatus({
@@ -93,7 +97,7 @@ const SignupScreen: FC = () => {
         loading: false,
       });
     }
-  }, [initData, username, setStatus]);
+  }, [initData, username, setStatus, onButtonClick]);
 
   return (
     <motion.div
