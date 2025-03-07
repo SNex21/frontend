@@ -8,8 +8,7 @@ export default function TheoryPage() {
   return (
     <><div
       className={styles.container}
-      style={{ backgroundImage: `url(${Gradient})` }}
-    >
+      style={{ backgroundImage: `url(${Gradient})` }}>
       <img
         src={Vector}
         alt="Логотип"
@@ -22,7 +21,7 @@ export default function TheoryPage() {
         <button className={styles.button}>Перейти в канал</button>
       </a>
     </div><div className={pageStyles.main}>
-        <TheorySection />
+        <TheorySection /> 
       </div></>
   );
 }
