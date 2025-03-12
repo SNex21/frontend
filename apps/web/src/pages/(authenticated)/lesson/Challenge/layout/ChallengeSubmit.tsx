@@ -62,7 +62,6 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
               </div>
               {correctText && (
                 <div className={styles["submit__panel__error-info"]}>
-                  <span className={styles["submit__panel__error-info__title"]}>Правильный ответ:</span>
                   <span className={styles["submit__panel__error-info__text"]}>{correctText}</span> 
                 </div>
               )}
