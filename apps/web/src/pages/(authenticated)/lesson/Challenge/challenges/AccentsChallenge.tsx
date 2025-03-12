@@ -24,10 +24,6 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
       console.error("Choices are undefined");
       return;
     }
-  
-    // Находим правильный ответ
-    //const correct = challenge.choices.find((c) => c.isCorrect);
-    //setCorrectAnswer(correct || null);
 
     const correctId= challenge.choices.findIndex((c) => c.isCorrect);
     setCorrectAnswerId(correctId || null);
@@ -64,7 +60,7 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
         next={next}
         disabled={!choice}
         state={state}
-        correctText={' '} // убираем из сабмита правильное слово
+        correctText={''} // убираем из сабмита правильное слово
         explanation={challenge.explanation}
       />
     </>
