@@ -60,7 +60,7 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
         next={next}
         disabled={!choice}
         state={state}
-        correctText={} // убираем из сабмита правильное слово
+        correctText={''} // убираем из сабмита правильное слово
         explanation={challenge.explanation}
       />
     </>
