@@ -41,7 +41,7 @@ export default function LessonPage() {
   }, []);
   const params = useParams();
   const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
-  const cloudStorage = useCloudStorage();
+  const cloudStorage = useCloudStorage(); // abuba
 
   const [completed, setCompleted] = React.useState(false);
   const [startDate, setStartDate] = React.useState<number | null>(null);
