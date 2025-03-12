@@ -82,6 +82,7 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
           )}
         </div>
       </div>
+    </div>
   );
 };
 
