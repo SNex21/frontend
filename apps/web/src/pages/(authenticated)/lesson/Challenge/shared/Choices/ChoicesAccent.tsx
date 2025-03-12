@@ -72,7 +72,7 @@ const ChoiceAccent: React.FC<ChoiceAccentProps> = ({ choice, onSelect, state, is
         aria-disabled={!isVowel}
       >
         <span className={styles.choice__text}>
-          {choice?.text}
+          {/*{choice?.text}*/}
           {isCorrect && (
           <div className={styles.choice__accent}>
             <svg width="7" height="11" viewBox="0 0 7 11" fill="none"  xmlns="http://www.w3.org/2000/svg">
