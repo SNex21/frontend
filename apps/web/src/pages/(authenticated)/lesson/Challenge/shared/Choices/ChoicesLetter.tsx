@@ -53,6 +53,7 @@ const ChoicesLetter: React.FC<ChoicesLetterProps> = ({
               attempt={attempt}
             />
           )}
+          
           <div className={styles.choice__skeleton} />
         </div>
       ))}
