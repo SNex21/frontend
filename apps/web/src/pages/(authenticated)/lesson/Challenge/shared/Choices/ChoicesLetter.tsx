@@ -53,6 +53,9 @@ const ChoicesLetter: React.FC<ChoicesLetterProps> = ({
               attempt={attempt}
             />
           )}
+          {state?.submitted && !choice.isCorrect && (
+            <div className={styles.correct__letter}>{choice.correctText}</div>
+          )}
           <div className={styles.choice__skeleton} />
         </div>
       ))}
