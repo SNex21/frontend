@@ -65,12 +65,6 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
                   <span className={styles["submit__panel__error-info__text"]}>{correctText}</span> 
                 </div>
               )}
-              {explanation && (
-                <div className={styles["submit__panel__error-info"]}>
-                  <span className={styles["submit__panel__error-info__title"]}>Объяснение:</span>
-                  <span className={styles["submit__panel__error-info__text"]}>{explanation}</span>
-                </div>
-              )}
             </>
           ) : (
             <div className={styles.submit__panel__heading}>
@@ -78,9 +72,16 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
               <h1 className={styles.submit__panel__heading__title}>Верно!</h1>
             </div>
           )}
+
+          {/* Объяснение теперь выводится всегда, если explanation существует */}
+          {explanation && (
+            <div className={styles["submit__panel__error-info"]}>
+              <span className={styles["submit__panel__error-info__title"]}>Объяснение:</span>
+              <span className={styles["submit__panel__error-info__text"]}>{explanation}</span>
+            </div>
+          )}
         </div>
       </div>
-    </div>
   );
 };
 
