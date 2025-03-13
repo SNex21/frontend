@@ -1,14 +1,12 @@
-import React from "react";
 import { Button } from "@repo/ui";
 import { motion } from "framer-motion";
+import React from "react";
 import styles from "./Lesson.module.scss";
 import dayjs from "dayjs";
 import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
-import { Haptic } from "@/lib/twa/components/Haptic";
+import { Haptic } from "@/lib/twa/components/Haptic.tsx";
 import { Link } from "react-router-dom";
 import { Xmark } from "@repo/ui/icons";
-
-declare let Telegram: any;
 
 interface LessonCompleteProps {
   startDate: number | null;
@@ -23,21 +21,6 @@ interface SummaryCardProps {
 
 const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPercentage, onRestart }) => {
   const wastedTime = React.useMemo(() => (startDate ? new Date().getTime() - startDate : null), [startDate]);
-
-  // Флаг первого запуска (по умолчанию true)
-  const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean | null>(null);
-
-  React.useEffect(() => {
-    // Проверяем флаг первого запуска в Cloud Storage
-    Telegram.WebApp.CloudStorage.getItem("isFirstLaunch").then((value: string | null) => {
-      setIsFirstLaunch(value === "false" ? false : true);
-    });
-  }, []);
-
-  // Если флаг ещё не загружен, показываем загрузку
-  if (isFirstLaunch === null) {
-    return <div>Загрузка...</div>;
-  }
 
   return (
     <motion.div
@@ -72,9 +55,7 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
         </div>
       </div>
       <div className={styles.complete__buttons}>
-        <Button onClick={onRestart}>
-          {isFirstLaunch ? "ЗАВЕРШИТЬ" : "РЕШАТЬ ЕЩЁ!"}
-        </Button>
+        <Button onClick={onRestart}>РЕШАТЬ ЕЩЁ!</Button> {/* Кнопка для начала новой сессии */}
       </div>
     </motion.div>
   );
@@ -95,3 +76,4 @@ const SummaryCard: React.FC<React.PropsWithChildren<SummaryCardProps>> = ({ i, i
 };
 
 export { LessonComplete };
+
