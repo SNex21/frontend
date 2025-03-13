@@ -21,7 +21,7 @@ const OnbordingScreen: FC = () => {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
           className={styles.onbording__title}
         >
           Привет, это Учи-бот — сервис, где можно удобно готовиться к ЕГЭ по русскому.
