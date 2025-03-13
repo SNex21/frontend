@@ -149,8 +149,7 @@ const WorkoutSection: FC = () => {
               description="по всем заданиям"
               icon={<img
                 src={Blocked}
-                alt="блок"
-                className={styles.blocked_logo} />}
+                alt="блок"/>}
             />
             <div className={styles.row}>
               <WorkoutCardBlocked title="Практика ошибок" icon={<WarningEmoji size={25} />} isSm />
@@ -159,8 +158,7 @@ const WorkoutSection: FC = () => {
                   title="Самые сложные"
                   icon={<img
                     src={Blocked}
-                    alt="блок"
-                    className={styles.blocked_logo} />}
+                    alt="блок" />}
                   isSm
                 />
               )}
