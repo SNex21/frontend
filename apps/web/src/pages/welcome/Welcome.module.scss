@@ -41,7 +41,7 @@
     flex: 1;
     flex-direction: column;
     justify-content: space-evenly;
-    max-width: 640px;
+    max-width: 650px;
     text-align: center;
     padding: 0 var(--spacing-4);
   }
@@ -56,7 +56,7 @@
 
   &__description {
     font-size: clamp(16px, 4vw, 20px); // Адаптивный размер шрифта
-    font-weight: 400;
+    font-weight: 700;
     color: var(--ds-text-secondary);
     margin-bottom: var(--spacing-6);
     line-height: 1.5; // Улучшаем читаемость
