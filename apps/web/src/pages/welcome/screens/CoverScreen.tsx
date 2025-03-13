@@ -23,7 +23,7 @@ const CoverScreen: FC<CoverScreenProps> = ({ onButtonClick }) => {
             filter: "blur(0)",
             transform: "translateY(0)",
           }}
-          transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
         >
           <svg width="82" height="103" viewBox="0 0 82 103" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -60,7 +60,7 @@ const CoverScreen: FC<CoverScreenProps> = ({ onButtonClick }) => {
             filter: "blur(0)",
             transform: "translateY(0)",
           }}
-          transition={{ duration: 1.2, delay: 1, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
         >
           Готовься к ЕГЭ
           <br />
@@ -81,7 +81,7 @@ const CoverScreen: FC<CoverScreenProps> = ({ onButtonClick }) => {
           filter: "blur(0)",
           transform: "translateY(0)",
         }}
-        transition={{ duration: 1.2, delay: 1.1, ease: "easeOut" }}
+        transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
       >
         <Haptic type="impact" value="medium" event="onTouchStart" asChild>
           <Button onClick={onButtonClick}>ПОЕХАЛИ</Button>
