@@ -110,19 +110,15 @@
 
 .signup {
   position: relative;
-
   display: flex;
-
   overflow: hidden;
   align-items: center;
   flex-direction: column;
-
   width: 100%;
   height: 100%;
 
   &__title {
     flex: 1;
-
     width: 100%;
     padding: var(--spacing-16) 0;
   }
@@ -130,78 +126,78 @@
   &__content {
     position: absolute;
     bottom: 0;
-
     display: flex;
-
     overflow: hidden;
     align-items: center;
     flex-direction: column;
     justify-content: space-between;
-
     width: 100%;
     max-width: 640px;
     height: calc(100% - 206px);
     max-height: 610px;
-
     padding: 0 var(--spacing-4);
-
     padding-top: var(--spacing-5);
-
     padding-bottom: calc(20px + var(--lvh, 100vh) - var(--tg-viewport-height, 100vh));
-
     transition: all 0.2s ease;
-
     animation: content-animation;
     animation-duration: 1.3s;
     animation-timing-function: ease;
     animation-delay: 0.7s;
-
     color: var(--ds-gray-1000);
-
     border-radius: 32px 32px 0 0;
-
     background-color: var(--ds-background-100);
     animation-fill-mode: backwards;
 
     &_expanded {
       height: 100%;
       max-height: 100dvh;
-
       border-radius: 0;
     }
   }
+}
+
+// Анимация для signup__content при выходе
+@keyframes content-exit {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+// Анимация для OnboardingScreen при входе
+.onbording {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--ds-background-100);
+
+  &__content {
+    padding: var(--spacing-16);
+  }
 
   &__button {
-    position: fixed;
-
-    bottom: calc(20px + var(--lvh, 100vh) - var(--tg-viewport-height, 100vh));
-
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-
-    width: 100%;
-    max-width: 640px;
-
+    margin-bottom: var(--spacing-8);
     padding: 0 var(--spacing-4);
+  }
+}
 
-    gap: var(--spacing-3);
-
-    animation: button-animation;
-    animation-duration: 1.3s;
-    animation-timing-function: ease;
-    animation-fill-mode: backwards;
-
-    animation-delay: 0.7s;
-
-    &__disclaimer {
-      text-align: center;
-
-      color: var(--ds-violet-600);
-
-      font-size: 12px;
-      font-weight: 500;
-    }
+@keyframes onbording-enter {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
