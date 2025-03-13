@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import styles from "../Welcome.module.scss";
 import { Haptic } from "@/lib/twa/components/Haptic";
-import { Avatar, AvatarFallback, AvatarImage, Button, LoaderSpinner } from "@repo/ui";
+import { Avatar, AvatarFallback, Button, LoaderSpinner } from "@repo/ui";
 import cn from "classnames";
 import { authTelegramMiniApp, checkUsername, login } from "@/services/auth";
 import axios, { AxiosError, CancelTokenSource } from "axios";
@@ -86,7 +86,7 @@ const SignupScreen: FC<SignUpScreenProps> = ({ onButtonClick }) => {
       });
       await login({ token: res.token, userId: res.user.id });
       posthog.capture("user_signed_up");
-      
+
       // Вызов props вместо navigate
       onButtonClick();
     } catch (e) {
@@ -98,6 +98,7 @@ const SignupScreen: FC<SignUpScreenProps> = ({ onButtonClick }) => {
       });
     }
   }, [initData, username, setStatus, onButtonClick]);
+
   return (
     <motion.div
       className={styles.signup}
@@ -107,7 +108,7 @@ const SignupScreen: FC<SignUpScreenProps> = ({ onButtonClick }) => {
       transition={{ duration: 0.5 }}
     >
       <motion.div
-        className={styles.signup__title}
+        className={cn(styles.signup__title)}
         initial={{
           opacity: 0,
           filter: "blur(10px)",
@@ -136,8 +137,48 @@ const SignupScreen: FC<SignUpScreenProps> = ({ onButtonClick }) => {
         exit={{ y: 100, opacity: 0 }} // Уезжает вниз
         transition={{ duration: 0.5, ease: "easeInOut" }}
       >
-        {/* ... (остальной код без изменений) */}
+        <div className={styles.form}>
+          <div className={styles.form__avatar}>
+            <Avatar className={styles.form__avatar__image}>
+              <AvatarFallback>{username.at(0)?.toUpperCase() ?? <HuggingFaceEmoji size={40} />}</AvatarFallback>
+            </Avatar>
+          </div>
+          <div
+            className={cn(styles.form__username, {
+              [styles.form__username_success!]: status.success,
+              [styles.form__username_error!]: !!status.error,
+            })}
+          >
+            <label htmlFor="username" data-label>
+              Никнейм
+            </label>
+            <div className={styles.form__username__input}>
+              <div style={{ position: "relative" }}>
+                <input
+                  type="text"
+                  data-input
+                  id="username"
+                  placeholder="Место для вашего крутого ника"
+                  onFocus={() => setFocused(true)}
+                  onBlur={() => setFocused(false)}
+                  value={username}
+                  onInput={(e) => {
+                    setUsername(e.currentTarget.value);
+                    setStatus({ success: false, error: null, loading: true });
+                  }}
+                />
+                <div data-indicator>
+                  {status.success && <CheckmarkCircleIcon size={23} />}
+                  {status.error && <XmarkCircleIcon size={23} />}
+                  {status.loading && <LoaderSpinner size={23} />}
+                </div>
+              </div>
 
+              {status.success && <p data-message>Классный ник! Он свободен</p>}
+              {!!status.error && <p data-message>{status.error}</p>}
+            </div>
+          </div>
+        </div>
         <div className={styles.signup__button}>
           <Haptic type="impact" value="medium" event="onTouchStart" asChild>
             <Button disabled={!status.success} onClick={status.success ? handleLogin : undefined}>
@@ -149,6 +190,7 @@ const SignupScreen: FC<SignUpScreenProps> = ({ onButtonClick }) => {
     </motion.div>
   );
 };
+
 function getErrorMessage(code?: number) {
   switch (code) {
     case ERROR_CODES.INVALID_USERNAME:
