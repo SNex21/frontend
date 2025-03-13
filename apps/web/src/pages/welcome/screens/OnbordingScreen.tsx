@@ -24,7 +24,7 @@ const OnbordingScreen: FC = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
           className={styles.onbording__title}
         >
-          Привет, это Учи-бот — сервис, где можно удобно готовиться к ЕГЭ по русскому.
+          Привет, это Учи-бот — твой помощник для подготовки к ЕГЭ по русскому
         </motion.h1>
 
         {/* Описание */}
@@ -34,7 +34,7 @@ const OnbordingScreen: FC = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
           className={styles.onbording__description}
         >
-          Чтобы тебе было проще ориентироваться, сейчас мы тебе покажем основной функционал нашего сервиса
+          Сейчас мы тебе покажем основной функционал нашего сервиса
         </motion.h2>
       </div>
 
