@@ -11,6 +11,7 @@ import { ERROR_CODES } from "@/services/api/errors";
 import debounce from "lodash/debounce";
 import { CheckmarkCircleIcon, XmarkCircleIcon } from "@repo/ui/icons";
 import { HuggingFaceEmoji } from "@repo/ui/emojis";
+import { saveIsFirstStart } from "../../../services/auth/storage";
 import posthog from "posthog-js";
 
 interface SignUpScreenProps {
@@ -18,6 +19,7 @@ interface SignUpScreenProps {
 }
 
 const SignupScreen: FC<SignUpScreenProps> = ({ onButtonClick }) => {
+  saveIsFirstStart('true')
   const [initDataUnsafe, initData] = useInitData();
 
   const [isFocused, setFocused] = useState(false);
