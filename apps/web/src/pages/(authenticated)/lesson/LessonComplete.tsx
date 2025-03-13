@@ -5,7 +5,7 @@ import styles from "./Lesson.module.scss";
 import dayjs from "dayjs";
 import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
 import { Haptic } from "@/lib/twa/components/Haptic.tsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Добавляем useNavigate
 import { Xmark } from "@repo/ui/icons";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { IS_FIRST_START, saveIsFirstStart } from "@/services/auth/storage.ts";
@@ -25,6 +25,7 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
   const wastedTime = React.useMemo(() => (startDate ? new Date().getTime() - startDate : null), [startDate]);
   const cloudStorage = useCloudStorage();
   const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null);
+  const navigate = useNavigate(); // Инициализируем useNavigate
 
   // Проверяем значение IS_FIRST_START при монтировании компонента
   useEffect(() => {
@@ -32,12 +33,21 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
       .getItem(IS_FIRST_START)
       .then((value) => {
         setIsFirstStart(value === "true"); // Преобразуем строку в булево значение
-        saveIsFirstStart('false')
+        saveIsFirstStart('false'); // Сохраняем значение false после первого запуска
       })
       .catch((error) => {
         console.error("Ошибка при получении значения из cloud storage:", error);
       });
   }, [cloudStorage]);
+
+  // Обработчик нажатия на кнопку
+  const handleButtonClick = () => {
+    if (isFirstStart === true) {
+      navigate("/home"); // Переход на /home, если isFirstStart === true
+    } else {
+      onRestart(); // Вызов функции перезапуска, если isFirstStart === false
+    }
+  };
 
   return (
     <motion.div
@@ -46,7 +56,6 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
       animate={{ opacity: 1, transform: "translateX(0)", transition: { delay: 0.2, duration: 0.4, ease: "ease" } }}
       exit={{ opacity: 0, transform: "translateX(0)" }}
     >
-      <p>{isFirstStart}</p>
       <Haptic type={"impact"} value={"light"} asChild>
         <Link to="/">
           <button className={styles.complete__out_button}>
@@ -73,9 +82,9 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
         </div>
       </div>
       <div className={styles.complete__buttons}>
-        {/* Условно изменяем текст кнопки */}
-        <Button onClick={onRestart}>
-          {isFirstStart === null ? "Загрузка..." : isFirstStart ? "Завершить" : "РЕШАТЬ ЕЩЁ!"}
+        {/* Кнопка с динамическим текстом и обработчиком */}
+        <Button onClick={handleButtonClick}>
+          {isFirstStart === null ? "Загрузка..." : isFirstStart ? "ЗАВЕРШИТЬ" : "РЕШАТЬ ЕЩЁ!"}
         </Button>
       </div>
     </motion.div>
