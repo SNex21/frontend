@@ -66,7 +66,7 @@ const CoverScreen: FC<CoverScreenProps> = ({ onButtonClick }) => {
           <br />
           по русскому
           <br />
-          <span className={styles.title_marked}>вдвое</span> быстрее
+          <span className={styles.title_marked}>в удобном</span> формате
         </motion.h1>
       </div>
       <motion.div
