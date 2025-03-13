@@ -147,18 +147,14 @@ const WorkoutSection: FC = () => {
             <WorkoutCardBlocked
               title="Начать тренировку"
               description="по всем заданиям"
-              icon={<img
-                src={Blocked}
-                alt="блок"/>}
+              icon={<FlexedBicepsEmoji size={25} />}
             />
             <div className={styles.row}>
               <WorkoutCardBlocked title="Практика ошибок" icon={<WarningEmoji size={25} />} isSm />
               {showHardLessonButton && (
                 <WorkoutCardBlocked
                   title="Самые сложные"
-                  icon={<img
-                    src={Blocked}
-                    alt="блок" />}
+                  icon={<PersonLiftingWeightsEmoji size={25} />}
                   isSm
                 />
               )}
