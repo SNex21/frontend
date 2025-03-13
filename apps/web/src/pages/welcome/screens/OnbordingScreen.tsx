@@ -5,9 +5,33 @@ import { Button } from "@repo/ui";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
+declare let Telegram: any;
+
 const OnbordingScreen: FC = () => {
   const navigate = useNavigate();
   const linkPath = "/lesson/topic/2?amount=${10}";
+
+  // Флаг первого запуска (по умолчанию true)
+  const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean | null>(null);
+
+  React.useEffect(() => {
+    // Проверяем флаг первого запуска в Cloud Storage
+    Telegram.WebApp.CloudStorage.getItem("isFirstLaunch").then((value: string | null) => {
+      if (value === null) {
+        // Если флаг не установлен, это первый запуск
+        setIsFirstLaunch(true);
+        Telegram.WebApp.CloudStorage.setItem("isFirstLaunch", "false");
+      } else {
+        setIsFirstLaunch(false);
+      }
+    });
+  }, []);
+
+  // Если флаг ещё не загружен, показываем загрузку
+  if (isFirstLaunch === null) {
+    return <div>Загрузка...</div>;
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, transform: "translateX(100%)" }}
@@ -41,7 +65,9 @@ const OnbordingScreen: FC = () => {
       {/* Кнопка */}
       <div className={styles.onbording__button}>
         <Haptic type="impact" value="medium" event="onTouchStart" asChild>
-          <Button onClick={() => navigate(linkPath)}>УЧИТЬСЯ!</Button>
+          <Button onClick={() => navigate(linkPath)}>
+            {isFirstLaunch ? "ЗАВЕРШИТЬ" : "УЧИТЬСЯ!"}
+          </Button>
         </Haptic>
       </div>
     </motion.div>
