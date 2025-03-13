@@ -6,6 +6,7 @@ import cn from "classnames";
 import { Link } from "react-router-dom";
 import { useUser } from "@/providers/AuthProvider/AuthProvider";
 import { useFeatureFlagEnabled } from "posthog-js/react";
+import Blocked from "../../../../../assets/fonts/images/Blocked.png";
 
 interface WorkoutCardProps {
   icon?: React.ReactNode;
@@ -146,14 +147,20 @@ const WorkoutSection: FC = () => {
             <WorkoutCardBlocked
               title="Начать тренировку"
               description="по всем заданиям"
-              icon={<FlexedBicepsEmoji size={25} />}
+              icon={<img
+                src={Blocked}
+                alt="блок"
+                className={styles.blocked_logo} />}
             />
             <div className={styles.row}>
               <WorkoutCardBlocked title="Практика ошибок" icon={<WarningEmoji size={25} />} isSm />
               {showHardLessonButton && (
                 <WorkoutCardBlocked
                   title="Самые сложные"
-                  icon={<PersonLiftingWeightsEmoji size={25} />}
+                  icon={<img
+                    src={Blocked}
+                    alt="блок"
+                    className={styles.blocked_logo} />}
                   isSm
                 />
               )}
