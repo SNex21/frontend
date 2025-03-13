@@ -1,6 +1,6 @@
+import React from "react";
 import { Button } from "@repo/ui";
 import { motion } from "framer-motion";
-import React from "react";
 import styles from "./Lesson.module.scss";
 import dayjs from "dayjs";
 import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
