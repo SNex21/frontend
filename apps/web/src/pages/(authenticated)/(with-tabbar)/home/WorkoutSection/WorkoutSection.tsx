@@ -6,7 +6,6 @@ import cn from "classnames";
 import { Link } from "react-router-dom";
 import { useUser } from "@/providers/AuthProvider/AuthProvider";
 import { useFeatureFlagEnabled } from "posthog-js/react";
-import Blocked from "../../../../../assets/fonts/images/Blocked.png";
 
 interface WorkoutCardProps {
   icon?: React.ReactNode;
@@ -172,7 +171,7 @@ const WorkoutSection: FC = () => {
       )}
     </>
   );
-  
+
 };
 
 const WorkoutCard: FC<WorkoutCardProps> = ({
