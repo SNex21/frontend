@@ -174,6 +174,7 @@ const WorkoutSection: FC = () => {
   );
 };
 
+
 const WorkoutCard: FC<WorkoutCardProps> = ({
   icon,
   title,
