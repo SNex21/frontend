@@ -46,7 +46,7 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
       animate={{ opacity: 1, transform: "translateX(0)", transition: { delay: 0.2, duration: 0.4, ease: "ease" } }}
       exit={{ opacity: 0, transform: "translateX(0)" }}
     >
-      <h>{isFirstStart}</h>
+      <p>{isFirstStart}</p>
       <Haptic type={"impact"} value={"light"} asChild>
         <Link to="/">
           <button className={styles.complete__out_button}>
