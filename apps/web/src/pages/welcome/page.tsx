@@ -17,7 +17,7 @@ export default function WelcomePage() {
   // const cloudStorage = useCloudStorage();
 
   // const navigate = useNavigate();
-  // const [screen, setScreen] = React.useState(0);
+  const [screen, setScreen] = React.useState(0);
 
   // const [checked, setChecked] = React.useState(false);
   // const [loading, setLoading] = React.useState(true);
