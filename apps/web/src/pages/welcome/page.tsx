@@ -67,7 +67,7 @@ export default function WelcomePage() {
   //       <LoaderSpinner size={25} />
   //     </div>
   //   );
-  }
+  // }
 
   return (
     <motion.div
