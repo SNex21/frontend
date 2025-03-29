@@ -30,12 +30,22 @@ export default function LessonPage() {
       if (tg.ready) {
         tg.ready();
       }
+      
       // Отключаем вертикальные свайпы на этой странице
       tg.disableVerticalSwipes();
       tg.enableClosingConfirmation();
+
+      // Добавляем обработчик события закрытия мини-приложения
+      const handlePopupClosed = () => {
+        console.log("abuba"); // Выводим сообщение в консоль при закрытии
+      };
+
+      tg.onEvent("popupClosed", handlePopupClosed);
+
       return () => {
         tg.disableVerticalSwipes();
         tg.enableClosingConfirmation();
+        tg.offEvent("popupClosed", handlePopupClosed); // Удаляем обработчик при размонтировании
       };
     }
   }, []);
