@@ -7,6 +7,8 @@ import { ChallengeScreen } from "./Challenge";
 
 import styles from "./Lesson.module.scss";
 
+declare let Telegram: any;
+
 const defaultState = {
   regular: 0,
   wom: 0,
