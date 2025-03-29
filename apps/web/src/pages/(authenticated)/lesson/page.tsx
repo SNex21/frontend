@@ -21,7 +21,7 @@ const defaultStats = {
 };
 
 export default function LessonPage() {
-  const [isFirstStart, setIsFirstStart] = useState<boolean | undefined>(true); // Состояние для первого запуска
+  const [isFirstStart, setIsFirstStart] = useState<boolean | undefined>(false); // Состояние для первого запуска
   const params = useParams();
   const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
   const cloudStorage = useCloudStorage();
@@ -48,7 +48,7 @@ export default function LessonPage() {
       });
   }, [cloudStorage]);
   // Добавляем флаг is_onboarding в зависимости от isFirstStart
-
+  console.log(isFirstStart)
   const { data: session, isLoading, refetch } = useQuery({
     queryKey: ["tasks", sessionKey],
     queryFn: async () =>
