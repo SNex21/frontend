@@ -2,14 +2,14 @@ import { SessionBuilder } from "@/pages/(authenticated)/lesson/SessionBuilder.ts
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { completeSession, getTasks } from "@/services/api/tasks";
-import { ACCESS_TOKEN_NAME, IS_FIRST_START} from "@/services/auth/storage.ts";
+import { ACCESS_TOKEN_NAME, IS_FIRST_START, saveIsFirstStart } from "@/services/auth/storage.ts";
 import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
 import React from "react";
 import { LessonComplete } from "./LessonComplete";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Guess } from "@/models/Session";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 declare let Telegram: any;
 
@@ -22,6 +22,7 @@ const defaultStats = {
 
 export default function LessonPage() {
   const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null); // Состояние для первого запуска
+  const [isReady, setIsReady] = useState(false); // Новое состояние для отслеживания готовности данных
   const params = useParams();
   const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
   const cloudStorage = useCloudStorage();
@@ -40,14 +41,27 @@ export default function LessonPage() {
       .then((value) => {
         const isFirstLaunch = value === "true"; // Преобразуем строку в булево значение
         setIsFirstStart(isFirstLaunch);
+        setIsReady(true); // Данные готовы
+        if (isFirstLaunch) {
+          saveIsFirstStart('false'); // Сохраняем значение false после первого запуска
+        }
       })
       .catch((error) => {
         console.error("Ошибка при получении значения из cloud storage:", error);
+        setIsReady(true); // Даже в случае ошибки отмечаем, что данные готовы
       });
   }, [cloudStorage]);
-  // Добавляем флаг is_onboarding в зависимости от isFirstStart
-  const isOnboarding = isFirstStart === true;
-  console.log(isOnboarding)
+
+  // Вычисляем флаг is_onboarding только после получения значения isFirstStart
+  const isOnboarding = useMemo(() => isFirstStart === true, [isFirstStart]);
+
+  // Логируем значение isOnboarding только один раз
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production" && isOnboarding !== undefined) {
+      console.log("isOnboarding:", isOnboarding);
+    }
+  }, [isOnboarding]);
+
   const { data: session, isLoading, refetch } = useQuery({
     queryKey: ["tasks", sessionKey],
     queryFn: async () =>
@@ -59,6 +73,7 @@ export default function LessonPage() {
         amount: taskAmount, // Передаем amount в запрос
         is_onboarding: isOnboarding, // Добавляем флаг is_onboarding
       }),
+    enabled: isReady, // Запрос выполняется только если данные готовы
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
@@ -128,5 +143,4 @@ export default function LessonPage() {
       )}
     </AnimatePresence>
   );
-
 }
