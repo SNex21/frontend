@@ -21,6 +21,25 @@ const defaultStats = {
 };
 
 export default function LessonPage() {
+
+  useEffect(() => {
+    if (Telegram && Telegram.WebApp) {
+      const tg = Telegram.WebApp;
+
+      // Проверяем, готов ли Web App
+      if (tg.ready) {
+        tg.ready();
+      }
+      // Отключаем вертикальные свайпы на этой странице
+      tg.disableVerticalSwipes();
+      tg.enableClosingConfirmation();
+      return () => {
+        tg.disableVerticalSwipes();
+        tg.enableClosingConfirmation();
+      };
+    }
+  }, []);
+
   const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null); // Состояние для первого запуска
   const [isReady, setIsReady] = useState(false); // Новое состояние для отслеживания готовности данных
   const params = useParams();
