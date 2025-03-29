@@ -39,15 +39,12 @@ export default function LessonPage() {
       .getItem(IS_FIRST_START)
       .then((value) => {
         const isFirstLaunch = value === "true"; // Преобразуем строку в булево значение
-        console.log(value)
-        console.log(isFirstLaunch)
         setIsFirstStart(isFirstLaunch);
       })
       .catch((error) => {
         console.error("Ошибка при получении значения из cloud storage:", error);
       });
   }, [cloudStorage]);
-  console.log(isFirstStart)
   // Добавляем флаг is_onboarding в зависимости от isFirstStart
   const isOnboarding = isFirstStart === true;
   console.log(isOnboarding)
