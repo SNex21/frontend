@@ -50,7 +50,7 @@ export default function LessonPage() {
   console.log(isFirstStart)
   // Добавляем флаг is_onboarding в зависимости от isFirstStart
   const isOnboarding = isFirstStart === true;
-
+  console.log(isOnboarding)
   const { data: session, isLoading, refetch } = useQuery({
     queryKey: ["tasks", sessionKey],
     queryFn: async () =>
@@ -131,5 +131,5 @@ export default function LessonPage() {
       )}
     </AnimatePresence>
   );
-  
+
 }
