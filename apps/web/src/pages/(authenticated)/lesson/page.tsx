@@ -7,7 +7,7 @@ import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
 import React from "react";
 import { LessonComplete } from "./LessonComplete";
-import { useParams } from "react-router-dom";// useSearchParams
+import { useParams, useSearchParams } from "react-router-dom";
 import { Guess } from "@/models/Session";
 import { useEffect, useState, useMemo } from "react";
 
@@ -24,7 +24,7 @@ export default function LessonPage() {
   const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null); // Состояние для первого запуска
   const [isReady, setIsReady] = useState(false); // Новое состояние для отслеживания готовности данных
   const params = useParams();
-  // const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
+  const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
   const cloudStorage = useCloudStorage();
 
   const [completed, setCompleted] = React.useState(false);
@@ -32,7 +32,7 @@ export default function LessonPage() {
   const [stats, setStats] = React.useState(defaultStats);
   const [sessionKey, setSessionKey] = React.useState(Date.now());
 
-  // const taskAmount = Number(searchParams.get("amount")) || 10; // Получаем значение amount из параметров
+  const taskAmount = Number(searchParams.get("amount")) || 10; // Получаем значение amount из параметров
 
   // Проверяем значение IS_FIRST_START при монтировании компонента
   useEffect(() => {
@@ -70,8 +70,10 @@ export default function LessonPage() {
         topic_id: params.topicId ? Number(params.topicId) : undefined,
         isHard: false,
         isWorkOnMistakes: params["*"] === "mistakes",
+        amount: taskAmount, // Передаем amount в запрос
         is_onboarding: isOnboarding, // Добавляем флаг is_onboarding
       }),
+      
     enabled: isReady, // Запрос выполняется только если данные готовы
     refetchOnMount: false,
     refetchOnReconnect: false,
