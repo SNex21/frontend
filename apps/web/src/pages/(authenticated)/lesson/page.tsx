@@ -93,17 +93,6 @@ export default function LessonPage() {
     gcTime: 0,
   });
 
-  useEffect(() => {
-    if (session) {
-      if (Telegram && Telegram.WebApp) {
-        const tg = Telegram.WebApp;
-        tg.onEvent("deactivated", () => {
-          console.log("abuba");
-        });
-      }
-    }
-  }, [session]);
-
   const complete = React.useCallback(
     async ({ guesses }: { guesses: Guess[] }) => {
       if (session && startDate) {

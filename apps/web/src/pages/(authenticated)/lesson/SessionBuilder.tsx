@@ -41,6 +41,15 @@ const SessionBuilder: React.FC<SessionBuilderProps> = ({ session, stats, startDa
   const [challengeScreens, setChallengeScreens] = React.useState<JSX.Element[]>([]);
   const [state, setState] = React.useState(defaultState);
 
+  React.useEffect(() => {
+    if (session && Telegram && Telegram.WebApp) {
+      const tg = Telegram.WebApp;
+      tg.onEvent("deactivated", async () => {
+        await onComplete({ guesses: guesses.current });
+      });
+    }
+  }, [session, onComplete]);
+
   const getNextChallenge = React.useCallback(() => {
     const regular = challenges.current.regular.at(0);
     const localWom = challenges.current.localWom.at(0);
@@ -68,7 +77,6 @@ const SessionBuilder: React.FC<SessionBuilderProps> = ({ session, stats, startDa
       }
 
       if (!isEverMistaken && wom && state.wom < WOM_TO_SOLVE) {
-      // if (wom) {
         return wom;
       }
     }
@@ -76,10 +84,6 @@ const SessionBuilder: React.FC<SessionBuilderProps> = ({ session, stats, startDa
     if (regular) {
       return regular;
     }
-
-    // if (localWom) {
-    //   return localWom;
-    // }
 
     return regular;
   }, [challenges.current, state, session.amount]);
@@ -106,7 +110,7 @@ const SessionBuilder: React.FC<SessionBuilderProps> = ({ session, stats, startDa
 
   const updateStats = React.useCallback((isCorrect: boolean) => {
     setStats((prevStats) => ({
-      total: prevStats.total, // убрал тут +1 при условии (тип это робит +1, когда чел неверно ответил, тип мы уверены, что он захочет свои ошибки прорешать)
+      total: prevStats.total,
       completed: prevStats.completed + 1,
       correct: isCorrect ? prevStats.correct + 1 : prevStats.correct,
       index: prevStats.index,
@@ -139,24 +143,6 @@ const SessionBuilder: React.FC<SessionBuilderProps> = ({ session, stats, startDa
           );
         }
       } else {
-        if (challenge.isLocalWom) {
-          challenges.current.localWom = challenges.current.localWom.filter(
-            (storedChallenge) => storedChallenge != challenge,
-          );
-        }
-        if (challenge.isHard) {
-          challenges.current.hard = challenges.current.regular.filter(
-            (storedChallenge) => storedChallenge != challenge,
-          );
-        }
-        if (challenge.isWorkOnMistakes) {
-          challenges.current.wom = challenges.current.wom.filter((storedChallenge) => storedChallenge != challenge);
-        }
-        if (!challenge.isLocalWom && !challenge.isHard && !challenge.isWorkOnMistakes) {
-          challenges.current.regular = challenges.current.regular.filter(
-            (storedChallenge) => storedChallenge != challenge,
-          );
-        }
         challenges.current.localWom.push({
           ...challenge,
           isLocalWom: true,
