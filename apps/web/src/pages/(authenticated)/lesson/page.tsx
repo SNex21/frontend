@@ -79,7 +79,6 @@ export default function LessonPage() {
     refetchOnWindowFocus: false,
     gcTime: 0,
   });
-
   const complete = React.useCallback(
     async ({ guesses }: { guesses: Guess[] }) => {
       if (session && startDate) {
