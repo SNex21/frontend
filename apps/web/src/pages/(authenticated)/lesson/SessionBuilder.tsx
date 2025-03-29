@@ -7,8 +7,6 @@ import { ChallengeScreen } from "./Challenge";
 
 import styles from "./Lesson.module.scss";
 
-declare let Telegram: any;
-
 const defaultState = {
   regular: 0,
   wom: 0,
@@ -42,15 +40,6 @@ const SessionBuilder: React.FC<SessionBuilderProps> = ({ session, stats, startDa
 
   const [challengeScreens, setChallengeScreens] = React.useState<JSX.Element[]>([]);
   const [state, setState] = React.useState(defaultState);
-
-  React.useEffect(() => {
-    if (session && Telegram && Telegram.WebApp) {
-      const tg = Telegram.WebApp;
-      tg.onEvent("deactivated", async () => {
-        await onComplete({ guesses: guesses.current });
-      });
-    }
-  }, [session, onComplete]);
 
   const getNextChallenge = React.useCallback(() => {
     const regular = challenges.current.regular.at(0);
