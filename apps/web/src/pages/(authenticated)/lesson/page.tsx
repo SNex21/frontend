@@ -47,7 +47,7 @@ export default function LessonPage() {
         console.error("Ошибка при получении значения из cloud storage:", error);
       });
   }, [cloudStorage]);
-
+  console.log(isFirstStart)
   // Добавляем флаг is_onboarding в зависимости от isFirstStart
   const isOnboarding = isFirstStart === true;
 
