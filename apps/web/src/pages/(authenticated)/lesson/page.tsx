@@ -47,9 +47,7 @@ export default function LessonPage() {
         console.error("Ошибка при получении значения из cloud storage:", error);
       });
   }, [cloudStorage]);
-  console.log(isFirstStart)
   // Добавляем флаг is_onboarding в зависимости от isFirstStart
-  const isOnboarding = isFirstStart === true;
 
   const { data: session, isLoading, refetch } = useQuery({
     queryKey: ["tasks", sessionKey],
@@ -60,7 +58,7 @@ export default function LessonPage() {
         isHard: false,
         isWorkOnMistakes: params["*"] === "mistakes",
         amount: taskAmount, // Передаем amount в запрос
-        is_onboarding: isOnboarding, // Добавляем флаг is_onboarding
+        is_onboarding: isFirstStart, // Добавляем флаг is_onboarding
       }),
     refetchOnMount: false,
     refetchOnReconnect: false,
