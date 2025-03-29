@@ -2,7 +2,7 @@ import { SessionBuilder } from "@/pages/(authenticated)/lesson/SessionBuilder.ts
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { completeSession, getTasks } from "@/services/api/tasks";
-import { ACCESS_TOKEN_NAME, IS_FIRST_START, saveIsFirstStart } from "@/services/auth/storage.ts";
+import { ACCESS_TOKEN_NAME, IS_FIRST_START} from "@/services/auth/storage.ts";
 import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
 import React from "react";
@@ -40,10 +40,8 @@ export default function LessonPage() {
       .then((value) => {
         const isFirstLaunch = value === "true"; // Преобразуем строку в булево значение
         console.log(value)
+        console.log(isFirstLaunch)
         setIsFirstStart(isFirstLaunch);
-        if (isFirstLaunch) {
-          saveIsFirstStart('false'); // Сохраняем значение false после первого запуска
-        }
       })
       .catch((error) => {
         console.error("Ошибка при получении значения из cloud storage:", error);
