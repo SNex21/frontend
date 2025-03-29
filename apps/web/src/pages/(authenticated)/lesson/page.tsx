@@ -2,16 +2,16 @@ import { SessionBuilder } from "@/pages/(authenticated)/lesson/SessionBuilder.ts
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { completeSession, getTasks } from "@/services/api/tasks";
-import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
+import { ACCESS_TOKEN_NAME, IS_FIRST_START, saveIsFirstStart } from "@/services/auth/storage.ts";
 import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
 import React from "react";
 import { LessonComplete } from "./LessonComplete";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Guess } from "@/models/Session";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-declare let Telegram: any; 
+declare let Telegram: any;
 
 const defaultStats = {
   total: 0,
@@ -21,24 +21,7 @@ const defaultStats = {
 };
 
 export default function LessonPage() {
-  useEffect(() => {
-    if (Telegram && Telegram.WebApp) {
-      const tg = Telegram.WebApp;
-
-      // Проверяем, готов ли Web App
-      if (tg.ready) {
-        tg.ready();
-      }
-
-      // Отключаем вертикальные свайпы на этой странице
-      tg.disableVerticalSwipes();
-      tg.enableClosingConfirmation();
-      return () => {
-        tg.disableVerticalSwipes();
-        tg.enableClosingConfirmation();
-      };
-    }
-  }, []);
+  const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null); // Состояние для первого запуска
   const params = useParams();
   const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
   const cloudStorage = useCloudStorage();
@@ -50,6 +33,25 @@ export default function LessonPage() {
 
   const taskAmount = Number(searchParams.get("amount")) || 10; // Получаем значение amount из параметров
 
+  // Проверяем значение IS_FIRST_START при монтировании компонента
+  useEffect(() => {
+    cloudStorage
+      .getItem(IS_FIRST_START)
+      .then((value) => {
+        const isFirstLaunch = value === "true"; // Преобразуем строку в булево значение
+        setIsFirstStart(isFirstLaunch);
+        if (isFirstLaunch) {
+          saveIsFirstStart('false'); // Сохраняем значение false после первого запуска
+        }
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении значения из cloud storage:", error);
+      });
+  }, [cloudStorage]);
+
+  // Добавляем флаг is_onboarding в зависимости от isFirstStart
+  const isOnboarding = isFirstStart === true;
+
   const { data: session, isLoading, refetch } = useQuery({
     queryKey: ["tasks", sessionKey],
     queryFn: async () =>
@@ -59,6 +61,7 @@ export default function LessonPage() {
         isHard: false,
         isWorkOnMistakes: params["*"] === "mistakes",
         amount: taskAmount, // Передаем amount в запрос
+        is_onboarding: isOnboarding, // Добавляем флаг is_onboarding
       }),
     refetchOnMount: false,
     refetchOnReconnect: false,
