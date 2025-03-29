@@ -21,7 +21,7 @@ const defaultStats = {
 };
 
 export default function LessonPage() {
-  const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null); // Состояние для первого запуска
+  const [isFirstStart, setIsFirstStart] = useState<boolean | undefined>(false); // Состояние для первого запуска
   const params = useParams();
   const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
   const cloudStorage = useCloudStorage();
