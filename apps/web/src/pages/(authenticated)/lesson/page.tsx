@@ -36,8 +36,24 @@ export default function LessonPage() {
       tg.enableClosingConfirmation();
 
       // Добавляем обработчик события закрытия мини-приложения
-      const handlePopupClosed = () => {
+      const handlePopupClosed = async () => {
         console.log("abuba"); // Выводим сообщение в консоль при закрытии
+
+        // Если сессия существует и дата начала установлена, отправляем запрос на завершение сессии
+        if (session && startDate) {
+          try {
+            await completeSession({
+              token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
+              id: session.id,
+              is_aborted: true, // Меняем флаг на true
+              wastedTime: new Date().getTime() - startDate,
+              guesses: [], // Передаем пустой массив, так как данные о догадках могут быть неизвестны
+            });
+            console.log("Сессия завершена с флагом is_aborted: true");
+          } catch (e) {
+            console.error("Ошибка при завершении сессии:", e);
+          }
+        }
       };
 
       tg.onEvent("popupClosed", handlePopupClosed);
@@ -48,7 +64,7 @@ export default function LessonPage() {
         tg.offEvent("popupClosed", handlePopupClosed); // Удаляем обработчик при размонтировании
       };
     }
-  }, []);
+  }, [session, startDate, cloudStorage]);
 
   const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null); // Состояние для первого запуска
   const [isReady, setIsReady] = useState(false); // Новое состояние для отслеживания готовности данных
@@ -109,6 +125,7 @@ export default function LessonPage() {
     refetchOnWindowFocus: false,
     gcTime: 0,
   });
+
   const complete = React.useCallback(
     async ({ guesses }: { guesses: Guess[] }) => {
       if (session && startDate) {
