@@ -21,6 +21,25 @@ const defaultStats = {
 };
 
 export default function LessonPage() {
+
+  useEffect(() => {
+    if (Telegram && Telegram.WebApp) {
+      const tg = Telegram.WebApp;
+
+      // Проверяем, готов ли Web App
+      if (tg.ready) {
+        tg.ready();
+      }
+      // Отключаем вертикальные свайпы на этой странице
+      tg.disableVerticalSwipes();
+      tg.enableClosingConfirmation();
+      return () => {
+        tg.disableVerticalSwipes();
+        tg.enableClosingConfirmation();
+      };
+    }
+  }, []);
+
   const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null); // Состояние для первого запуска
   const [isReady, setIsReady] = useState(false); // Новое состояние для отслеживания готовности данных
   const params = useParams();
@@ -80,52 +99,6 @@ export default function LessonPage() {
     refetchOnWindowFocus: false,
     gcTime: 0,
   });
-
-  useEffect(() => {
-    if (Telegram && Telegram.WebApp) {
-      const tg = Telegram.WebApp;
-
-      // Проверяем, готов ли Web App
-      if (tg.ready) {
-        tg.ready();
-      }
-      
-      // Отключаем вертикальные свайпы на этой странице
-      tg.disableVerticalSwipes();
-      tg.enableClosingConfirmation();
-
-      // Добавляем обработчик события закрытия мини-приложения
-      const handlePopupClosed = async () => {
-        console.log("abuba"); // Выводим сообщение в консоль при закрытии
-
-        // Если сессия существует и дата начала установлена, отправляем запрос на завершение сессии
-        if (session && startDate) {
-          try {
-            await completeSession({
-              token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
-              id: session.id,
-              is_aborted: true, // Меняем флаг на true
-              wastedTime: new Date().getTime() - startDate,
-              guesses: [], // Передаем пустой массив, так как данные о догадках могут быть неизвестны
-            });
-            console.log("Сессия завершена с флагом is_aborted: true");
-          } catch (e) {
-            console.error("Ошибка при завершении сессии:", e);
-          }
-        }
-      };
-
-      tg.onEvent("popupClosed", handlePopupClosed);
-
-      return () => {
-        tg.disableVerticalSwipes();
-        tg.enableClosingConfirmation();
-        tg.offEvent("popupClosed", handlePopupClosed); // Удаляем обработчик при размонтировании
-      };
-    }
-  }, [session, startDate, cloudStorage]);
-
-
   const complete = React.useCallback(
     async ({ guesses }: { guesses: Guess[] }) => {
       if (session && startDate) {
@@ -190,3 +163,4 @@ export default function LessonPage() {
     </AnimatePresence>
   );
 }
+
