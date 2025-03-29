@@ -131,4 +131,5 @@ export default function LessonPage() {
       )}
     </AnimatePresence>
   );
+  
 }
