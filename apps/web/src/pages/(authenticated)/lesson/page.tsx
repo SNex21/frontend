@@ -57,7 +57,7 @@ export default function LessonPage() {
 
   // Логируем значение isOnboarding только один раз
   useEffect(() => {
-    if (process.env.NODE_ENV !== "production" && isOnboarding !== undefined) {
+    if (isOnboarding !== undefined) {
       console.log("isOnboarding:", isOnboarding);
     }
   }, [isOnboarding]);
@@ -73,7 +73,7 @@ export default function LessonPage() {
         amount: taskAmount, // Передаем amount в запрос
         is_onboarding: isOnboarding, // Добавляем флаг is_onboarding
       }),
-      
+
     enabled: isReady, // Запрос выполняется только если данные готовы
     refetchOnMount: false,
     refetchOnReconnect: false,
