@@ -70,7 +70,6 @@ export default function LessonPage() {
         topic_id: params.topicId ? Number(params.topicId) : undefined,
         isHard: false,
         isWorkOnMistakes: params["*"] === "mistakes",
-        amount: taskAmount, // Передаем amount в запрос
         is_onboarding: isOnboarding, // Добавляем флаг is_onboarding
       }),
     enabled: isReady, // Запрос выполняется только если данные готовы
