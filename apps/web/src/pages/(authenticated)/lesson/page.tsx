@@ -21,16 +21,13 @@ const defaultStats = {
 };
 
 export default function LessonPage() {
-
   useEffect(() => {
     if (Telegram && Telegram.WebApp) {
       const tg = Telegram.WebApp;
 
-      // Проверяем, готов ли Web App
       if (tg.ready) {
         tg.ready();
       }
-      // Отключаем вертикальные свайпы на этой странице
       tg.disableVerticalSwipes();
       tg.enableClosingConfirmation();
       return () => {
@@ -40,10 +37,10 @@ export default function LessonPage() {
     }
   }, []);
 
-  const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null); // Состояние для первого запуска
-  const [isReady, setIsReady] = useState(false); // Новое состояние для отслеживания готовности данных
+  const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null);
+  const [isReady, setIsReady] = useState(false);
   const params = useParams();
-  const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
+  const [searchParams] = useSearchParams();
   const cloudStorage = useCloudStorage();
 
   const [completed, setCompleted] = React.useState(false);
@@ -51,30 +48,27 @@ export default function LessonPage() {
   const [stats, setStats] = React.useState(defaultStats);
   const [sessionKey, setSessionKey] = React.useState(Date.now());
 
-  const taskAmount = Number(searchParams.get("amount")) || 10; // Получаем значение amount из параметров
+  const taskAmount = Number(searchParams.get("amount")) || 10;
 
-  // Проверяем значение IS_FIRST_START при монтировании компонента
   useEffect(() => {
     cloudStorage
       .getItem(IS_FIRST_START)
       .then((value) => {
-        const isFirstLaunch = value === "true"; // Преобразуем строку в булево значение
+        const isFirstLaunch = value === "true";
         setIsFirstStart(isFirstLaunch);
-        setIsReady(true); // Данные готовы
+        setIsReady(true);
         if (isFirstLaunch) {
-          saveIsFirstStart('false'); // Сохраняем значение false после первого запуска
+          saveIsFirstStart("false");
         }
       })
       .catch((error) => {
         console.error("Ошибка при получении значения из cloud storage:", error);
-        setIsReady(true); // Даже в случае ошибки отмечаем, что данные готовы
+        setIsReady(true);
       });
   }, [cloudStorage]);
 
-  // Вычисляем флаг is_onboarding только после получения значения isFirstStart
   const isOnboarding = useMemo(() => isFirstStart === true, [isFirstStart]);
 
-  // Логируем значение isOnboarding только один раз
   useEffect(() => {
     if (isOnboarding !== undefined) {
       console.log("isOnboarding:", isOnboarding);
@@ -89,16 +83,27 @@ export default function LessonPage() {
         topic_id: params.topicId ? Number(params.topicId) : undefined,
         isHard: false,
         isWorkOnMistakes: params["*"] === "mistakes",
-        amount: taskAmount, // Передаем amount в запрос
-        is_onboarding: isOnboarding, // Добавляем флаг is_onboarding
+        amount: taskAmount,
+        is_onboarding: isOnboarding,
       }),
-
-    enabled: isReady, // Запрос выполняется только если данные готовы
+    enabled: isReady,
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     gcTime: 0,
   });
+
+  useEffect(() => {
+    if (session) {
+      if (Telegram && Telegram.WebApp) {
+        const tg = Telegram.WebApp;
+        tg.onEvent("deactivated", () => {
+          console.log("abuba");
+        });
+      }
+    }
+  }, [session]);
+
   const complete = React.useCallback(
     async ({ guesses }: { guesses: Guess[] }) => {
       if (session && startDate) {
@@ -163,4 +168,3 @@ export default function LessonPage() {
     </AnimatePresence>
   );
 }
-
