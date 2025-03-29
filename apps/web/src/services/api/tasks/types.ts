@@ -6,6 +6,7 @@ export interface GetTasksReq {
   isWorkOnMistakes?: boolean;
   topic_id?: number;
   amount?: number;
+  is_onboarding?: boolean;
 
   token: string;
 }
