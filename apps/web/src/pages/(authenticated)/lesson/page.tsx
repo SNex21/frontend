@@ -32,7 +32,7 @@ export default function LessonPage() {
   const [stats, setStats] = React.useState(defaultStats);
   const [sessionKey, setSessionKey] = React.useState(Date.now());
 
-  const taskAmount = Number(searchParams.get("amount")) || 10; // Получаем значение amount из параметров
+  // const taskAmount = Number(searchParams.get("amount")) || 10; // Получаем значение amount из параметров
 
   // Проверяем значение IS_FIRST_START при монтировании компонента
   useEffect(() => {
