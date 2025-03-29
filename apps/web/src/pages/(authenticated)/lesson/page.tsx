@@ -64,23 +64,15 @@ export default function LessonPage() {
 
   const { data: session, isLoading, refetch } = useQuery({
     queryKey: ["tasks", sessionKey],
-    queryFn: async () => {
-      // Динамическое формирование объекта параметров запроса
-      const queryParams = {
+    queryFn: async () =>
+      getTasks({
         token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
         topic_id: params.topicId ? Number(params.topicId) : undefined,
         isHard: false,
         isWorkOnMistakes: params["*"] === "mistakes",
+        amount: taskAmount, // Передаем amount в запрос
         is_onboarding: isOnboarding, // Добавляем флаг is_onboarding
-      };
-
-      // Добавляем amount только если это НЕ онбординг
-      if (!isOnboarding) {
-        queryParams.amount = taskAmount;
-      }
-
-      return getTasks(queryParams);
-    },
+      }),
     enabled: isReady, // Запрос выполняется только если данные готовы
     refetchOnMount: false,
     refetchOnReconnect: false,
