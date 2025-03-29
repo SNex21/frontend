@@ -21,7 +21,7 @@ const defaultStats = {
 };
 
 export default function LessonPage() {
-  const [isFirstStart, setIsFirstStart] = useState<boolean | undefined>(false); // Состояние для первого запуска
+  const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null); // Состояние для первого запуска
   const params = useParams();
   const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
   const cloudStorage = useCloudStorage();
@@ -47,8 +47,10 @@ export default function LessonPage() {
         console.error("Ошибка при получении значения из cloud storage:", error);
       });
   }, [cloudStorage]);
-  // Добавляем флаг is_onboarding в зависимости от isFirstStart
   console.log(isFirstStart)
+  // Добавляем флаг is_onboarding в зависимости от isFirstStart
+  const isOnboarding = isFirstStart === true;
+
   const { data: session, isLoading, refetch } = useQuery({
     queryKey: ["tasks", sessionKey],
     queryFn: async () =>
@@ -58,7 +60,7 @@ export default function LessonPage() {
         isHard: false,
         isWorkOnMistakes: params["*"] === "mistakes",
         amount: taskAmount, // Передаем amount в запрос
-        is_onboarding: isFirstStart, // Добавляем флаг is_onboarding
+        is_onboarding: isOnboarding, // Добавляем флаг is_onboarding
       }),
     refetchOnMount: false,
     refetchOnReconnect: false,
