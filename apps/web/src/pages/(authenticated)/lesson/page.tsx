@@ -39,6 +39,7 @@ export default function LessonPage() {
       .getItem(IS_FIRST_START)
       .then((value) => {
         const isFirstLaunch = value === "true"; // Преобразуем строку в булево значение
+        console.log(value)
         setIsFirstStart(isFirstLaunch);
         if (isFirstLaunch) {
           saveIsFirstStart('false'); // Сохраняем значение false после первого запуска
