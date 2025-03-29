@@ -69,6 +69,7 @@ export default function WelcomePage() {
   //   );
   // }
 
+  
   return (
     <motion.div
       className={styles.welcome}
