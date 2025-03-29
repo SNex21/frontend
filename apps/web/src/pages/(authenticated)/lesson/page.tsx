@@ -7,7 +7,7 @@ import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
 import React from "react";
 import { LessonComplete } from "./LessonComplete";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";// useSearchParams
 import { Guess } from "@/models/Session";
 import { useEffect, useState, useMemo } from "react";
 
@@ -24,7 +24,7 @@ export default function LessonPage() {
   const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null); // Состояние для первого запуска
   const [isReady, setIsReady] = useState(false); // Новое состояние для отслеживания готовности данных
   const params = useParams();
-  const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
+  // const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
   const cloudStorage = useCloudStorage();
 
   const [completed, setCompleted] = React.useState(false);
