@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 const OnbordingScreen: FC = () => {
   const navigate = useNavigate();
-  const linkPath = "/lesson/topic/2?amount=${10}";
+  const linkPath = "/lesson/topic/-1?amount=${10}";
   return (
     <motion.div
       initial={{ opacity: 0, transform: "translateX(100%)" }}
