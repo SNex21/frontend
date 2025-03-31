@@ -52,12 +52,7 @@
     color: var(--ds-gray-alpha-400);
     margin-bottom: var(--spacing-3);
     line-height: 1.2; // Улучшаем читаемость
-    color: #000;
-
-    // Стили для темной темы
-    .tg-theme-dark & {
-      color: #fff;
-    }
+    color: var(--ds-gray-1000);
   }
 
   &__description {
@@ -66,12 +61,7 @@
     color: var(--ds-gray-alpha-400);
     margin-bottom: var(--spacing-6);
     line-height: 1.5; // Улучшаем читаемость
-    color: #000;
-
-    // Стили для темной темы
-    .tg-theme-dark & {
-      color: #fff;
-    }
+    color: var(--ds-gray-1000);
   }
 
   &__button {
