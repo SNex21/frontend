@@ -49,7 +49,7 @@
   &__title {
     font-size: clamp(24px, 6vw, 32px); // Адаптивный размер шрифта
     font-weight: 700;
-    color: var(--ds-gray-800);
+    color: #4900DC;
     margin-bottom: var(--spacing-3);
     line-height: 1.2; // Улучшаем читаемость
   }
@@ -57,7 +57,7 @@
   &__description {
     font-size: clamp(16px, 4vw, 20px); // Адаптивный размер шрифта
     font-weight: 700;
-    color: var(--ds-gray-800);
+    color: #4900DC;
     margin-bottom: var(--spacing-6);
     line-height: 1.5; // Улучшаем читаемость
   }
