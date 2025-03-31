@@ -5,12 +5,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import styles from "./Welcome.module.scss";
 import { SignupScreen } from "./screens/SignupScreen";
 import { OnbordingScreen } from "./screens/OnbordingScreen";
-import { useCloudStorage, useWebApp } from "@/lib/twa/hooks";
-import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
-import { useNavigate } from "react-router-dom";
-import { authTelegramMiniApp, login } from "@/services/auth";
-import { LoaderSpinner } from "@repo/ui";
-import posthog from "posthog-js";
+// import { useCloudStorage, useWebApp } from "@/lib/twa/hooks";
+// import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
+// import { useNavigate } from "react-router-dom";
+// import { authTelegramMiniApp, login } from "@/services/auth";
+// import { LoaderSpinner } from "@repo/ui";
+// import posthog from "posthog-js";
 
 export default function WelcomePage() {
   // const webApp = useWebApp();
