@@ -3,20 +3,24 @@ import { motion } from "framer-motion";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import styles from "../Welcome.module.scss";
 import { Haptic } from "@/lib/twa/components/Haptic";
-import { Avatar, AvatarFallback, AvatarImage, Button, LoaderSpinner } from "@repo/ui";
+import { Avatar, AvatarFallback, Button, LoaderSpinner } from "@repo/ui";
 import cn from "classnames";
-import { useNavigate } from "react-router-dom";
 import { authTelegramMiniApp, checkUsername, login } from "@/services/auth";
 import axios, { AxiosError, CancelTokenSource } from "axios";
 import { ERROR_CODES } from "@/services/api/errors";
 import debounce from "lodash/debounce";
 import { CheckmarkCircleIcon, XmarkCircleIcon } from "@repo/ui/icons";
 import { HuggingFaceEmoji } from "@repo/ui/emojis";
+import { saveIsFirstStart } from "../../../services/auth/storage";
 import posthog from "posthog-js";
 
-const SignupScreen: FC = () => {
+interface SignUpScreenProps {
+  onButtonClick: () => void;
+}
+
+const SignupScreen: FC<SignUpScreenProps> = ({ onButtonClick }) => {
+  saveIsFirstStart('true')
   const [initDataUnsafe, initData] = useInitData();
-  const navigate = useNavigate();
 
   const [isFocused, setFocused] = useState(false);
 
@@ -84,7 +88,9 @@ const SignupScreen: FC = () => {
       });
       await login({ token: res.token, userId: res.user.id });
       posthog.capture("user_signed_up");
-      navigate("/home");
+
+      // Вызов props вместо navigate
+      onButtonClick();
     } catch (e) {
       const error = e as AxiosError;
       setStatus({
@@ -93,14 +99,15 @@ const SignupScreen: FC = () => {
         loading: false,
       });
     }
-  }, [initData, username, setStatus]);
+  }, [initData, username, setStatus, onButtonClick]);
 
   return (
     <motion.div
       className={styles.signup}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: 0.2, duration: 0 }}
+      exit={{ opacity: 0 }} // Анимация исчезновения фона
+      transition={{ duration: 0.5 }}
     >
       <motion.div
         className={cn(styles.signup__title)}
@@ -123,16 +130,19 @@ const SignupScreen: FC = () => {
         </h1>
       </motion.div>
 
-      <div
+      <motion.div
         className={cn(styles.signup__content, {
           [styles.signup__content_expanded!]: isFocused,
         })}
+        initial={{ y: 0 }}
+        animate={{ y: 0 }}
+        exit={{ y: 100, opacity: 0 }} // Уезжает вниз
+        transition={{ duration: 0.5, ease: "easeInOut" }}
       >
         <div className={styles.form}>
           <div className={styles.form__avatar}>
             <Avatar className={styles.form__avatar__image}>
               <AvatarFallback>{username.at(0)?.toUpperCase() ?? <HuggingFaceEmoji size={40} />}</AvatarFallback>
-              <AvatarImage />
             </Avatar>
           </div>
           <div
@@ -178,7 +188,7 @@ const SignupScreen: FC = () => {
             </Button>
           </Haptic>
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };

@@ -1,12 +1,14 @@
 import { Button } from "@repo/ui";
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Lesson.module.scss";
 import dayjs from "dayjs";
 import { AlarmClockEmoji, DirectHitEmoji } from "@repo/ui/emojis";
 import { Haptic } from "@/lib/twa/components/Haptic.tsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Добавляем useNavigate
 import { Xmark } from "@repo/ui/icons";
+import { useCloudStorage } from "@/lib/twa/hooks";
+import { IS_FIRST_START, saveIsFirstStart } from "@/services/auth/storage.ts";
 
 interface LessonCompleteProps {
   startDate: number | null;
@@ -21,7 +23,32 @@ interface SummaryCardProps {
 
 const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPercentage, onRestart }) => {
   const wastedTime = React.useMemo(() => (startDate ? new Date().getTime() - startDate : null), [startDate]);
+  const cloudStorage = useCloudStorage();
+  const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null);
+  const navigate = useNavigate(); // Инициализируем useNavigate
 
+  // Проверяем значение IS_FIRST_START при монтировании компонента
+  useEffect(() => {
+    cloudStorage
+      .getItem(IS_FIRST_START)
+      .then((value) => {
+        setIsFirstStart(value === "true"); // Преобразуем строку в булево значение
+        saveIsFirstStart('false'); // Сохраняем значение false после первого запуска
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении значения из cloud storage:", error);
+      });
+  }, [cloudStorage]);
+
+  // Обработчик нажатия на кнопку
+  const handleButtonClick = () => {
+    if (isFirstStart === true) {
+      navigate("/home"); // Переход на /home, если isFirstStart === true
+    } else {
+      onRestart(); // Вызов функции перезапуска, если isFirstStart === false
+    }
+  };
+  console.log(isFirstStart)
   return (
     <motion.div
       className={styles.complete}
@@ -55,7 +82,10 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
         </div>
       </div>
       <div className={styles.complete__buttons}>
-        <Button onClick={onRestart}>РЕШАТЬ ЕЩЁ!</Button> {/* Кнопка для начала новой сессии */}
+        {/* Кнопка с динамическим текстом и обработчиком */}
+        <Button onClick={handleButtonClick}>
+          {isFirstStart === null ? "Загрузка..." : isFirstStart ? "ЗАВЕРШИТЬ" : "РЕШАТЬ ЕЩЁ!"}
+        </Button>
       </div>
     </motion.div>
   );

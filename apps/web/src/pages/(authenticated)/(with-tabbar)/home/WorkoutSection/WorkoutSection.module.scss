@@ -7,30 +7,23 @@
 .row {
   display: flex;
   gap: var(--spacing-3);
-
   width: 100%;
 }
 
 .card {
   display: flex;
   align-items: center;
-
   flex: 1;
-
   min-height: 78px;
-
   cursor: pointer;
-
   border: 1px solid var(--ds-gray-alpha-400);
   border-radius: var(--rounded-2xl);
-
   background-color: var(--ds-background-200);
 
   &__icon {
     display: flex;
     align-items: center;
     justify-content: center;
-
     min-width: 58px;
     height: 100%;
   }
@@ -43,7 +36,6 @@
 
     &__title {
       color: var(--ds-gray-1000);
-
       font-size: 18px;
       font-weight: 600;
     }
@@ -54,7 +46,6 @@
 
     &__description {
       color: var(--ds-gray-900);
-
       font-size: 14px;
       font-weight: 500;
     }
@@ -64,23 +55,17 @@
 .blocked_card {
   display: flex;
   align-items: center;
-
   flex: 1;
-
   min-height: 78px;
-
   cursor: pointer;
-
   border: 1px solid var(--ds-gray-alpha-400);
   border-radius: var(--rounded-2xl);
-
   background-color: var(--ds-background-200);
 
   &__icon {
     display: flex;
     align-items: center;
     justify-content: center;
-
     min-width: 58px;
     height: 100%;
   }
@@ -93,7 +78,6 @@
 
     &__title {
       color: var(--ds-gray-800);
-
       font-size: 18px;
       font-weight: 600;
     }
@@ -104,9 +88,13 @@
 
     &__description {
       color: var(--ds-gray-800);
-
       font-size: 14px;
       font-weight: 500;
     }
   }
+}
+
+.blocked_logo {
+  max-width: 32px;
+  max-height: 32px;
 }
