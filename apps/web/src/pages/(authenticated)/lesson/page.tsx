@@ -2,7 +2,7 @@ import { SessionBuilder } from "@/pages/(authenticated)/lesson/SessionBuilder.ts
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { completeSession, getTasks } from "@/services/api/tasks";
-import { ACCESS_TOKEN_NAME, IS_FIRST_START, saveIsFirstStart } from "@/services/auth/storage.ts";
+import { ACCESS_TOKEN_NAME, IS_FIRST_START } from "@/services/auth/storage.ts";
 import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
 import React from "react";
