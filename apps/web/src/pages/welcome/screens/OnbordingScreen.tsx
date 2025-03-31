@@ -34,7 +34,7 @@ const OnbordingScreen: FC = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
           className={styles.onbording__description}
         >
-          Сейчас мы тебе покажем основной функционал нашего сервиса, чтобы тебе было проще ориентироваться в боте
+          Пройди старт-задания, чтобы было проше ориентироваться в боте!
         </motion.h2>
       </div>
 
