@@ -57,9 +57,6 @@ export default function LessonPage() {
         const isFirstLaunch = value === "true";
         setIsFirstStart(isFirstLaunch);
         setIsReady(true);
-        if (isFirstLaunch) {
-          saveIsFirstStart("false");
-        }
       })
       .catch((error) => {
         console.error("Ошибка при получении значения из cloud storage:", error);
