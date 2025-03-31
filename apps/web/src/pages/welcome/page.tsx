@@ -3,6 +3,7 @@ import { CoverScreen } from "./screens/CoverScreen";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "./Welcome.module.scss";
 import { SignupScreen } from "./screens/SignupScreen";
+import { OnbordingScreen } from "./screens/OnbordingScreen";
 import { useCloudStorage, useWebApp } from "@/lib/twa/hooks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { useNavigate } from "react-router-dom";
@@ -66,7 +67,7 @@ export default function WelcomePage() {
       </div>
     );
   }
-
+  
   return (
     <motion.div
       className={styles.welcome}
@@ -81,7 +82,8 @@ export default function WelcomePage() {
       }}
     >
       <AnimatePresence>{screen === 0 && <CoverScreen onButtonClick={() => setScreen(1)} />}</AnimatePresence>
-      <AnimatePresence>{screen === 1 && <SignupScreen />}</AnimatePresence>
+      <AnimatePresence>{screen === 1 && <SignupScreen onButtonClick={() => setScreen(2)} />}</AnimatePresence>
+      <AnimatePresence>{screen === 2 && <OnbordingScreen />}</AnimatePresence>
     </motion.div>
   );
 }

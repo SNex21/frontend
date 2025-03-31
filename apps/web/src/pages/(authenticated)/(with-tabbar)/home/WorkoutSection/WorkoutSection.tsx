@@ -1,5 +1,5 @@
 import { Haptic } from "@/lib/twa/components/Haptic";
-import { FlexedBicepsEmoji, PersonLiftingWeightsEmoji, WarningEmoji, PhoneEmoji } from "@repo/ui/emojis";
+import Blocked from "../../../../../assets/fonts/images/Blocked.png"; // Импортируем изображение замка
 import React, { FC, useEffect, useState } from "react";
 import styles from "./WorkoutSection.module.scss";
 import cn from "classnames";
@@ -33,35 +33,25 @@ const WorkoutSection: FC = () => {
   useEffect(() => {
     if (Telegram && Telegram.WebApp) {
       const tg = Telegram.WebApp;
-
-      // Проверяем, готов ли Web App
       if (tg.ready) {
         tg.ready();
       }
-
-      // Отключаем вертикальные свайпы на этой странице
       tg.disableVerticalSwipes();
-
-      // Включаем подтверждение закрытия приложения
       tg.enableClosingConfirmation();
-
-      // Проверяем статус добавления на главный экран
       checkHomeScreenStatus(tg);
 
-      // Подписываемся на событие homeScreenAdded
       if (typeof tg.onEvent === "function") {
         tg.onEvent("homeScreenAdded", () => {
           console.log("Mini App успешно добавлен на главный экран!");
-          setShowAddToHomeButton(false); // Скрываем кнопку после добавления
+          setShowAddToHomeButton(false);
         });
       }
 
-      // Очистка эффекта при размонтировании компонента
       return () => {
-        tg.enableVerticalSwipes(); // Включаем вертикальные свайпы
-        tg.disableClosingConfirmation(); // Отключаем подтверждение закрытия
+        tg.enableVerticalSwipes();
+        tg.disableClosingConfirmation();
         if (typeof tg.offEvent === "function") {
-          tg.offEvent("homeScreenAdded"); // Отписываемся от события
+          tg.offEvent("homeScreenAdded");
         }
       };
     }
@@ -70,25 +60,22 @@ const WorkoutSection: FC = () => {
   const checkHomeScreenStatus = (tg: any) => {
     if (tg && typeof tg.checkHomeScreenStatus === "function") {
       try {
-        // Вызываем метод checkHomeScreenStatus и проверяем результат
         tg.checkHomeScreenStatus((result: string) => {
-          // Убеждаемся, что result имеет допустимое значение
           if (result === "missed") {
-            setShowAddToHomeButton(true); // Показываем кнопку, если ярлык не добавлен
+            setShowAddToHomeButton(true);
           } else {
-            setShowAddToHomeButton(false); // Скрываем кнопку в остальных случаях
+            setShowAddToHomeButton(false);
           }
         });
       } catch (error) {
         console.error("Ошибка при проверке статуса добавления на главный экран:", error);
-        setShowAddToHomeButton(false); // По умолчанию скрываем кнопку при ошибке
+        setShowAddToHomeButton(false);
       }
     } else {
-      setShowAddToHomeButton(false); // Если метод недоступен, скрываем кнопку
+      setShowAddToHomeButton(false);
     }
   };
 
-  // Функция для вызова addToHomeScreen
   const handleAddToHomeScreen = () => {
     if (Telegram && typeof Telegram.WebApp.addToHomeScreen === "function") {
       try {
@@ -110,32 +97,31 @@ const WorkoutSection: FC = () => {
             <WorkoutCard
               title="Начать тренировку"
               description="по всем заданиям"
-              icon={<FlexedBicepsEmoji size={25} />}
+              icon={<img src={Blocked} alt="Замок" className={styles.blocked_logo} />}
               href={"/set/lesson"}
             />
             <div className={styles.row}>
               <WorkoutCard
                 title="Практика ошибок"
-                icon={<WarningEmoji size={25} />}
+                icon={<img src={Blocked} alt="Замок" className={styles.blocked_logo} />}
                 isSm
                 href={"/set/lesson/mistakes"}
               />
               {showHardLessonButton && (
                 <WorkoutCard
                   title="Самые сложные"
-                  icon={<PersonLiftingWeightsEmoji size={25} />}
+                  icon={<img src={Blocked} alt="Замок" className={styles.blocked_logo} />}
                   isSm
                   href={"/set/lesson/hard"}
                 />
               )}
             </div>
-            {/* Новая кнопка для добавления на главный экран */}
             {showAddToHomeButton && (
               <WorkoutCard
                 title="Добавить на главный экран"
-                icon={<PhoneEmoji size={32.5} />}
+                icon={<img src={Blocked} alt="Замок" className={styles.blocked_logo} />}
                 isSm
-                onClick={handleAddToHomeScreen} // Добавляем обработчик onClick
+                onClick={handleAddToHomeScreen}
               />
             )}
           </div>
@@ -146,14 +132,18 @@ const WorkoutSection: FC = () => {
             <WorkoutCardBlocked
               title="Начать тренировку"
               description="по всем заданиям"
-              icon={<FlexedBicepsEmoji size={25} />}
+              icon={<img src={Blocked} alt="Замок" className={styles.blocked_logo} />}
             />
             <div className={styles.row}>
-              <WorkoutCardBlocked title="Практика ошибок" icon={<WarningEmoji size={25} />} isSm />
+              <WorkoutCardBlocked
+                title="Практика ошибок"
+                icon={<img src={Blocked} alt="Замок" className={styles.blocked_logo} />}
+                isSm
+              />
               {showHardLessonButton && (
                 <WorkoutCardBlocked
                   title="Самые сложные"
-                  icon={<PersonLiftingWeightsEmoji size={25} />}
+                  icon={<img src={Blocked} alt="Замок" className={styles.blocked_logo} />}
                   isSm
                 />
               )}
@@ -161,9 +151,9 @@ const WorkoutSection: FC = () => {
             {showAddToHomeButton && (
               <WorkoutCard
                 title="Добавить на главный экран"
-                icon={<PhoneEmoji size={32.5} />}
+                icon={<img src={Blocked} alt="Замок" className={styles.blocked_logo} />}
                 isSm
-                onClick={handleAddToHomeScreen} // Добавляем обработчик onClick
+                onClick={handleAddToHomeScreen}
               />
             )}
           </div>
@@ -179,12 +169,11 @@ const WorkoutCard: FC<WorkoutCardProps> = ({
   description,
   isSm = false,
   href = "",
-  onClick, // Принимаем обработчик onClick
+  onClick,
 }) => {
   return (
     <Haptic type="impact" value="medium" asChild>
       {onClick ? (
-        // Если есть onClick, используем div с обработчиком
         <div
           className={styles.card}
           onClick={onClick}
@@ -205,7 +194,6 @@ const WorkoutCard: FC<WorkoutCardProps> = ({
           </div>
         </div>
       ) : (
-        // Иначе используем Link
         <Link to={href} className={styles.card}>
           {icon && <div className={styles.card__icon}>{icon}</div>}
           <div className={styles.card__content}>

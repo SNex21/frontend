@@ -2,16 +2,16 @@ import { SessionBuilder } from "@/pages/(authenticated)/lesson/SessionBuilder.ts
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { completeSession, getTasks } from "@/services/api/tasks";
-import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
+import { ACCESS_TOKEN_NAME, IS_FIRST_START } from "@/services/auth/storage.ts";
 import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
 import React from "react";
 import { LessonComplete } from "./LessonComplete";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Guess } from "@/models/Session";
-import { useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 
-declare let Telegram: any; 
+declare let Telegram: any;
 
 const defaultStats = {
   total: 0,
@@ -25,12 +25,9 @@ export default function LessonPage() {
     if (Telegram && Telegram.WebApp) {
       const tg = Telegram.WebApp;
 
-      // Проверяем, готов ли Web App
       if (tg.ready) {
         tg.ready();
       }
-
-      // Отключаем вертикальные свайпы на этой странице
       tg.disableVerticalSwipes();
       tg.enableClosingConfirmation();
       return () => {
@@ -39,16 +36,42 @@ export default function LessonPage() {
       };
     }
   }, []);
+
+  const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null);
+  const [isReady, setIsReady] = useState(false);
   const params = useParams();
-  const [searchParams] = useSearchParams(); // Извлекаем параметры из строки запроса
-  const cloudStorage = useCloudStorage(); // abuba
+  const [searchParams] = useSearchParams();
+  const cloudStorage = useCloudStorage();
+
 
   const [completed, setCompleted] = React.useState(false);
   const [startDate, setStartDate] = React.useState<number | null>(null);
   const [stats, setStats] = React.useState(defaultStats);
   const [sessionKey, setSessionKey] = React.useState(Date.now());
 
-  const taskAmount = Number(searchParams.get("amount")) || 10; // Получаем значение amount из параметров
+  const taskAmount = Number(searchParams.get("amount")) || 10;
+
+  useEffect(() => {
+    cloudStorage
+      .getItem(IS_FIRST_START)
+      .then((value) => {
+        const isFirstLaunch = value === "true";
+        setIsFirstStart(isFirstLaunch);
+        setIsReady(true);
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении значения из cloud storage:", error);
+        setIsReady(true);
+      });
+  }, [cloudStorage]);
+
+  const isOnboarding = useMemo(() => isFirstStart === true, [isFirstStart]);
+
+  useEffect(() => {
+    if (isOnboarding !== undefined) {
+      console.log("isOnboarding:", isOnboarding);
+    }
+  }, [isOnboarding]);
 
   const { data: session, isLoading, refetch } = useQuery({
     queryKey: ["tasks", sessionKey],
@@ -58,8 +81,10 @@ export default function LessonPage() {
         topic_id: params.topicId ? Number(params.topicId) : undefined,
         isHard: false,
         isWorkOnMistakes: params["*"] === "mistakes",
-        amount: taskAmount, // Передаем amount в запрос
+        amount: taskAmount,
+        is_onboarding: isOnboarding,
       }),
+    enabled: isReady,
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
