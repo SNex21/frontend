@@ -32,6 +32,7 @@ const LessonComplete: React.FC<LessonCompleteProps> = ({ startDate, correctPerce
     cloudStorage
       .getItem(IS_FIRST_START)
       .then((value) => {
+        console.log(value)
         setIsFirstStart(value === "true"); // Преобразуем строку в булево значение
         saveIsFirstStart('false'); // Сохраняем значение false после первого запуска
       })
