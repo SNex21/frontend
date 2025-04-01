@@ -67,6 +67,7 @@ export default function WelcomePage() {
       </div>
     );
   }
+
   
   return (
     <motion.div

@@ -1,5 +1,6 @@
 import { Haptic } from "@/lib/twa/components/Haptic";
 import Blocked from "../../../../../assets/fonts/images/Blocked.png"; // Импортируем изображение замка
+import { FlexedBicepsEmoji, PersonLiftingWeightsEmoji, WarningEmoji, PhoneEmoji } from "@repo/ui/emojis";
 import React, { FC, useEffect, useState } from "react";
 import styles from "./WorkoutSection.module.scss";
 import cn from "classnames";
@@ -89,6 +90,7 @@ const WorkoutSection: FC = () => {
     }
   };
 
+  
   return (
     <>
       {user.subscription ? (
@@ -97,20 +99,20 @@ const WorkoutSection: FC = () => {
             <WorkoutCard
               title="Начать тренировку"
               description="по всем заданиям"
-              icon={<img src={Blocked} alt="Замок" className={styles.blocked_logo} />}
+              icon={<FlexedBicepsEmoji size={25} />}
               href={"/set/lesson"}
             />
             <div className={styles.row}>
               <WorkoutCard
                 title="Практика ошибок"
-                icon={<img src={Blocked} alt="Замок" className={styles.blocked_logo} />}
+                icon={<WarningEmoji size={25} />}
                 isSm
                 href={"/set/lesson/mistakes"}
               />
               {showHardLessonButton && (
                 <WorkoutCard
                   title="Самые сложные"
-                  icon={<img src={Blocked} alt="Замок" className={styles.blocked_logo} />}
+                  icon={<PersonLiftingWeightsEmoji size={25} />}
                   isSm
                   href={"/set/lesson/hard"}
                 />
@@ -119,7 +121,7 @@ const WorkoutSection: FC = () => {
             {showAddToHomeButton && (
               <WorkoutCard
                 title="Добавить на главный экран"
-                icon={<img src={Blocked} alt="Замок" className={styles.blocked_logo} />}
+                icon={<PhoneEmoji size={32.5} />}
                 isSm
                 onClick={handleAddToHomeScreen}
               />
@@ -151,7 +153,7 @@ const WorkoutSection: FC = () => {
             {showAddToHomeButton && (
               <WorkoutCard
                 title="Добавить на главный экран"
-                icon={<img src={Blocked} alt="Замок" className={styles.blocked_logo} />}
+                icon={<PhoneEmoji size={32.5} />}
                 isSm
                 onClick={handleAddToHomeScreen}
               />
