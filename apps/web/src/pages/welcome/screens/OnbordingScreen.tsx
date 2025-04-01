@@ -17,7 +17,6 @@ const OnbordingScreen: FC = () => {
       className={styles.onbording}
     >
       <div className={styles.onbording__content}>
-        {/* Заголовок */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -27,7 +26,6 @@ const OnbordingScreen: FC = () => {
           Привет, это Учи-бот — твой помощник для подготовки к ЕГЭ по русскому
         </motion.h1>
 
-        {/* Описание */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -38,7 +36,6 @@ const OnbordingScreen: FC = () => {
         </motion.h2>
       </div>
 
-      {/* Кнопка */}
       <div className={styles.onbording__button}>
         <Haptic type="impact" value="medium" event="onTouchStart" asChild>
           <Button onClick={() => navigate(linkPath)}>УЧИТЬСЯ!</Button>

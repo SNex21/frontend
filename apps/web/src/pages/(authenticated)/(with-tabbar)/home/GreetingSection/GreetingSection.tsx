@@ -19,5 +19,4 @@ const GreetingSection: FC = () => {
   );
 };
 
-
 export { GreetingSection };
