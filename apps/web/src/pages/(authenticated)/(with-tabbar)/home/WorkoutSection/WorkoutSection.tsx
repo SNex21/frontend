@@ -90,6 +90,7 @@ const WorkoutSection: FC = () => {
     }
   };
 
+  
   return (
     <>
       {user.subscription ? (
