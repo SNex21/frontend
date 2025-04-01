@@ -91,4 +91,5 @@ const CoverScreen: FC<CoverScreenProps> = ({ onButtonClick }) => {
   );
 };
 
+
 export { CoverScreen };
