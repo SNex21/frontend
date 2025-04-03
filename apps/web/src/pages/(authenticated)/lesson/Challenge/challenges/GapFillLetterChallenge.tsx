@@ -12,7 +12,7 @@ const GapFillLetterChallenge: React.FC<ChallengeScreenProps> = ({ challenge, upd
   const [_, notification] = useHapticFeedback();
   const [choice, setChoice] = React.useState<Choice | null>(null);
   const [state, setState] = React.useState<ChallengeState>({ submitted: false, wrong: false });
-м
+
   function onSubmit() {
     if (!choice) {
       return;
