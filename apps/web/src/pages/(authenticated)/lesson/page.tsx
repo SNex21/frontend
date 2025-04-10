@@ -7,7 +7,8 @@ import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
 import React from "react";
 import { LessonComplete } from "./LessonComplete";
-import { useParams, useSearchParams } from "react-router-dom";
+// import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Guess } from "@/models/Session";
 import { useEffect, useState, useMemo } from "react";
 
