@@ -11,7 +11,21 @@ const PunctuationChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updat
   const [, notification] = useHapticFeedback();
   const [choice, setChoice] = React.useState<Choice | null>(null);
   const [state, setState] = React.useState<ChallengeState>({ submitted: false, wrong: false });
-  const [correctIndex, setCorrectAnswerId] = React.useState<Number | null>(null);
+  const [selectedIndexes, setSelectedIndexes] = React.useState<Set<number>>(new Set()); // Множество выбранных индексов
+  const [correctAnswerIds, setCorrectAnswerIds] = React.useState<number[] | null>(null);
+
+  // Функция для изменения выбора
+  const toggleChoice = (index: number) => {
+    setSelectedIndexes((prevSelected) => {
+      const newSelected = new Set(prevSelected);
+      if (newSelected.has(index)) {
+        newSelected.delete(index);
+      } else {
+        newSelected.add(index);
+      }
+      return newSelected;
+    });
+  };
 
   function onSubmit() {
     if (!choice) {
@@ -24,12 +38,13 @@ const PunctuationChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updat
       return;
     }
 
-    const correctIds = challenge.choices.filter((c) => c.isCorrect).map((c, i) => i);
-    const selectedIds = challenge.choices
-      .filter((c) => c.text === " " && c.isSelected)
-      .map((c, i) => i);
+    const correctIds = challenge.choices
+      .map((c, i) => c.isCorrect ? i : -1)
+      .filter((index) => index !== -1); // Массив правильных индексов
 
-    setCorrectAnswerId(correctIds.length ? correctIds : null);
+    setCorrectAnswerIds(correctIds);
+
+    const selectedIds = Array.from(selectedIndexes);
 
     const isCorrect = selectedIds.every((id) => correctIds.includes(id)) && selectedIds.length === correctIds.length;
 
@@ -55,7 +70,9 @@ const PunctuationChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updat
             currentChoice={choice}
             setChoice={setChoice}
             state={state}
-            correctAnswerId={correctIndex} // Передаем правильный ответ
+            correctAnswerIds={correctAnswerIds} // Передаем правильные ответы
+            selectedIndexes={selectedIndexes} // Передаем выбранные индексы
+            toggleChoice={toggleChoice} // Передаем функцию изменения выбора
           />,
         )}
       </ChallengeMain>
@@ -63,7 +80,7 @@ const PunctuationChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updat
         onSubmit={onSubmit}
         challenge={challenge}
         next={next}
-        disabled={!choice}
+        disabled={selectedIndexes.size === 0} // Кнопка доступна только при выборе хотя бы одного варианта
         state={state}
         correctText={''} // убираем из сабмита правильное слово
         explanation={challenge.explanation}

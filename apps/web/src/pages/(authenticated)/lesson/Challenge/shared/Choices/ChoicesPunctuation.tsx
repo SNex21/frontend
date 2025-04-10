@@ -10,7 +10,9 @@ interface ManyChoicesPunctuationProps {
   currentChoice: Choice | null;
   setChoice: React.Dispatch<React.SetStateAction<Choice | null>>;
   state?: ChallengeState;
-  correctAnswerId?: Number | null; // Новое свойство
+  correctAnswerIds?: number[] | null; // Массив правильных ответов
+  selectedIndexes: Set<number>; // Множество выбранных индексов
+  toggleChoice: (index: number) => void; // Функция для изменения выбора
 }
 
 interface ChoicePunctuationProps {
@@ -21,7 +23,15 @@ interface ChoicePunctuationProps {
   isCorrect?: boolean; // Новое свойство
 }
 
-const ChoicesPunctuation: React.FC<ManyChoicesPunctuationProps> = ({ choices, currentChoice, setChoice, state, correctAnswerId }) => {
+const ChoicesPunctuation: React.FC<ManyChoicesPunctuationProps> = ({
+  choices,
+  currentChoice,
+  setChoice,
+  state,
+  correctAnswerIds,
+  selectedIndexes,
+  toggleChoice
+}) => {
   if (!choices) {
     return null;
   }
@@ -31,15 +41,15 @@ const ChoicesPunctuation: React.FC<ManyChoicesPunctuationProps> = ({ choices, cu
       {choices.map((choice, i) => {
         // Проверяем, является ли ячейка пробелом (место для запятой)
         const isSpace = choice?.text === " ";
-        // Проверяем, является ли ячейка правильной
-        const isCorrect = correctAnswerId === i;
+        // Проверяем, является ли ячейка правильной (если она в массиве правильных ответов)
+        const isCorrect = correctAnswerIds?.includes(i) || false;
 
         return (
           <ChoicePunctuation
             key={`${choice.text}-${i}`}
             choice={choice}
-            onSelect={isSpace && !state?.submitted ? () => setChoice(choice) : undefined}
-            isSelected={choice === currentChoice}
+            onSelect={isSpace && !state?.submitted ? () => toggleChoice(i) : undefined}
+            isSelected={selectedIndexes.has(i)}
             state={state}
             isCorrect={isCorrect} // Передаем флаг правильности
           />
@@ -49,7 +59,13 @@ const ChoicesPunctuation: React.FC<ManyChoicesPunctuationProps> = ({ choices, cu
   );
 };
 
-const ChoicePunctuation: React.FC<ChoicePunctuationProps> = ({ choice, onSelect, state, isSelected, isCorrect }) => {
+const ChoicePunctuation: React.FC<ChoicePunctuationProps> = ({
+  choice,
+  onSelect,
+  state,
+  isSelected,
+  isCorrect
+}) => {
   // Проверяем, является ли ячейка пробелом (место для запятой)
   const isSpace = choice?.text === " ";
 
