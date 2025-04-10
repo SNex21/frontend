@@ -40,7 +40,7 @@ export default function LessonPage() {
   const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null);
   const [isReady, setIsReady] = useState(false);
   const params = useParams();
-  const [searchParams] = useSearchParams();
+  // const [searchParams] = useSearchParams();
   const cloudStorage = useCloudStorage();
 
 
