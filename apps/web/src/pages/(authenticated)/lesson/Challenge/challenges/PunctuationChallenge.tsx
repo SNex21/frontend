@@ -1,8 +1,10 @@
+// Удалить строку импорта Choice
+// import { Choice } from "@/models/Session.ts"; // Удалить эту строку
+
 import React, { ReactNode } from "react";
 import { ChallengeScreenProps, ChallengeState } from "@/pages/(authenticated)/lesson/Challenge/Challenge.tsx";
 import { ChallengeSubmit } from "@/pages/(authenticated)/lesson/Challenge/layout/ChallengeSubmit.tsx";
 import { ChallengeHeading } from "@/pages/(authenticated)/lesson/Challenge/layout/ChallengeHeading.tsx";
-import { Choice } from "@/models/Session.ts";
 import { ChallengeMain } from "@/pages/(authenticated)/lesson/Challenge/layout/ChallengeMain.tsx";
 import { useHapticFeedback } from "@/lib/twa/hooks";
 import { ChoicesPunctuation } from "@/pages/(authenticated)/lesson/Challenge/shared/Choices/ChoicesPunctuation.tsx";
