@@ -49,7 +49,8 @@ export default function LessonPage() {
   const [stats, setStats] = React.useState(defaultStats);
   const [sessionKey, setSessionKey] = React.useState(Date.now());
 
-  const taskAmount = Number(searchParams.get("amount")) || 1;
+  // const taskAmount = Number(searchParams.get("amount")) || 10;
+  const taskAmount = 1;
 
   useEffect(() => {
     cloudStorage
