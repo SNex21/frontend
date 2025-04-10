@@ -9,11 +9,11 @@ import { ChoicesAccent } from "@/pages/(authenticated)/lesson/Challenge/shared/C
 
 const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateStats, next }) => {
   const [, notification] = useHapticFeedback();
-  const [choice, setChoice] = React.useState<Choice | null>(null);
-  const [state, setState] = React.useState<ChallengeState>({ submitted: false, wrong: false });
-  const [correctIndex, setCorrectAnswerId] = React.useState<Number | null>(null); 
+  const [choice, setChoice] = React.useState<Choice | null>(null); // Сохраняем выбранный ответ
+  const [state, setState] = React.useState<ChallengeState>({ submitted: false, wrong: false }); // Отправлено ли задание и правильный ли ответ
+  const [correctIndex, setCorrectAnswerId] = React.useState<Number | null>(null); // Индекс правильного ответа для анимации
 
-  function onSubmit() {
+  function onSubmit() { // Срабатывает при нажатии на проверить 
     if (!choice) {
       return;
     }
@@ -24,8 +24,8 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
       return;
     }
 
-    const correctId= challenge.choices.findIndex((c) => c.isCorrect);
-    setCorrectAnswerId(correctId || null);
+    const correctId= challenge.choices.findIndex((c) => c.isCorrect); // Ищем правильный ответ
+    setCorrectAnswerId(correctId || null); // Сохраняем его индекс
   
     setState({
       submitted: true,
@@ -33,7 +33,7 @@ const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateSta
     });
   
     updateStats(choice.isCorrect);
-    notification(choice.isCorrect ? "success" : "error");
+    notification(choice.isCorrect ? "success" : "error"); // Отмечаем что задание правильное и делаем виброотклик
   }
 
   const prompt = challenge.prompt ?? '';

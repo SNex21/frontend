@@ -21,7 +21,7 @@ export interface Challenge {
   attempt?: number;
 }
 
-export type ChallengeType = "gapFill" | "accents" | "mistake" | "gapFillLetter";
+export type ChallengeType = "gapFill" | "accents" | "mistake" | "gapFillLetter" | "punctuationFill";
 
 export interface Choice {
   text: string;
@@ -36,3 +36,5 @@ export interface Guess {
   challengeId: string;
   correct: boolean;
 }
+
+[]

@@ -5,6 +5,7 @@ import { GapFillLetterChallenge } from "@/pages/(authenticated)/lesson/Challenge
 import { MistakeChallenge } from "@/pages/(authenticated)/lesson/Challenge/challenges/MistakeChallenge.tsx";
 import { AccentsChallenge } from "@/pages/(authenticated)/lesson/Challenge/challenges/AccentsChallenge.tsx";
 import { ChallengeLayout } from "@/pages/(authenticated)/lesson/Challenge/layout/ChallengeLayout.tsx";
+import { PunctuationChallenge } from "./challenges/PunctuationChallenge";
 
 interface ChallengeScreenProps {
   challenge: Challenge;
@@ -37,6 +38,8 @@ function getChallenge(type: ChallengeType) {
       return MistakeChallenge;
     case "accents":
       return AccentsChallenge;
+    case "punctuationFill":
+      return PunctuationChallenge;
     default:
       return GapFillChallenge;
   }

@@ -5,46 +5,52 @@ import { ChallengeHeading } from "@/pages/(authenticated)/lesson/Challenge/layou
 import { Choice } from "@/models/Session.ts";
 import { ChallengeMain } from "@/pages/(authenticated)/lesson/Challenge/layout/ChallengeMain.tsx";
 import { useHapticFeedback } from "@/lib/twa/hooks";
-import { ChoicesAccent } from "@/pages/(authenticated)/lesson/Challenge/shared/Choices/ChoicesAccent.tsx";
+import { ChoicesPunctuation } from "@/pages/(authenticated)/lesson/Challenge/shared/Choices/ChoicesPunctuation.tsx";
 
-const AccentsChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateStats, next }) => {
+const PunctuationChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateStats, next }) => {
   const [, notification] = useHapticFeedback();
   const [choice, setChoice] = React.useState<Choice | null>(null);
   const [state, setState] = React.useState<ChallengeState>({ submitted: false, wrong: false });
-  const [correctIndex, setCorrectAnswerId] = React.useState<Number | null>(null); 
+  const [correctIndex, setCorrectAnswerId] = React.useState<Number | null>(null);
 
   function onSubmit() {
     if (!choice) {
       return;
     }
-  
+
     // Проверяем, что choices существует
     if (!challenge.choices) {
       console.error("Choices are undefined");
       return;
     }
 
-    const correctId= challenge.choices.findIndex((c) => c.isCorrect);
-    setCorrectAnswerId(correctId || null);
-  
+    const correctIds = challenge.choices.filter((c) => c.isCorrect).map((c, i) => i);
+    const selectedIds = challenge.choices
+      .filter((c) => c.text === " " && c.isSelected)
+      .map((c, i) => i);
+
+    setCorrectAnswerId(correctIds.length ? correctIds : null);
+
+    const isCorrect = selectedIds.every((id) => correctIds.includes(id)) && selectedIds.length === correctIds.length;
+
     setState({
       submitted: true,
-      wrong: !choice.isCorrect,
+      wrong: !isCorrect,
     });
-  
-    updateStats(choice.isCorrect);
-    notification(choice.isCorrect ? "success" : "error");
+
+    updateStats(isCorrect);
+    notification(isCorrect ? "success" : "error");
   }
 
   const prompt = challenge.prompt ?? '';
 
   return (
     <>
-      <ChallengeHeading challenge={challenge}>Выбери букву под ударением</ChallengeHeading>
+      <ChallengeHeading challenge={challenge}>Расставьте запятые</ChallengeHeading>
       <ChallengeMain>
         {formatPrompt(
           prompt,
-          <ChoicesAccent
+          <ChoicesPunctuation
             choices={challenge.choices}
             currentChoice={choice}
             setChoice={setChoice}
@@ -78,7 +84,6 @@ function formatPrompt(prompt: string, GapFillComponent: ReactNode): ReactNode {
       <h3>{parts[1] && <span>{parts[1].trim()}</span>}</h3>
     </>
   );
-
 }
 
-export { AccentsChallenge };
+export { PunctuationChallenge };
