@@ -9,7 +9,6 @@ import { ChoicesPunctuation } from "@/pages/(authenticated)/lesson/Challenge/sha
 
 const PunctuationChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updateStats, next }) => {
   const [, notification] = useHapticFeedback();
-  const [choice, setChoice] = React.useState<Choice | null>(null);
   const [state, setState] = React.useState<ChallengeState>({ submitted: false, wrong: false });
   const [selectedIndexes, setSelectedIndexes] = React.useState<Set<number>>(new Set()); // Множество выбранных индексов
   const [correctAnswerIds, setCorrectAnswerIds] = React.useState<number[] | null>(null);
@@ -28,7 +27,7 @@ const PunctuationChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updat
   };
 
   function onSubmit() {
-    if (!choice) {
+    if (selectedIndexes.size === 0) {
       return;
     }
 
@@ -67,8 +66,6 @@ const PunctuationChallenge: React.FC<ChallengeScreenProps> = ({ challenge, updat
           prompt,
           <ChoicesPunctuation
             choices={challenge.choices}
-            currentChoice={choice}
-            setChoice={setChoice}
             state={state}
             correctAnswerIds={correctAnswerIds} // Передаем правильные ответы
             selectedIndexes={selectedIndexes} // Передаем выбранные индексы

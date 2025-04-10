@@ -7,8 +7,6 @@ import { Haptic } from "@/lib/twa/components/Haptic.tsx";
 
 interface ManyChoicesPunctuationProps {
   choices?: Choice[];
-  currentChoice: Choice | null;
-  setChoice: React.Dispatch<React.SetStateAction<Choice | null>>;
   state?: ChallengeState;
   correctAnswerIds?: number[] | null; // Массив правильных ответов
   selectedIndexes: Set<number>; // Множество выбранных индексов
@@ -25,8 +23,6 @@ interface ChoicePunctuationProps {
 
 const ChoicesPunctuation: React.FC<ManyChoicesPunctuationProps> = ({
   choices,
-  currentChoice,
-  setChoice,
   state,
   correctAnswerIds,
   selectedIndexes,
