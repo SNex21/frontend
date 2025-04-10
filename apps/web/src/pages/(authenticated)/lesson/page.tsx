@@ -7,7 +7,8 @@ import { AnimatePresence } from "framer-motion";
 import { LessonPageLoading } from "./loading";
 import React from "react";
 import { LessonComplete } from "./LessonComplete";
-import { useParams, useSearchParams } from "react-router-dom";
+// import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Guess } from "@/models/Session";
 import { useEffect, useState, useMemo } from "react";
 
@@ -40,7 +41,7 @@ export default function LessonPage() {
   const [isFirstStart, setIsFirstStart] = useState<boolean | null>(null);
   const [isReady, setIsReady] = useState(false);
   const params = useParams();
-  const [searchParams] = useSearchParams();
+  // const [searchParams] = useSearchParams();
   const cloudStorage = useCloudStorage();
 
 
@@ -49,7 +50,8 @@ export default function LessonPage() {
   const [stats, setStats] = React.useState(defaultStats);
   const [sessionKey, setSessionKey] = React.useState(Date.now());
 
-  const taskAmount = Number(searchParams.get("amount")) || 10;
+  // const taskAmount = Number(searchParams.get("amount")) || 10;
+  const taskAmount = 1;
 
   useEffect(() => {
     cloudStorage
@@ -129,7 +131,6 @@ export default function LessonPage() {
       setStats({ total: session.amount, completed: 0, correct: 0, index: 1 });
     }
   }, [session?.amount, stats]);
-
   const correctPercentage = React.useMemo(() => Math.round((stats.correct / stats.total) * 100), [stats]);
 
   return (
