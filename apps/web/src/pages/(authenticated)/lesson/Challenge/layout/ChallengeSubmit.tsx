@@ -72,15 +72,6 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
               <h1 className={styles.submit__panel__heading__title}>Верно!</h1>
             </div>
           )}
-          <a
-            // href={`${import.meta.env.TELEGRAM_BOT_LINK}?start=report`} 
-            href="https://t.me/Example_chat_courses_bot?start=report"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.submit__panel__heading__report}
-          >
-            Сообщить об ошибке
-          </a>
           {explanation && (
             <div className={styles["submit__panel__error-info"]}>
               <span className={styles["submit__panel__error-info__title"]}>Объяснение:</span>
