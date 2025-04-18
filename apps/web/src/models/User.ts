@@ -5,6 +5,7 @@ interface User {
   avatarUrl?: string;
   create_datetime: Date;
   subscription: SubscriptionInf | null;
+  mistake: boolean;
   settings: {
     notifications: boolean;
   };
