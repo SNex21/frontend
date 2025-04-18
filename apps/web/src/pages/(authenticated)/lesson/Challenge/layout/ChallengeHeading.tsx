@@ -18,7 +18,6 @@ const ChallengeHeading: React.FC<ChallengeHeadingProps> = ({ challenge, children
         {(challenge.isWorkOnMistakes || challenge.isLocalWom) && <p>Исправляем ошибки</p>}
         {challenge.isHard && <p>Сложное задание</p>}
         <h1 className={styles.heading__title}>{children}</h1>
-      </div>
       <a
         // href={`${import.meta.env.TELEGRAM_BOT_LINK}?start=report`} 
         href="https://t.me/Example_chat_courses_bot?start=report"
@@ -28,6 +27,7 @@ const ChallengeHeading: React.FC<ChallengeHeadingProps> = ({ challenge, children
       >
         Сообщить об ошибке
     </a>
+    </div>
   </>
   );
 };
