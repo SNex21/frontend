@@ -102,22 +102,22 @@ const WorkoutSection: FC = () => {
               icon={<FlexedBicepsEmoji size={25} />}
               href={"/set/lesson"}
             />
-            {user.mistake ? (            
-              <div className={styles.row}>
+            <div className={styles.row}>
+            {user.mistake ? (
               <WorkoutCard
                 title="Практика ошибок"
                 icon={<WarningEmoji size={25} />}
                 isSm
                 href={"/set/lesson/mistakes"}
-              />) : (
-                <div className={styles.row}>
-              <WorkoutCard
-                title="У тебя пока нет ошибок!"
-                icon={<WarningEmoji size={25} />}
-                isSm
-                href={"/set/lesson/mistakes"}
               />
-              )}
+            ):(
+            <WorkoutCard
+              title="У тебя пока нет ошибок"
+              icon={<WarningEmoji size={25} />}
+              isSm
+              href={"/set/lesson/mistakes"}
+            />
+            )}
               {showHardLessonButton && (
                 <WorkoutCard
                   title="Самые сложные"
