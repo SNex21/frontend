@@ -1,6 +1,6 @@
 import { Haptic } from "@/lib/twa/components/Haptic";
 import Blocked from "../../../../../assets/fonts/images/Blocked.png"; // Импортируем изображение замка
-import { FlexedBicepsEmoji, PersonLiftingWeightsEmoji, WarningEmoji, PhoneEmoji } from "@repo/ui/emojis";
+import { FlexedBicepsEmoji, PersonLiftingWeightsEmoji, WarningEmoji, PhoneEmoji, KindSmileEmoji } from "@repo/ui/emojis";
 import React, { FC, useEffect, useState } from "react";
 import styles from "./WorkoutSection.module.scss";
 import cn from "classnames";
@@ -114,7 +114,7 @@ const WorkoutSection: FC = () => {
             <WorkoutCardNoMistakes
               title="Практика ошибок"
               description="У тебя пока нет ошибок"
-              icon={<WarningEmoji size={25} />}
+              icon={<KindSmileEmoji size={25} />}
               isSm
             />
             )}
