@@ -59,6 +59,15 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
               <div className={styles.submit__panel__heading}>
                 <p className={styles.submit__panel__heading__p}> &#x274C;</p>
                 <h1 className={styles.submit__panel__heading__title}>Неверно</h1>
+                <a
+                  // href={`${import.meta.env.TELEGRAM_BOT_LINK}?start=report`} 
+                  href="https://t.me/Example_chat_courses_bot?start=report"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.submit__panel__heading__report}
+                >
+                  Нашли у нас ошибку?
+              </a>
               </div>
               {correctText && (
                 <div className={styles["submit__panel__error-info"]}>
@@ -70,9 +79,7 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
             <div className={styles.submit__panel__heading}>
               <p className={styles.submit__panel__heading__p}> &#9989;</p>
               <h1 className={styles.submit__panel__heading__title}>Верно!</h1>
-            </div>
-          )}
-           <a
+              <a
               // href={`${import.meta.env.TELEGRAM_BOT_LINK}?start=report`} 
               href="https://t.me/Example_chat_courses_bot?start=report"
               target="_blank"
@@ -81,6 +88,8 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
             >
               Нашли у нас ошибку?
           </a>
+            </div>
+          )}
           {explanation && (
             <div className={styles["submit__panel__error-info"]}>
               <span className={styles["submit__panel__error-info__title"]}>Объяснение:</span>
