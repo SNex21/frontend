@@ -113,7 +113,7 @@ const WorkoutSection: FC = () => {
             ):(
             <WorkoutCardNoMistakes
               title="У тебя пока нет ошибок"
-              description="Тут можно прорешать свои ошибки, когда они появятся"
+              description="Тут можно прорешать свои ошибки"
               icon={<KindSmileEmoji size={30} />}
               isSm
             />
