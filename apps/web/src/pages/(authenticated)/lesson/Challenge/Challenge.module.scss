@@ -115,6 +115,7 @@
     &__heading {
       display: flex;
       gap: var(--spacing-3);
+      justify-content: space-between;
       &__p{
         font-size: 150%;
       }
