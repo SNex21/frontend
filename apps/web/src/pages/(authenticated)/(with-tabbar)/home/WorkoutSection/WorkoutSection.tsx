@@ -103,7 +103,7 @@ const WorkoutSection: FC = () => {
               href={"/set/lesson"}
             />
             <div className={styles.row}>
-            {user.mistake ? (
+            {user.mistakes ? (
               <WorkoutCard
                 title="Практика ошибок"
                 icon={<WarningEmoji size={25} />}
