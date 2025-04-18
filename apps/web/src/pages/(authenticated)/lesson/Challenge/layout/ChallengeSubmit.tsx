@@ -73,7 +73,7 @@ const ChallengeSubmit: FC<ChallengeSubmitProps> = ({
             </div>
           )}
           <a
-            href={`${import.meta.env.BOT_LINK}?start=report`}
+            href={`${import.meta.env.TELEGRAM_BOT_LINK}?start=report`}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.submit__panel__heading__report}
