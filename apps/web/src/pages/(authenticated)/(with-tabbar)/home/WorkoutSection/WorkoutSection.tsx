@@ -111,11 +111,11 @@ const WorkoutSection: FC = () => {
                 href={"/set/lesson/mistakes"}
               />
             ):(
-            <WorkoutCard
-              title="У тебя пока нет ошибок"
+            <WorkoutCardNoMistakes
+              title="Практика ошибок"
+              description="У тебя пока нет ошибок"
               icon={<WarningEmoji size={25} />}
               isSm
-              href={"/set/lesson/mistakes"}
             />
             )}
               {showHardLessonButton && (
@@ -251,5 +251,56 @@ const WorkoutCardBlocked: FC<WorkoutCardBlockedProps> = ({
     </Haptic>
   );
 };
+
+const WorkoutCardNoMistakes: FC<WorkoutCardProps> = ({
+  icon,
+  title,
+  description,
+  isSm = false,
+  onClick,
+}) => {
+  return (
+    <Haptic type="impact" value="medium" asChild>
+      {onClick ? (
+        <div
+          className={styles.card}
+          onClick={onClick}
+          style={{ cursor: "pointer" }}
+        >
+          {icon && <div className={styles.card__icon}>{icon}</div>}
+          <div className={styles.card__content}>
+            <h3
+              className={cn(styles.card__content__title, {
+                [styles.card__content__title_sm!]: isSm,
+              })}
+            >
+              {title}
+            </h3>
+            {description && (
+              <p className={styles.card__content__description}>{description}</p>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className={styles.card}>
+          {icon && <div className={styles.card__icon}>{icon}</div>}
+          <div className={styles.card__content}>
+            <h3
+              className={cn(styles.card__content__title, {
+                [styles.card__content__title_sm!]: isSm,
+              })}
+            >
+              {title}
+            </h3>
+            {description && (
+              <p className={styles.card__content__description}>{description}</p>
+            )}
+          </div>
+        </div>
+      )}
+    </Haptic>
+  );
+};
+
 
 export { WorkoutSection };
