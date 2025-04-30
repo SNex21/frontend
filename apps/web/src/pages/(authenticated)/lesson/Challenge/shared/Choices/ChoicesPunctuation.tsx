@@ -3,50 +3,101 @@ import { Choice } from "@/models/Session.ts";
 import { ChallengeState } from "@/pages/(authenticated)/lesson/Challenge/Challenge.tsx";
 import styles from "./ChoicesPunctuation.module.scss";
 import cn from "classnames";
+import { Haptic } from "@/lib/twa/components/Haptic.tsx";
 
-interface ChoicesPunctuationProps {
+interface ManyChoicesPunctuationProps {
   choices?: Choice[];
   state?: ChallengeState;
-  correctAnswerIds?: number[] | null;
-  selectedIndexes: Set<number>;
-  toggleChoice: (index: number) => void;
+  correctAnswerIds?: number[] | null; // Массив правильных ответов
+  selectedIndexes: Set<number>; // Множество выбранных индексов
+  toggleChoice: (index: number) => void; // Функция для изменения выбора
 }
 
-const ChoicesPunctuation: React.FC<ChoicesPunctuationProps> = ({
+interface ChoicePunctuationProps {
+  choice?: Choice;
+  onSelect?: () => void;
+  isSelected?: boolean;
+  state?: ChallengeState;
+  isCorrect?: boolean; // Новое свойство
+}
+
+const ChoicesPunctuation: React.FC<ManyChoicesPunctuationProps> = ({
   choices,
   state,
   correctAnswerIds,
   selectedIndexes,
-  toggleChoice,
+  toggleChoice
 }) => {
-  if (!choices) return null;
+  if (!choices) {
+    return null;
+  }
 
   return (
     <div className={styles.choices}>
       {choices.map((choice, i) => {
+        // Проверяем, является ли ячейка пробелом (место для запятой)
         const isSpace = choice?.text === " ";
+        // Проверяем, является ли ячейка правильной (если она в массиве правильных ответов)
         const isCorrect = correctAnswerIds?.includes(i) || false;
-        const isSelected = selectedIndexes.has(i);
 
         return (
-          <span
-            key={i}
-            className={cn(styles.choice, {
-              "choice_candidate": isSpace && !state?.submitted,
-              "choice_selected": isSelected,
-              "choice_right": isCorrect && state?.submitted,
-              "choice_wrong": isSelected && state?.submitted && !isCorrect,
-              "choice_disabled": !isSpace,
-            })}
-            onClick={isSpace && !state?.submitted ? () => toggleChoice(i) : undefined}
-            role="radio"
-          >
-            {isSpace ? null : choice?.text}
-          </span>
-
+          <ChoicePunctuation
+            key={`${choice.text}-${i}`}
+            choice={choice}
+            onSelect={isSpace && !state?.submitted ? () => toggleChoice(i) : undefined}
+            isSelected={selectedIndexes.has(i)}
+            state={state}
+            isCorrect={isCorrect} // Передаем флаг правильности
+          />
         );
       })}
     </div>
+  );
+};
+
+const ChoicePunctuation: React.FC<ChoicePunctuationProps> = ({
+  choice,
+  onSelect,
+  state,
+  isSelected,
+  isCorrect
+}) => {
+  // Проверяем, является ли ячейка пробелом (место для запятой)
+  const isSpace = choice?.text === " ";
+
+  return (
+    <Haptic type={"impact"} value={"medium"} disabled={!isSpace || state?.submitted} asChild>
+      <div
+        className={cn(styles.choice, {
+          [styles["choice_not-submitted"]!]: !state?.submitted,
+          [styles.choice_selected!]: isSelected,
+          [styles.choice_right!]: isCorrect, // Зелёное выделение для правильного места для запятой
+          [styles.choice_wrong!]: isSelected && state?.submitted && !state?.wrong,
+          [styles.choice_disabled!]: !isSpace,
+        })}
+        role="radio"
+        onClick={onSelect}
+        aria-disabled={!isSpace}
+      >
+        <span className={styles.choice__text}>
+          {choice?.text === " " ? " " : choice?.text}
+        </span>
+        {isCorrect && (
+          <div className={styles.choice__accent}>
+            <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 0L3.05825 11H0L2.32767 0H7Z" />
+            </svg>
+          </div>
+        )}
+        {isSelected && (
+          <div className={styles.choice__accent}>
+            <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 0L3.05825 11H0L2.32767 0H7Z" />
+            </svg>
+          </div>
+        )}
+      </div>
+    </Haptic>
   );
 };
 
