@@ -1,6 +1,6 @@
 import { Haptic } from "@/lib/twa/components/Haptic";
 import Blocked from "../../../../../assets/fonts/images/Blocked.png"; // Импортируем изображение замка
-import { FlexedBicepsEmoji, PersonLiftingWeightsEmoji, WarningEmoji, PhoneEmoji } from "@repo/ui/emojis";
+import { FlexedBicepsEmoji, PersonLiftingWeightsEmoji, WarningEmoji, PhoneEmoji, KindSmileEmoji } from "@repo/ui/emojis";
 import React, { FC, useEffect, useState } from "react";
 import styles from "./WorkoutSection.module.scss";
 import cn from "classnames";
@@ -103,12 +103,21 @@ const WorkoutSection: FC = () => {
               href={"/set/lesson"}
             />
             <div className={styles.row}>
+            {user.mistakes ? (
               <WorkoutCard
                 title="Практика ошибок"
                 icon={<WarningEmoji size={25} />}
                 isSm
                 href={"/set/lesson/mistakes"}
               />
+            ):(
+            <WorkoutCardNoMistakes
+              title="У тебя пока нет ошибок"
+              description="Тут можно прорешать свои ошибки"
+              icon={<KindSmileEmoji size={30} />}
+              isSm
+            />
+            )}
               {showHardLessonButton && (
                 <WorkoutCard
                   title="Самые сложные"
@@ -242,5 +251,56 @@ const WorkoutCardBlocked: FC<WorkoutCardBlockedProps> = ({
     </Haptic>
   );
 };
+
+const WorkoutCardNoMistakes: FC<WorkoutCardProps> = ({
+  icon,
+  title,
+  description,
+  isSm = false,
+  onClick,
+}) => {
+  return (
+    <Haptic type="impact" value="medium" asChild>
+      {onClick ? (
+        <div
+          className={styles.card}
+          onClick={onClick}
+          style={{ cursor: "pointer" }}
+        >
+          {icon && <div className={styles.card__icon}>{icon}</div>}
+          <div className={styles.card__content}>
+            <h3
+              className={cn(styles.card__content__title, {
+                [styles.card__content__title_sm!]: isSm,
+              })}
+            >
+              {title}
+            </h3>
+            {description && (
+              <p className={styles.card__content__description}>{description}</p>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className={styles.card}>
+          {icon && <div className={styles.card__icon}>{icon}</div>}
+          <div className={styles.card__content}>
+            <h3
+              className={cn(styles.card__content__title, {
+                [styles.card__content__title_sm!]: isSm,
+              })}
+            >
+              {title}
+            </h3>
+            {description && (
+              <p className={styles.card__content__description}>{description}</p>
+            )}
+          </div>
+        </div>
+      )}
+    </Haptic>
+  );
+};
+
 
 export { WorkoutSection };

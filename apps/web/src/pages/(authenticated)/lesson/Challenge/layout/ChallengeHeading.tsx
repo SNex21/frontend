@@ -13,11 +13,13 @@ const ChallengeHeading: React.FC<ChallengeHeadingProps> = ({ challenge, children
   }
 
   return (
-    <div className={styles.heading}>
-      {(challenge.isWorkOnMistakes || challenge.isLocalWom) && <p>Исправляем ошибки</p>}
-      {challenge.isHard && <p>Сложное задание</p>}
-      <h1 className={styles.heading__title}>{children}</h1>
+    <>
+      <div className={styles.heading}>
+        {(challenge.isWorkOnMistakes || challenge.isLocalWom) && <p>Исправляем ошибки</p>}
+        {challenge.isHard && <p>Сложное задание</p>}
+        <h1 className={styles.heading__title}>{children}</h1>
     </div>
+  </>
   );
 };
 
