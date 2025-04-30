@@ -32,17 +32,18 @@ const ChoicesPunctuation: React.FC<ChoicesPunctuationProps> = ({
           <span
             key={i}
             className={cn(styles.choice, {
-              [styles.choice_candidate]: isSpace && !state?.submitted,
-              [styles.choice_selected]: isSelected,
-              [styles.choice_right]: isCorrect && state?.submitted,
-              [styles.choice_wrong]: isSelected && state?.submitted && !isCorrect,
-              [styles.choice_disabled]: !isSpace,
+              "choice_candidate": isSpace && !state?.submitted,
+              "choice_selected": isSelected,
+              "choice_right": isCorrect && state?.submitted,
+              "choice_wrong": isSelected && state?.submitted && !isCorrect,
+              "choice_disabled": !isSpace,
             })}
             onClick={isSpace && !state?.submitted ? () => toggleChoice(i) : undefined}
             role="radio"
           >
             {isSpace ? null : choice?.text}
           </span>
+
         );
       })}
     </div>
