@@ -131,6 +131,7 @@ export default function LessonPage() {
   }, [session?.amount, stats]);
 
   const correctPercentage = React.useMemo(() => Math.round((stats.correct / stats.total) * 100), [stats]);
+
   return (
     <AnimatePresence>
       {isLoading && <LessonPageLoading initial key="loading" />}
