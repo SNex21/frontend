@@ -29,12 +29,13 @@ const ChoicesPunctuation: React.FC<ChoicesPunctuationProps> = ({
         const isSelected = selectedIndexes.has(i);
 
         const className = cn(styles.choice, {
-          [styles.choice_not_submitted]: !state?.submitted,
-          [styles.choice_selected]: isSelected,
-          [styles.choice_right]: isCorrect && state?.submitted,
-          [styles.choice_wrong]: isSelected && state?.submitted && !isCorrect,
-          [styles.choice_disabled]: !isSpace,
-        });
+          "choice_not-submitted": !state?.submitted,
+          "choice_selected": isSelected,
+          "choice_right": isCorrect && state?.submitted,
+          "choice_wrong": isSelected && state?.submitted && !isCorrect,
+          "choice_disabled": !isSpace,
+        })
+        
 
         return (
           <span
