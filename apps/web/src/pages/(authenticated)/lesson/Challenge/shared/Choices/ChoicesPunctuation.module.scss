@@ -1,112 +1,75 @@
 .choices {
   display: flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: var(--spacing-2);
-
-  margin-top: -60px;
+  flex-wrap: wrap;
+  gap: 4px;
+  line-height: 1.6;
+  font-size: 18px;
 }
 
 .choice {
-  --size: 40px;
-  --border-color: var(--ds-gray-alpha-400);
-  --text-color: var(--ds-gray-1000);
-  --background-color: var(--ds-purple-200);
   position: relative;
-
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  cursor: default;
 
-  width: var(--size);
-  height: var(--size);
-
-  transition: scale 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
-
-  border: 2px solid var(--border-color);
-  border-radius: var(--rounded-xl);
-  background-color: var(--background-color);
-
-  &_selected {
-    --border-color: var(--ds-violet-700);
-    --text-color: var(--ds-violet-700);
-    --background-color: var(--ds-violet-300);
+  &::before {
+    content: ",";
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    text-align: center;
+    line-height: 24px;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    background-color: transparent;
+    margin-right: 2px;
+    visibility: hidden;
   }
 
-  &_right {
-    --border-color: var(--success-primary);
-    --text-color: var(--success-primary);
-    --background-color: var(--success-background);
+  // Это пробел-кандидат на запятую
+  &_not_submitted {
+    cursor: pointer;
+
+    &::before {
+      visibility: visible;
+      border: 2px solid var(--ds-gray-alpha-400);
+      background-color: var(--ds-purple-100);
+      color: var(--ds-gray-1000);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
   }
 
-  &_wrong {
-    --border-color: var(--error-primary);
-    --text-color: var(--error-primary);
-    --background-color: var(--error-background);
+  &_selected::before {
+    visibility: visible;
+    border-color: var(--ds-violet-700);
+    background-color: var(--ds-violet-300);
+    color: var(--ds-violet-700);
+  }
+
+  &_right::before {
+    visibility: visible;
+    border-color: var(--success-primary);
+    background-color: var(--success-background);
+    color: var(--success-primary);
+  }
+
+  &_wrong::before {
+    visibility: visible;
+    border-color: var(--error-primary);
+    background-color: var(--error-background);
+    color: var(--error-primary);
   }
 
   &_disabled {
-    --background-color: var(--ds-background-200);
-    opacity: 0.9;
     pointer-events: none;
-    cursor: not-allowed;
+    opacity: 0.4;
   }
-
-  &_not-submitted {
-    cursor: pointer;
-
-    &:active {
-      scale: 0.85;
-    }
-  }
-
-  &__accent {
-    position: absolute;
-    top: -26px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    svg {
-      fill: var(--text-color);
-    }
-  }
-
-  &__text {
-    color: var(--text-color);
-    font-size: 20px;
-    font-weight: 500;
-  }
-}
-
-.choice__text {
-  color: var(--text-color);
-
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.choice_selected {
-  background-color: var(--ds-violet-300);
-  border-color: var(--ds-violet-700);
-  color: var(--ds-violet-700);
-}
-
-.choice_right {
-  background-color: var(--success-background);
-  border-color: var(--success-primary);
-  color: var(--success-primary);
-}
-
-.choice_wrong {
-  background-color: var(--error-background);
-  border-color: var(--error-primary);
-  color: var(--error-primary);
-}
-
-.choice_disabled {
-  background-color: var(--ds-background-200);
-  opacity: 0.9;
-  pointer-events: none;
-  cursor: not-allowed;
 }
