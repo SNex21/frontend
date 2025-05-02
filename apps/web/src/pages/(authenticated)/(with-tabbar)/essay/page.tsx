@@ -66,25 +66,33 @@ export default function EssayPage() {
     );
   }
 
+  // Маппинг статусов
+  const statusMap = {
+    bought: { label: "Куплено", className: styles.statusBought },
+    in_progress: { label: "В процессе", className: styles.statusInProgress },
+    in_review: { label: "На проверке", className: styles.statusInReview },
+    reviewed: { label: "Проверено", className: styles.statusReviewed },
+  };
+
   return (
     <div className={styles.wrapper}>
       <section className={styles.section}>
         <h1 className={styles.title}>Твои сочинения</h1>
         <div className={styles.essayList}>
-          {userEssaysData.map((essay, index) => (
-            <div className={styles.essayItem} key={index}>
-              <span>{essay.title}</span>
-              <span
-                className={
-                  essay.status === 'проверено'
-                    ? styles.statusChecked
-                    : styles.statusPending
-                }
-              >
-                {essay.status}
-              </span>
-            </div>
-          ))}
+          {userEssaysData.map((essay, index) => {
+            const currentStatus =
+              statusMap[essay.status] || {
+                label: "Неизвестно",
+                className: styles.statusUnknown,
+              };
+
+            return (
+              <div className={`${styles.essayItem} ${currentStatus.className}`} key={index}>
+                <span>{essay.title}</span>
+                <span>{currentStatus.label}</span>
+              </div>
+            );
+          })}
         </div>
       </section>
 
