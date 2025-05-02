@@ -13,11 +13,11 @@ export const getEssaysTopics = async ({ token }: { token: string }): Promise<Get
 };
 
 export const getUserEssays = async ({ token }: { token: string }): Promise<GetUserEssaysRes> => {
-    const { userEssayList } = await apiClient.get<GetUserEssaysRes>(`${API_ENDPOINTS.GET_USERS_ESSAYS}`, {
+    const { data } = await apiClient.get<GetUserEssaysRes>(`${API_ENDPOINTS.GET_USERS_ESSAYS}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return userEssayList;
+    return data;
   };
   
