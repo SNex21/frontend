@@ -1,12 +1,13 @@
 import styles from "./Essay.module.scss";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useQuery } from "@tanstack/react-query";
-import { getEssaysTopics, getUserEssays} from "@/services/api/essays";
+import { getEssaysTopics, getUserEssays } from "@/services/api/essays";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { Skeleton } from "@repo/ui";
 import { useEffect } from "react";
 
 declare let Telegram: any;
+
 export default function EssayPage() {
   useEffect(() => {
     if (Telegram && Telegram.WebApp) {
@@ -18,6 +19,7 @@ export default function EssayPage() {
 
       tg.disableVerticalSwipes();
       tg.enableClosingConfirmation();
+
       return () => {
         tg.disableVerticalSwipes();
         tg.enableClosingConfirmation();
@@ -26,14 +28,16 @@ export default function EssayPage() {
   }, []);
 
   const cloudStorage = useCloudStorage();
-  const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
 
   const {
     data: topicsData,
     isLoading: topicsLoading,
   } = useQuery({
     queryKey: ["topics"],
-    queryFn: () => getEssaysTopics({ token }),
+    queryFn: async () => {
+      const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
+      return getEssaysTopics({ token });
+    },
   });
 
   const {
@@ -41,10 +45,16 @@ export default function EssayPage() {
     isLoading: userEssaysLoading,
   } = useQuery({
     queryKey: ["userEssays"],
-    queryFn: () => getUserEssays({ token }),
+    queryFn: async () => {
+      const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
+      return getUserEssays({ token });
+    },
   });
 
-  if (topicsLoading || userEssaysLoading || !topicsData || !userEssaysData) {
+  const isLoading = topicsLoading || userEssaysLoading;
+  const isDataReady = topicsData && userEssaysData;
+
+  if (isLoading || !isDataReady) {
     return (
       <>
         {[...Array(6).keys()].map((i) => (
@@ -81,10 +91,10 @@ export default function EssayPage() {
       <section className={styles.section}>
         <h2 className={styles.subtitle}>Магазин сочинений</h2>
         <div className={styles.shopGrid}>
-          {topicsData.map((essay, index) => (
+          {topicsData.map((topic, index) => (
             <div className={styles.card} key={index}>
-              <img className={styles.cardImage} src={essay.image_url} alt="" />
-              <div className={styles.cardText}>{essay.title}</div>
+              <img className={styles.cardImage} src={topic.image_url} alt="" />
+              <div className={styles.cardText}>{topic.title}</div>
             </div>
           ))}
         </div>
