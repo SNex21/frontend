@@ -59,7 +59,7 @@ export default function EssayPage() {
         <div className={styles.shopGrid}>
           {data.map((essay, index) => (
             <div className={styles.card} key={index}>
-              <img className={styles.cardImage} src={essay.img_url} alt="" />
+              <img className={styles.cardImage} src={essay.image_url} alt="" />
               <div className={styles.cardText}>{essay.title}</div>
             </div>
           ))}
