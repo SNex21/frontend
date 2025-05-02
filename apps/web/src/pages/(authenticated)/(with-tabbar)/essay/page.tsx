@@ -5,6 +5,9 @@ import { getEssaysTopics, getUserEssays } from "@/services/api/essays";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { Skeleton } from "@repo/ui";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Haptic } from "@/lib/twa/components/Haptic";
+
 
 declare let Telegram: any;
 
@@ -110,12 +113,16 @@ export default function EssayPage() {
                 };
 
               return (
-                <div className={styles.essayItem} key={index}>
-                  <span>{essay.title}</span>
-                  <div className={currentStatus.className}>
-                    <span>{currentStatus.label}</span>
+                <Haptic type="impact" value="medium" asChild>
+                  <Link to={`/${essay.id}`}>
+                  <div className={styles.essayItem} key={index}>
+                    <span>{essay.title}</span>
+                    <div className={currentStatus.className}>
+                      <span>{currentStatus.label}</span>
+                    </div>
                   </div>
-                </div>
+                  </Link>
+                </Haptic>
               );
             })
           )}
@@ -126,10 +133,14 @@ export default function EssayPage() {
         <h2 className={styles.subtitle}>Магазин сочинений</h2>
         <div className={styles.shopGrid}>
           {topicsData.map((topic, index) => (
+         <Haptic type="impact" value="medium" asChild>
+            <Link to={`/${essay.id}`}>
             <div className={styles.card} key={index}>
               <img className={styles.cardImage} src={topic.image_url} alt="" />
               <div className={styles.cardText}>{topic.title}</div>
             </div>
+            </Link>
+        </Haptic>
           ))}
         </div>
       </section>
