@@ -1,8 +1,6 @@
 import { GetEssaysTopicsRes } from "@/services/api/essays/types.ts";
 import { apiClient } from "@/services/api/client.ts";
 import { API_ENDPOINTS } from "@/services/api/endpoints.ts";
-import { TopicEssay, UserEssay } from "@/models/Essay.ts";
-
 
 
 export const getEssaysTopics = async ({ token }: { token: string }): Promise<GetEssaysTopicsRes> => {
