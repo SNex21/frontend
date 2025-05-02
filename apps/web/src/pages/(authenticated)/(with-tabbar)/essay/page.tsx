@@ -4,14 +4,35 @@ import { useQuery } from "@tanstack/react-query";
 import { getEssaysTopics } from "@/services/api/essays";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { Skeleton } from "@repo/ui";
+import { useEffect } from "react";
+
+import { LoaderSpinner } from "@repo/ui";
 
 const userEssays = [
   { title: 'Маяковский, “А вы любите розы?”', status: 'на проверке' },
   { title: 'Маяковский, “А я на них срал”', status: 'проверено' },
 ];
 
+declare let Telegram: any;
 
 export default function EssayPage() {
+
+  useEffect(() => {
+    if (Telegram && Telegram.WebApp) {
+      const tg = Telegram.WebApp;
+
+      if (tg.ready) {
+        tg.ready();
+      }
+
+      tg.disableVerticalSwipes();
+      tg.enableClosingConfirmation();
+      return () => {
+        tg.disableVerticalSwipes();
+        tg.enableClosingConfirmation();
+      };
+    }
+  }, []);
 
   const cloudStorage = useCloudStorage();
   const { data, isLoading } = useQuery({
@@ -24,11 +45,17 @@ export default function EssayPage() {
 
     if (isLoading || !data) {
       return (
-        <div className={styles.cards}>
-          {[...Array(6).keys()].map((i) => (
-            <Skeleton key={i} style={{ height: "157px", borderRadius: "var(--rounded-2xl)" }} />
-          ))}
-        </div>
+        <div
+            style={{
+              width: "100dvw",
+              height: "100dvh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <LoaderSpinner size={25} />
+      </div>
       );
     }
 
