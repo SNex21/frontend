@@ -8,6 +8,9 @@ import { useEffect } from "react";
 
 declare let Telegram: any;
 
+// Типы для статуса сочинения
+type EssayStatus = "bought" | "in_progress" | "in_review" | "reviewed";
+
 export default function EssayPage() {
   useEffect(() => {
     if (Telegram && Telegram.WebApp) {
@@ -72,7 +75,7 @@ export default function EssayPage() {
     in_progress: { label: "В процессе", className: styles.statusInProgress },
     in_review: { label: "На проверке", className: styles.statusInReview },
     reviewed: { label: "Проверено", className: styles.statusReviewed },
-  };
+  } satisfies Record<EssayStatus, { label: string; className: string }>;
 
   return (
     <div className={styles.wrapper}>
@@ -80,8 +83,10 @@ export default function EssayPage() {
         <h1 className={styles.title}>Твои сочинения</h1>
         <div className={styles.essayList}>
           {userEssaysData.map((essay, index) => {
+            // Приводим essay.status к нужному типу
+            const essayStatus = essay.status as EssayStatus;
             const currentStatus =
-              statusMap[essay.status] || {
+              statusMap[essayStatus] || {
                 label: "Неизвестно",
                 className: styles.statusUnknown,
               };
