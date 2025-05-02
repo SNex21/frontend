@@ -114,9 +114,9 @@ export default function EssayPage() {
             <>
               {/* Элемент-заглушка, имитирующий 2 сочинения */}
               <div className={styles.emptyPlaceholder}>
-                <span className={styles.emptyText}>
+
                   тут будут отображаться твои сочинения
-                </span>
+
               </div>
               <div className={styles.emptyPlaceholder}></div>
             </>
