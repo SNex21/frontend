@@ -1,16 +1,35 @@
 import styles from "./Essay.module.scss";
+import { useCloudStorage } from "@/lib/twa/hooks";
+import { useQuery } from "@tanstack/react-query";
+import { getEssaysTopics } from "@/services/api/essays";
 
 const userEssays = [
   { title: 'Маяковский, “А вы любите розы?”', status: 'на проверке' },
   { title: 'Маяковский, “А я на них срал”', status: 'проверено' },
 ];
 
-const shopEssays = [
-  { title: 'Тургенев, “Как быть человеком?”', img: '/images/turgenev.png' },
-  { title: 'Пушкин, “Димоооон”', img: '/images/pushkin.png' },
-];
 
 export default function EssayPage() {
+
+  const cloudStorage = useCloudStorage();
+  const { shopEssays, isLoading } = useQuery({
+    queryKey: ["topics"],
+    queryFn: async () =>
+      getEssaysTopics({
+        token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
+      }),
+    });
+
+    if (isLoading || !shopEssays) {
+      return (
+        <div className={styles.cards}>
+          {[...Array(6).keys()].map((i) => (
+            <Skeleton key={i} style={{ height: "157px", borderRadius: "var(--rounded-2xl)" }} />
+          ))}
+        </div>
+      );
+    }
+    
   return (
     <div className={styles.wrapper}>
       <section className={styles.section}>
