@@ -6,6 +6,11 @@ import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { Skeleton } from "@repo/ui";
 import { useEffect } from "react";
 
+const userEssays = [
+  { title: 'Маяковский, “А вы любите розы?”', status: 'на проверке' },
+  { title: 'Маяковский, “А я на них срал”', status: 'проверено' },
+];
+
 declare let Telegram: any;
 
 export default function EssayPage() {
@@ -28,21 +33,14 @@ export default function EssayPage() {
   }, []);
 
   const cloudStorage = useCloudStorage();
-  const { shopList, isLoadingShop } = useQuery({
+  const { shopList, isLoading } = useQuery({
     queryKey: ["topics"],
     queryFn: async () =>
       getEssaysTopics({
         token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
       }),
     });
-  const { userEssayList, isLoadingUserEssays } = useQuery({
-    queryKey: ["topics"],
-    queryFn: async () =>
-      getUserEssays({
-        token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
-      }),
-    });
-  if (isLoadingShop|| isLoadingUserEssays || !shopList || !userEssayList) {
+  if (isLoading || !shopList) {
     return (
       <>
         {[...Array(6).keys()].map((i) => (
@@ -52,8 +50,14 @@ export default function EssayPage() {
         ))}
       </>
     );
-      }
-  
+    }
+  const { userEssayList, isLoading } = useQuery({
+    queryKey: ["topics"],
+    queryFn: async () =>
+      getEssaysTopics({
+        token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
+      }),
+    });
 
   return (
     <div className={styles.wrapper}>
@@ -65,7 +69,7 @@ export default function EssayPage() {
               <span>{essay.title}</span>
               <span
                 className={
-                  essay.status === 'in_review'
+                  essay.status === 'проверено'
                     ? styles.statusChecked
                     : styles.statusPending
                 }
