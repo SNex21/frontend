@@ -28,12 +28,16 @@
 }
 
 .essayList {
-  border: 1px dashed var(--ds-gray-alpha-400); // Изменено на dashed
+  border: 1px dashed var(--ds-gray-alpha-400);
   border-radius: 20px;
   padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  /* Прокрутка и фиксированная высота */
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .essayItem {
@@ -50,35 +54,35 @@
 
 /* Стили для статусов */
 .statusBought {
-  color: #6c757d; // Фиолетовый
+  color: #6c757d;
   font-weight: 600;
   font-size: 11px;
   white-space: nowrap;
 }
 
 .statusInProgress {
-  color: #4900dc; // Оранжевый
+  color: #4900dc;
   font-weight: 600;
   font-size: 11px;
   white-space: nowrap;
 }
 
 .statusInReview {
-  color: #17a2b8; // Бирюзовый
+  color: #17a2b8;
   font-weight: 600;
   font-size: 11px;
   white-space: nowrap;
 }
 
 .statusReviewed {
-  color: #16d74a; // Зелёный
+  color: #16d74a;
   font-weight: 600;
   font-size: 11px;
   white-space: nowrap;
 }
 
 .statusUnknown {
-  color: #6c757d; // Серый
+  color: #6c757d;
   font-weight: 600;
   font-size: 11px;
   white-space: nowrap;

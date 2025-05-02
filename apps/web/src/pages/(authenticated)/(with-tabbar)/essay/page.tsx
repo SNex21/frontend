@@ -60,7 +60,7 @@ export default function EssayPage() {
   if (isLoading || !isDataReady) {
     return (
       <>
-        {[...Array(6)].map((i) => (
+        {[...Array(6)].map((_, i) => (
           <div className={styles.card} key={i}>
             <Skeleton style={{ height: "157px", borderRadius: "var(--rounded-2xl)" }} />
           </div>
@@ -68,21 +68,6 @@ export default function EssayPage() {
       </>
     );
   }
-
-  // Порядок сортировки
-  const statusOrder: Record<EssayStatus, number> = {
-    in_progress: 0,
-    in_review: 1,
-    reviewed: 2,
-    bought: 3,
-  };
-
-  // Сортируем сочинения по статусу
-  const sortedEssays = [...userEssaysData].sort((a, b) => {
-    const aStatus = a.status as EssayStatus;
-    const bStatus = b.status as EssayStatus;
-    return statusOrder[aStatus] - statusOrder[bStatus];
-  });
 
   // Маппинг статусов
   const statusMap: Record<EssayStatus, { label: string; className: string }> = {
@@ -110,19 +95,16 @@ export default function EssayPage() {
         <h1 className={styles.title}>Твои сочинения</h1>
         <div className={styles.essayList}>
           {/* Если сочинений нет */}
-          {sortedEssays.length === 0 ? (
+          {userEssaysData.length === 0 ? (
             <>
-              {/* Элемент-заглушка, имитирующий 2 сочинения */}
               <div className={styles.emptyPlaceholder}>
-
-                  тут будут отображаться твои сочинения
-
+                тут будут отображаться твои сочинения
               </div>
               <div className={styles.emptyPlaceholder}></div>
             </>
           ) : (
             /* Если есть сочинения */
-            sortedEssays.map((essay, index) => {
+            userEssaysData.map((essay, index) => {
               const essayStatus = essay.status as EssayStatus;
               const currentStatus =
                 statusMap[essayStatus] || {
@@ -157,4 +139,3 @@ export default function EssayPage() {
     </div>
   );
 }
-
