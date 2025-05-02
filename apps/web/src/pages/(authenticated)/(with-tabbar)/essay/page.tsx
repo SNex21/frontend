@@ -1,7 +1,7 @@
 import styles from "./Essay.module.scss";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useQuery } from "@tanstack/react-query";
-import { getEssaysTopics, getUserEssays } from "@/services/api/essays";
+import { getEssaysTopics, getUserEssays} from "@/services/api/essays";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { Skeleton } from "@repo/ui";
 import { useEffect } from "react";
@@ -26,7 +26,7 @@ export default function EssayPage() {
   }, []);
 
   const cloudStorage = useCloudStorage();
-  const token = cloudStorage.getItem(ACCESS_TOKEN_NAME);
+  const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
 
   const {
     data: topicsData,
