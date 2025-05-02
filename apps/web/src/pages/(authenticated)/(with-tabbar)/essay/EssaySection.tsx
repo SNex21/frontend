@@ -57,4 +57,4 @@ const LessonCard: FC<Topic> = ({title, ege_number }) => {
   );
 };
 
-export { TheorySection };
+export { EssaySection };
