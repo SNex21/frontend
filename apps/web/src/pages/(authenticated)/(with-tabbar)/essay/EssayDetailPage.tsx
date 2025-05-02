@@ -1,4 +1,4 @@
-import styles from "./EssayDetailPage.module.scss";
+import styles from "./Essay.module.scss";
 
 export default function EssayDetailPage() {
   const handleBuy = () => {
