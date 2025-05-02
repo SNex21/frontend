@@ -18,17 +18,17 @@
 .title {
   font-size: 24px;
   font-weight: 700;
-  color: var(--ds-gray-900);
+  color: var(--ds-gray-1000);
 }
 
 .subtitle {
   font-size: 20px;
   font-weight: 600;
-  color: var(--ds-gray-900);
+  color: var(--ds-gray-1000);
 }
 
 .essayList {
-  border: 1px solid var(--ds-gray-900);
+  border: 1px solid var(--ds-gray-alpha-400);
   border-radius: 20px;
   padding: 10px;
   display: flex;
