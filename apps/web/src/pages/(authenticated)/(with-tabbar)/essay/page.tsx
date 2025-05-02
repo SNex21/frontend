@@ -94,14 +94,11 @@ export default function EssayPage() {
       <section className={styles.section}>
         <h1 className={styles.title}>Твои сочинения</h1>
         <div className={styles.essayList}>
-          {/* Если сочинений нет */}
+          {/* Если сочинений нет — центрированный текст */}
           {userEssaysData.length === 0 ? (
-            <>
-              <div className={styles.emptyPlaceholder}>
-                тут будут отображаться твои сочинения
-              </div>
-              <div className={styles.emptyPlaceholder}></div>
-            </>
+            <div className={styles.emptyPlaceholderContainer}>
+              тут будут отображаться твои сочинения
+            </div>
           ) : (
             /* Если есть сочинения */
             userEssaysData.map((essay, index) => {
