@@ -69,6 +69,21 @@ export default function EssayPage() {
     );
   }
 
+  // Порядок сортировки
+  const statusOrder: Record<EssayStatus, number> = {
+    in_progress: 0,
+    in_review: 1,
+    reviewed: 2,
+    bought: 3,
+  };
+
+  // Сортируем сочинения по статусу
+  const sortedEssays = [...userEssaysData].sort((a, b) => {
+    const aStatus = a.status as EssayStatus;
+    const bStatus = b.status as EssayStatus;
+    return statusOrder[aStatus] - statusOrder[bStatus];
+  });
+
   // Маппинг статусов
   const statusMap: Record<EssayStatus, { label: string; className: string }> = {
     bought: {
@@ -94,7 +109,7 @@ export default function EssayPage() {
       <section className={styles.section}>
         <h1 className={styles.title}>Твои сочинения</h1>
         <div className={styles.essayList}>
-          {userEssaysData.map((essay, index) => {
+          {sortedEssays.map((essay, index) => {
             const essayStatus = essay.status as EssayStatus;
             const currentStatus =
               statusMap[essayStatus] || {
