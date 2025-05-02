@@ -6,9 +6,9 @@ export interface TopicEssay {
     price: number;
     file_url: string;
     purchased_essays: UserEssay[];
-  }
+}
 
-  export interface UserEssay {
+export interface UserEssay {
     id: number;
     user_id: number;
     essay_id: number;
@@ -16,5 +16,11 @@ export interface TopicEssay {
     score: number;
     review: string;
     deadline: string;
-  }
+}
   
+export interface UserEssayShort {
+    id: number;
+    title: string;
+    status: string;
+ }
+

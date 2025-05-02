@@ -37,7 +37,7 @@
 }
 
 .essayItem {
-  border: 1px solid #4900DC;
+  border: 1px solid #4900dc;
   border-radius: 12px;
   padding: 10px 12px;
   display: flex;
@@ -48,16 +48,33 @@
   background-color: var(--ds-background-200);
 }
 
-.statusPending {
-  color: #4900DC;
+/* Стили для статусов */
+.statusBought {
+  color: #4900dc; // Фиолетовый
   font-weight: 600;
 }
 
-.statusChecked {
-  color: #34a853;
+.statusInProgress {
+  color: #ff8c00; // Оранжевый
   font-weight: 600;
 }
 
+.statusInReview {
+  color: #17a2b8; // Бирюзовый
+  font-weight: 600;
+}
+
+.statusReviewed {
+  color: #34a853; // Зелёный
+  font-weight: 600;
+}
+
+.statusUnknown {
+  color: #6c757d; // Серый
+  font-weight: 600;
+}
+
+/* Магазин сочинений */
 .shopGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
