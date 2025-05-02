@@ -60,7 +60,7 @@ export default function EssayPage() {
   if (isLoading || !isDataReady) {
     return (
       <>
-        {[...Array(6).keys()].map((i) => (
+        {[...Array(6)].map((i) => (
           <div className={styles.card} key={i}>
             <Skeleton style={{ height: "157px", borderRadius: "var(--rounded-2xl)" }} />
           </div>
@@ -109,23 +109,37 @@ export default function EssayPage() {
       <section className={styles.section}>
         <h1 className={styles.title}>Твои сочинения</h1>
         <div className={styles.essayList}>
-          {sortedEssays.map((essay, index) => {
-            const essayStatus = essay.status as EssayStatus;
-            const currentStatus =
-              statusMap[essayStatus] || {
-                label: "Неизвестно",
-                className: styles.statusUnknown ?? "",
-              };
-
-            return (
-              <div className={styles.essayItem} key={index}>
-                <span>{essay.title}</span>
-                <div className={currentStatus.className}>
-                  <span>{currentStatus.label}</span>
-                </div>
+          {/* Если сочинений нет */}
+          {sortedEssays.length === 0 ? (
+            <>
+              {/* Элемент-заглушка, имитирующий 2 сочинения */}
+              <div className={styles.emptyPlaceholder}>
+                <span className={styles.emptyText}>
+                  тут будут отображаться твои сочинения
+                </span>
               </div>
-            );
-          })}
+              <div className={styles.emptyPlaceholder}></div>
+            </>
+          ) : (
+            /* Если есть сочинения */
+            sortedEssays.map((essay, index) => {
+              const essayStatus = essay.status as EssayStatus;
+              const currentStatus =
+                statusMap[essayStatus] || {
+                  label: "Неизвестно",
+                  className: styles.statusUnknown ?? "",
+                };
+
+              return (
+                <div className={styles.essayItem} key={index}>
+                  <span>{essay.title}</span>
+                  <div className={currentStatus.className}>
+                    <span>{currentStatus.label}</span>
+                  </div>
+                </div>
+              );
+            })
+          )}
         </div>
       </section>
 
@@ -143,3 +157,4 @@ export default function EssayPage() {
     </div>
   );
 }
+

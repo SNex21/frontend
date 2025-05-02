@@ -102,3 +102,22 @@
   font-size: 14px;
   font-weight: 600;
 }
+
+.emptyPlaceholder {
+  border: 1px dashed var(--ds-gray-alpha-400);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ds-gray-alpha-500);
+  background-color: var(--ds-background-200);
+  min-height: 48px;
+}
+
+.emptyText {
+  text-align: center;
+  color: var(--ds-gray-alpha-500);
+}
