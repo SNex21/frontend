@@ -18,6 +18,3 @@ export interface TopicEssay {
     deadline: string;
   }
   
-
-export { type TopicEssay };
-export { type UserEssay };
