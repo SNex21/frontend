@@ -10,7 +10,7 @@ export default function EssayDetailPage() {
       <div className={styles.card}>
         <img
           className={styles.image}
-          src="https://images.unsplash.com/photo-1703431058491-55e55037a81e?fit=crop&w=800&q=80"
+          src="https://img.goodfon.ru/wallpaper/big/8/4e/badfon-full-hd-cvety-priroda-vesna.webp"
           alt="Тургенев, Как быть человеком?"
         />
         <div className={styles.content}>
