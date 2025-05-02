@@ -2,6 +2,8 @@ import styles from "./Essay.module.scss";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { getEssaysTopics } from "@/services/api/essays";
+import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
+import { Skeleton } from "@repo/ui";
 
 const userEssays = [
   { title: 'Маяковский, “А вы любите розы?”', status: 'на проверке' },
