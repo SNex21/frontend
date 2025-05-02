@@ -8,6 +8,8 @@ import { useEffect } from "react";
 
 declare let Telegram: any;
 
+type EssayStatus = "bought" | "in_progress" | "in_review" | "reviewed";
+
 export default function EssayPage() {
   useEffect(() => {
     if (Telegram && Telegram.WebApp) {
@@ -45,7 +47,7 @@ export default function EssayPage() {
       }),
   });
 
-  const statusMap = {
+  const statusMap: Record<EssayStatus, { label: string; className: string }> = {
     bought: { label: "Куплено", className: styles.statusBought },
     in_progress: { label: "В процессе", className: styles.statusInProgress },
     in_review: { label: "На проверке", className: styles.statusInReview },
