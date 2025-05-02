@@ -28,7 +28,7 @@
 }
 
 .essayList {
-  border: 1px solid var(--ds-gray-alpha-400);
+  border: 1px dashed var(--ds-gray-alpha-400); // Изменено на dashed
   border-radius: 20px;
   padding: 10px;
   display: flex;
