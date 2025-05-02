@@ -3,7 +3,7 @@ import { useCloudStorage } from "@/lib/twa/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { getEssaysTopics } from "@/services/api/essays";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
-import { Skeleton } from "@repo/ui";
+// import { Skeleton } from "@repo/ui";
 import { useEffect } from "react";
 
 import { LoaderSpinner } from "@repo/ui";
