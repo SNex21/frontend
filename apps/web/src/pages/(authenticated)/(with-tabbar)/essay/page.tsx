@@ -8,13 +8,6 @@ import { useEffect } from "react";
 
 declare let Telegram: any;
 
-const statusMap = {
-  bought: { label: "Куплено", className: styles.statusBought },
-  in_progress: { label: "В процессе", className: styles.statusInProgress },
-  in_review: { label: "На проверке", className: styles.statusInReview },
-  reviewed: { label: "Проверено", className: styles.statusReviewed },
-};
-
 export default function EssayPage() {
 
   useEffect(() => {
