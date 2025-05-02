@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./EssayDetailPage.module.scss";
 
 export default function EssayDetailPage() {

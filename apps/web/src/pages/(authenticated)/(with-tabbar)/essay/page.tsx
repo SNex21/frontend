@@ -134,7 +134,7 @@ export default function EssayPage() {
         <div className={styles.shopGrid}>
           {topicsData.map((topic, index) => (
          <Haptic type="impact" value="medium" asChild>
-            <Link to={`/${essay.id}`}>
+            <Link to={`/${topic.id}`}>
             <div className={styles.card} key={index}>
               <img className={styles.cardImage} src={topic.image_url} alt="" />
               <div className={styles.cardText}>{topic.title}</div>
