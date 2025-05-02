@@ -43,11 +43,13 @@ export default function EssayPage() {
 
     if (isLoading || !data) {
       return (
-        <div className={styles.cards}>
+        <>
           {[...Array(6).keys()].map((i) => (
-            <Skeleton key={i} style={{ height: "157px", borderRadius: "var(--rounded-2xl)" }} />
+            <div className={styles.card}>
+              <Skeleton key={i} style={{ height: "157px", borderRadius: "var(--rounded-2xl)" }} />
+              </div>
           ))}
-        </div>
+        </>
       );
     }
 
