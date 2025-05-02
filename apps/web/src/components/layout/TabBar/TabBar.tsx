@@ -22,8 +22,8 @@ const tabs: TabProps[] = [
     icon: <HouseFillIcon size={25} />,
   },
   {
-    title: "Теория",
-    path: "/theory",
+    title: "Сочинения",
+    path: "/essay",
     icon: <BookFillIcon size={25} />,
   },
   {
