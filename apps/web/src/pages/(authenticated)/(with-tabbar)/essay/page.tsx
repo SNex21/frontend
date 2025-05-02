@@ -26,7 +26,7 @@ export default function EssayPage() {
   }, []);
 
   const cloudStorage = useCloudStorage();
-  const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
+  const token = cloudStorage.getItem(ACCESS_TOKEN_NAME);
 
   const {
     data: topicsData,
