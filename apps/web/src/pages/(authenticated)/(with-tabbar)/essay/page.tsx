@@ -87,7 +87,7 @@ export default function EssayPage() {
   // Маппинг статусов
   const statusMap: Record<EssayStatus, { label: string; className: string }> = {
     bought: {
-      label: "Куплено",
+      label: "Не использовано",
       className: styles.statusBought ?? "",
     },
     in_progress: {
