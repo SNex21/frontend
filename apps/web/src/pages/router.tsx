@@ -10,7 +10,7 @@ import { LoaderSpinner } from "@repo/ui";
 import HomePage from "@/pages/(authenticated)/(with-tabbar)/home/page.tsx";
 
 const WelcomePage = lazy(() => import("@/pages/welcome/page.tsx"));
-const TheoryPage = lazy(() => import("@/pages/(authenticated)/(with-tabbar)/theory/page.tsx"));
+const EssayPage = lazy(() => import("@/pages/(authenticated)/(with-tabbar)/essay/page"));
 const AccountPage = lazy(() => import("@/pages/(authenticated)/(with-tabbar)/account/page.tsx"));
 const SettingsPage = lazy(() => import("@/pages/(authenticated)/settings/page.tsx"));
 const SubscriptionPage = lazy(() => import("@/pages/(authenticated)/subscription/page.tsx"));
@@ -49,7 +49,7 @@ const router = createBrowserRouter(
       <Route element={<AuthenticatedLayout />}>
         <Route element={<WithTabbarLayout />}>
           <Route path="/home" element={<HomePage />} />
-          <Route path="/theory" element={<TheoryPage />} />
+          <Route path="/essay" element={<EssayPage />} />
           <Route path="/account" element={<AccountPage />} />
         </Route>
 
