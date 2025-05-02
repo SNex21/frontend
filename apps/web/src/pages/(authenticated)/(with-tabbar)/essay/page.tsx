@@ -8,9 +8,15 @@ import { useEffect } from "react";
 
 declare let Telegram: any;
 
-type EssayStatus = "bought" | "in_progress" | "in_review" | "reviewed";
+const statusMap = {
+  bought: { label: "Куплено", className: styles.statusBought },
+  in_progress: { label: "В процессе", className: styles.statusInProgress },
+  in_review: { label: "На проверке", className: styles.statusInReview },
+  reviewed: { label: "Проверено", className: styles.statusReviewed },
+};
 
 export default function EssayPage() {
+
   useEffect(() => {
     if (Telegram && Telegram.WebApp) {
       const tg = Telegram.WebApp;
@@ -21,7 +27,6 @@ export default function EssayPage() {
 
       tg.disableVerticalSwipes();
       tg.enableClosingConfirmation();
-
       return () => {
         tg.disableVerticalSwipes();
         tg.enableClosingConfirmation();
@@ -30,60 +35,52 @@ export default function EssayPage() {
   }, []);
 
   const cloudStorage = useCloudStorage();
-
-  const { data: shopList, isLoading: isLoadingShop } = useQuery({
+  const { shopList, isLoadingShop } = useQuery({
     queryKey: ["topics"],
     queryFn: async () =>
       getEssaysTopics({
         token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
       }),
-  });
-
-  const { data: userEssayList, isLoading: isLoadingUserEssays } = useQuery({
-    queryKey: ["userEssays"],
+    });
+  const { userEssayList, isLoadingUserEssays } = useQuery({
+    queryKey: ["topics"],
     queryFn: async () =>
       getUserEssays({
         token: await cloudStorage.getItem(ACCESS_TOKEN_NAME),
       }),
-  });
-
-  const statusMap: Record<EssayStatus, { label: string; className: string }> = {
-    bought: { label: "Куплено", className: styles.statusBought },
-    in_progress: { label: "В процессе", className: styles.statusInProgress },
-    in_review: { label: "На проверке", className: styles.statusInReview },
-    reviewed: { label: "Проверено", className: styles.statusReviewed },
-  };
-
-  if (isLoadingShop || isLoadingUserEssays || !shopList || !userEssayList) {
+    });
+  if (isLoadingShop|| isLoadingUserEssays || !shopList || !userEssayList) {
     return (
       <>
-        {[...Array(6)].map((i) => (
-          <div className={styles.card} key={i}>
+        {[...Array(6).keys()].map((i) => (
+          <div className={styles.card}>
             <Skeleton key={i} style={{ height: "157px", borderRadius: "var(--rounded-2xl)" }} />
-          </div>
+            </div>
         ))}
       </>
     );
-  }
+      }
+  
 
   return (
     <div className={styles.wrapper}>
       <section className={styles.section}>
         <h1 className={styles.title}>Твои сочинения</h1>
         <div className={styles.essayList}>
-          {userEssayList.map((essay, index) => {
-            const statusInfo = statusMap[essay.status] || {
-              label: "Неизвестно",
-              className: styles.statusUnknown,
-            };
-
-            return (
-              <div className={styles.essayItem} key={index}>
-                <span>{essay.title}</span>
-                <span className={statusInfo.className}>{statusInfo.label}</span>
-              </div>
-            );
-          })}
+          {userEssayList.map((essay, index) => (
+            <div className={styles.essayItem} key={index}>
+              <span>{essay.title}</span>
+              <span
+                className={
+                  essay.status === 'in_review'
+                    ? styles.statusChecked
+                    : styles.statusPending
+                }
+              >
+                {essay.status}
+              </span>
+            </div>
+          ))}
         </div>
       </section>
 
