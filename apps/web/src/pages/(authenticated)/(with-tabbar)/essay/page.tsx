@@ -103,9 +103,11 @@ export default function EssayPage() {
               };
 
             return (
-              <div className={`${styles.essayItem} ${currentStatus.className}`} key={index}>
+              <div className={styles.essayItem} key={index}>
                 <span>{essay.title}</span>
-                <span>{currentStatus.label}</span>
+                <div className={currentStatus.className}>
+                  <span>{currentStatus.label}</span>
+                </div>
               </div>
             );
           })}
