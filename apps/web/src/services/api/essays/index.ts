@@ -4,7 +4,7 @@ import { API_ENDPOINTS } from "@/services/api/endpoints.ts";
 
 
 export const getEssaysTopics = async ({ token }: { token: string }): Promise<GetEssaysTopicsRes> => {
-  const { data } = await apiClient.get<GetEssaysTopicsRes>(`${API_ENDPOINTS.GET_TOPICS}`, {
+  const { data } = await apiClient.get<GetEssaysTopicsRes>(`${API_ENDPOINTS.GET_ESSAYS_TOPICS}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
