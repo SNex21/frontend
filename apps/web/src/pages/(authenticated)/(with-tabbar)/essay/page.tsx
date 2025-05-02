@@ -1,46 +1,43 @@
-import { EssaySection } from "./EssaySection";
-import pageStyles from "../Page.module.scss";
 import styles from "./Essay.module.scss";
-import Gradient from "../../../../assets/fonts/images/Gradient.png";
-import Vector from "../../../../assets/fonts/images/Vector.png";
-import { useEffect } from "react";
-
-declare let Telegram: any; 
 
 export default function EssayPage() {
-  useEffect(() => {
-    if (Telegram && Telegram.WebApp) {
-      const tg = Telegram.WebApp;
-      // Проверяем, готов ли Web App
-      if (tg.ready) {
-        tg.ready();
-      }
-      // Отключаем вертикальные свайпы на этой странице
-      tg.disableVerticalSwipes();
-      tg.enableClosingConfirmation();
-      return () => {
-        tg.disableVerticalSwipes();
-        tg.enableClosingConfirmation();
-      };
-    }
-  }, []);
   return (
-    <><div
-      className={styles.container}
-      style={{ backgroundImage: `url(${Gradient})` }}>
-      <img
-        src={Vector}
-        alt="Логотип"
-        className={styles.logo} />
-      <p className={styles.text}>
-        Раздел <span className={styles.highlight}>Ababababababba</span> находится в активной
-        разработке команды <span className={styles.highlight}>Учи-Бота</span>. Следи за обновлениями в Telegram канале.
-      </p>
-      <a href="https://t.me/ege_uchibot" target="_blank" rel="noopener noreferrer">
-        <button className={styles.button}>Перейти в канал</button>
-      </a>
-    </div><div className={pageStyles.main}>
-        <EssaySection /> 
-      </div></>
+    <div className={styles.wrapper}>
+      <div className={styles.section}>
+        <h1 className={styles.title}>Твои сочинения</h1>
+        <div className={styles.emptyBox}>
+          <p className={styles.emptyText}>тут будут отображаться твои сочинения</p>
+        </div>
+      </div>
+
+      <div className={styles.section}>
+        <h2 className={styles.subtitle}>Магазин сочинений</h2>
+        <div className={styles.shopGrid}>
+          <div className={styles.card}>
+            <img src="/images/gator-plane.png" alt="Тургенев" className={styles.cardImage} />
+            <p className={styles.cardText}>Тургенев, “Как быть человеком?”</p>
+          </div>
+          <div className={styles.card}>
+            <img src="/images/shark-sneakers.png" alt="Маяковский" className={styles.cardImage} />
+            <p className={styles.cardText}>Маяковский, “А вы любите розы?”</p>
+          </div>
+        </div>
+      </div>
+
+      <nav className={styles.navbar}>
+        <div className={styles.navItemActive}>
+          <img src="/icons/home.svg" alt="Главная" />
+          <span>Главная</span>
+        </div>
+        <div className={styles.navItem}>
+          <img src="/icons/book.svg" alt="Теория" />
+          <span>Теория</span>
+        </div>
+        <div className={styles.navItem}>
+          <img src="/icons/user.svg" alt="Аккаунт" />
+          <span>Аккаунт</span>
+        </div>
+      </nav>
+    </div>
   );
 }
