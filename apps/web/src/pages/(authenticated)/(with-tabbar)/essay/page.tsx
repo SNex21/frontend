@@ -1,28 +1,49 @@
 import styles from "./Essay.module.scss";
 
+const userEssays = [
+  { title: 'Маяковский, “А вы любите розы?”', status: 'на проверке' },
+  { title: 'Маяковский, “А я на них срал”', status: 'проверено' },
+];
+
+const shopEssays = [
+  { title: 'Тургенев, “Как быть человеком?”', img: '/images/turgenev.png' },
+  { title: 'Пушкин, “Димоооон”', img: '/images/pushkin.png' },
+];
+
 export default function EssayPage() {
   return (
     <div className={styles.wrapper}>
-      <div className={styles.section}>
+      <section className={styles.section}>
         <h1 className={styles.title}>Твои сочинения</h1>
-        <div className={styles.emptyBox}>
-          <p className={styles.emptyText}>тут будут отображаться твои сочинения</p>
+        <div className={styles.essayList}>
+          {userEssays.map((essay, index) => (
+            <div className={styles.essayItem} key={index}>
+              <span>{essay.title}</span>
+              <span
+                className={
+                  essay.status === 'проверено'
+                    ? styles.statusChecked
+                    : styles.statusPending
+                }
+              >
+                {essay.status}
+              </span>
+            </div>
+          ))}
         </div>
-      </div>
+      </section>
 
-      <div className={styles.section}>
+      <section className={styles.section}>
         <h2 className={styles.subtitle}>Магазин сочинений</h2>
         <div className={styles.shopGrid}>
-          <div className={styles.card}>
-            <img src="/images/gator-plane.png" alt="Тургенев" className={styles.cardImage} />
-            <p className={styles.cardText}>Тургенев, “Как быть человеком?”</p>
-          </div>
-          <div className={styles.card}>
-            <img src="/images/shark-sneakers.png" alt="Маяковский" className={styles.cardImage} />
-            <p className={styles.cardText}>Маяковский, “А вы любите розы?”</p>
-          </div>
+          {shopEssays.map((essay, index) => (
+            <div className={styles.card} key={index}>
+              <img className={styles.cardImage} src={essay.img} alt="" />
+              <div className={styles.cardText}>{essay.title}</div>
+            </div>
+          ))}
         </div>
-      </div>
+      </section>
 
       <nav className={styles.navbar}>
         <div className={styles.navItemActive}>

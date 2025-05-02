@@ -6,6 +6,7 @@
   background-color: white;
   min-height: 100vh;
   box-sizing: border-box;
+  padding-bottom: 80px;
 }
 
 .section {
@@ -26,16 +27,35 @@
   color: black;
 }
 
-.emptyBox {
+.essayList {
   border: 1px solid #dcdcdc;
-  border-radius: 16px;
-  height: 150px;
+  border-radius: 20px;
+  padding: 10px;
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.essayItem {
+  border: 2px solid #7e5bef;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  color: #999;
-  font-size: 16px;
-  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: white;
+}
+
+.statusPending {
+  color: #3600ff;
+  font-weight: 600;
+}
+
+.statusChecked {
+  color: #34a853;
+  font-weight: 600;
 }
 
 .shopGrid {
@@ -63,7 +83,7 @@
 .cardText {
   padding: 8px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .navbar {
@@ -76,7 +96,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding-bottom: env(safe-area-inset-bottom); /* для iOS */
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .navItem,
@@ -89,7 +109,7 @@
 }
 
 .navItemActive {
-  color: #6200ea; /* фиолетовый активный */
+  color: #6200ea;
 }
 
 .navItem img,
