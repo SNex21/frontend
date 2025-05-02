@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 declare let Telegram: any;
 
-// Типы для статуса сочинения
+// Тип для статуса сочинения
 type EssayStatus = "bought" | "in_progress" | "in_review" | "reviewed";
 
 export default function EssayPage() {
@@ -70,12 +70,24 @@ export default function EssayPage() {
   }
 
   // Маппинг статусов
-  const statusMap = {
-    bought: { label: "Куплено", className: styles.statusBought },
-    in_progress: { label: "В процессе", className: styles.statusInProgress },
-    in_review: { label: "На проверке", className: styles.statusInReview },
-    reviewed: { label: "Проверено", className: styles.statusReviewed },
-  } satisfies Record<EssayStatus, { label: string; className: string }>;
+  const statusMap: Record<EssayStatus, { label: string; className: string }> = {
+    bought: {
+      label: "Куплено",
+      className: styles.statusBought ?? "",
+    },
+    in_progress: {
+      label: "В процессе",
+      className: styles.statusInProgress ?? "",
+    },
+    in_review: {
+      label: "На проверке",
+      className: styles.statusInReview ?? "",
+    },
+    reviewed: {
+      label: "Проверено",
+      className: styles.statusReviewed ?? "",
+    },
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -83,12 +95,11 @@ export default function EssayPage() {
         <h1 className={styles.title}>Твои сочинения</h1>
         <div className={styles.essayList}>
           {userEssaysData.map((essay, index) => {
-            // Приводим essay.status к нужному типу
             const essayStatus = essay.status as EssayStatus;
             const currentStatus =
               statusMap[essayStatus] || {
                 label: "Неизвестно",
-                className: styles.statusUnknown,
+                className: styles.statusUnknown ?? "",
               };
 
             return (
