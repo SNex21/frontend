@@ -1,4 +1,4 @@
-import { GetEssaysTopicsRes, GetUserEssaysRes } from "@/services/api/essays/types.ts";
+import { GetEssaysTopicsRes, GetUserEssaysRes, GetEssaysRes } from "@/services/api/essays/types.ts";
 import { apiClient } from "@/services/api/client.ts";
 import { API_ENDPOINTS } from "@/services/api/endpoints.ts";
 
@@ -20,4 +20,13 @@ export const getUserEssays = async ({ token }: { token: string }): Promise<GetUs
     });
     return data;
   };
-  
+
+
+  export const getEssay = async ({ id, token }: { id: number, token: string }): Promise<GetEssaysRes> => {
+  const { data } = await apiClient.get<GetEssaysRes>(`${API_ENDPOINTS.GET_ESSAYS_TOPICS}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+  });
+  return data;
+};
