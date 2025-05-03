@@ -9,8 +9,7 @@ import { Skeleton } from "@repo/ui";
 
 export default function EssayDetailPage() {
   const navigate = useNavigate();
-  const params = useParams<{ essayId: string }>(); // типизация
-
+  const params = useParams<{ essayId: string }>();
   const cloudStorage = useCloudStorage();
 
   const {
@@ -21,16 +20,13 @@ export default function EssayDetailPage() {
     queryKey: ["essay", params.essayId],
     queryFn: async () => {
       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
-
-      // Преобразуем строку в число
       const essayId = Number(params.essayId);
       if (isNaN(essayId)) {
         throw new Error("Некорректный ID эссе");
       }
-
       return getEssay({ id: essayId, token });
     },
-    enabled: !!params.essayId, // не запускаем, если ID нет
+    enabled: !!params.essayId,
   });
 
   if (essayLoading || !essayData) {
@@ -57,6 +53,27 @@ export default function EssayDetailPage() {
           </div>
         </div>
 
+        {/* Секция: купленные сочинения */}
+        <div className={styles.attemptsSection}>
+          <h2 className={styles.attemptsTitle}>Твои попытки</h2>
+          <div className={styles.attemptsList}>
+            {essayData.purchased_essays.length === 0 ? (
+              <p className={styles.emptyMessage}>
+                тут будут отображаться твои попытки
+              </p>
+            ) : (
+              essayData.purchased_essays.map((essay) => (
+                <div key={essay.id} className={styles.attemptCard}>
+                  <p><strong>Статус:</strong> {essay.status}</p>
+                  <p><strong>Оценка:</strong> {essay.score}</p>
+                  <p><strong>Комментарий:</strong> {essay.review}</p>
+                  <p><strong>Дедлайн:</strong> {essay.deadline}</p>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
         <div className={styles.complete}>
           <button className={styles.button}>Купить</button>
         </div>
@@ -78,4 +95,3 @@ const EssaySectionLoading = () => (
     </div>
   </section>
 );
-
