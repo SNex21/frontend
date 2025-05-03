@@ -6,6 +6,10 @@ import { useQuery } from "@tanstack/react-query";
 import { getEssay } from "@/services/api/essays";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { Skeleton } from "@repo/ui";
+import { Link } from "react-router-dom";
+import { Haptic } from "@/lib/twa/components/Haptic";
+
+
 
 type EssayStatus = "bought" | "in_progress" | "in_review" | "reviewed";
 
@@ -98,7 +102,7 @@ export default function EssayDetailPage() {
                 <Haptic type="impact" value="medium" asChild>
                   <Link to={`/essay/${essay.id}`}>
                   <div className={styles.essayItem} key={index}>
-                    <span>{essay.title}</span>
+                    <span>{essay.deadline}</span>
                     <div className={currentStatus.className}>
                       <span>{currentStatus.label}</span>
                     </div>
