@@ -62,13 +62,17 @@ export default function EssayPage() {
 
   if (isLoading || !isDataReady) {
     return (
-      <>
-        {[...Array(6)].map((_, i) => (
-          <div className={styles.card} key={i}>
-            <Skeleton style={{ height: "157px", borderRadius: "var(--rounded-2xl)" }} />
-          </div>
-        ))}
-      </>
+      <section className="wrapper">
+      <div className={styles.cards}>
+        <Skeleton
+          style={{
+            height: "65px",
+            borderRadius: "var(--rounded-2xl)",
+            gridColumn: "span 2",
+          }}
+        />
+      </div>
+    </section>
     );
   }
 
