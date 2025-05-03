@@ -86,7 +86,7 @@ export default function EssayDetailPage() {
           {/* Если сочинений нет — центрированный текст */}
           {essayData.purchased_essays.length === 0 ? (
             <div className={styles.emptyPlaceholderContainer}>
-              тут будут отображаться твои сочинения
+              У тебя пока нет купленный сочинений
             </div>
           ) : (
             /* Если есть сочинения */
