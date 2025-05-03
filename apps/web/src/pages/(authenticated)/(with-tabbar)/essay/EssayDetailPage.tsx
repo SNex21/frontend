@@ -100,7 +100,7 @@ export default function EssayDetailPage() {
 
               return (
                 <Haptic type="impact" value="medium" asChild>
-                  <Link to={`/essay/${essay.id}`}>
+                  <Link to={`/essay/purchases/${essay.id}`}>
                   <div className={styles.essayItem} key={index}>
                     <span>{essay.deadline}</span>
                     <div className={currentStatus.className}>

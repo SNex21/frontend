@@ -1,0 +1,50 @@
+.wrapper {
+    padding: 16px;
+  }
+  
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 24px;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  
+  .fileBox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px dashed #ccc;
+    border-radius: 12px;
+    background-color: #fafafa;
+  }
+  
+  .fileIcon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .fileName {
+    font-weight: 600;
+    font-size: 16px;
+  }
+  
+  .statusBlock {
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  .status {
+    color: #5f2eea;
+    font-weight: 600;
+  }
+  
