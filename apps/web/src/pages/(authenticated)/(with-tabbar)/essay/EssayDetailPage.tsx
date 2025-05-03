@@ -54,25 +54,40 @@ export default function EssayDetailPage() {
         </div>
 
         {/* Секция: купленные сочинения */}
-        <div className={styles.attemptsSection}>
-          <h2 className={styles.attemptsTitle}>Твои попытки</h2>
-          <div className={styles.attemptsList}>
-            {essayData.purchased_essays.length === 0 ? (
-              <p className={styles.emptyMessage}>
-                тут будут отображаться твои попытки
-              </p>
-            ) : (
-              essayData.purchased_essays.map((essay) => (
-                <div key={essay.id} className={styles.attemptCard}>
-                  <p><strong>Статус:</strong> {essay.status}</p>
-                  <p><strong>Оценка:</strong> {essay.score}</p>
-                  <p><strong>Комментарий:</strong> {essay.review}</p>
-                  <p><strong>Дедлайн:</strong> {essay.deadline}</p>
-                </div>
-              ))
-            )}
-          </div>
+        <section className={styles.section}>
+        <h2 className={styles.subtitle}>Твои сочинения</h2>
+        <div className={styles.essayList}>
+          {/* Если сочинений нет — центрированный текст */}
+          {essayData.purchased_essays.length === 0 ? (
+            <div className={styles.emptyPlaceholderContainer}>
+              тут будут отображаться твои сочинения
+            </div>
+          ) : (
+            /* Если есть сочинения */
+            essayData.purchased_essays.map((essay, index) => {
+              const essayStatus = essay.status as EssayStatus;
+              const currentStatus =
+                statusMap[essayStatus] || {
+                  label: "Неизвестно",
+                  className: styles.statusUnknown ?? "",
+                };
+
+              return (
+                <Haptic type="impact" value="medium" asChild>
+                  <Link to={`/essay/${essay.id}`}>
+                  <div className={styles.essayItem} key={index}>
+                    <span>{essay.title}</span>
+                    <div className={currentStatus.className}>
+                      <span>{currentStatus.label}</span>
+                    </div>
+                  </div>
+                  </Link>
+                </Haptic>
+              );
+            })
+          )}
         </div>
+        </section>
 
         <div className={styles.complete}>
           <button className={styles.button}>Купить</button>
