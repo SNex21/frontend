@@ -76,6 +76,7 @@ export default function EssayDetailPage() {
           <div className={styles.content}>
             <h1 className={styles.title}>{essayData.title}</h1>
             <p className={styles.description}>{essayData.description}</p>
+            <h3 className={styles.title}>Цена: {essayData.price} руб.</h1>
           </div>
         </div>
 
