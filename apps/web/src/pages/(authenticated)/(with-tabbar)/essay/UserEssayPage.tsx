@@ -1,4 +1,4 @@
-import styles from "./UserEssayDetail.module.scss";
+import styles from "./UserEssay.module.scss";
 import { BackButton } from "@/lib/twa/components/BackButton";
 
 export default function UserEssayPage() {
