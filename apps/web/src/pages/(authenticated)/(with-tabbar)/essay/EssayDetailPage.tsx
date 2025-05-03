@@ -3,9 +3,6 @@ import { BackButton } from "@/lib/twa/components/BackButton";
 import { useNavigate } from "react-router-dom";
 
 export default function EssayDetailPage() {
-  const handleBuy = () => {
-    alert("Вы купили сочинение!");
-  };
   const navigate = useNavigate();
 
   return (
@@ -30,9 +27,7 @@ export default function EssayDetailPage() {
 
         <div className={styles.complete}>
           <button
-            className={cn(styles.button, !selectedPlanId && styles["button--inactive"])}
-            onClick={handleBuyClick}
-            disabled={!selectedPlanId}
+            className={styles.button}
           >
             Купить
         </button>
