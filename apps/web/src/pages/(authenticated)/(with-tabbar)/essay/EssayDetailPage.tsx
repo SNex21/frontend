@@ -28,9 +28,15 @@ export default function EssayDetailPage() {
           </div>
         </div>
 
-        <button className={styles.buyButton} onClick={handleBuy}>
-          КУПИТЬ
+        <div className={styles.complete}>
+          <button
+            className={cn(styles.button, !selectedPlanId && styles["button--inactive"])}
+            onClick={handleBuyClick}
+            disabled={!selectedPlanId}
+          >
+            Купить
         </button>
+      </div>
       </div>
     </>
   );

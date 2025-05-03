@@ -50,25 +50,39 @@
     line-height: 1.5;
   }
   
-  .buyButton {
-    background-color: #4900dc;
-    color: white;
-    font-weight: 700;
-    padding: 16px;
-    border: none;
-    border-radius: 10px;
-    width: 100%;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+  .complete {
     position: fixed;
-    bottom: 16px;
-    max-width: 400px;
-    margin: 16px auto;
-    z-index: 1000;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+  
+    background-color: var(--ds-background-100);
+    padding: var(--spacing-4);
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    z-index: 10;
   }
   
-  .buyButton:hover {
-    background-color: #3700a8;
-  }
+  .button {
+    background-color: #4900DC;
+    width: 100%;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: var(--rounded-2xl);
+    padding: var(--spacing-3) var(--spacing-6);
+    cursor: pointer;
+    transition: background-color 0.3s;
   
+    &--inactive {
+      background-color: #280078; /* Цвет неактивной кнопки */
+      color: #a5a5a5;
+      cursor: not-allowed;
+  
+    }
+  }
