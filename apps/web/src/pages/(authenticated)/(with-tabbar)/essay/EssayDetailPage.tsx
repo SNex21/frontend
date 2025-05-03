@@ -7,6 +7,9 @@ import { getEssay } from "@/services/api/essays";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { Skeleton } from "@repo/ui";
 
+type EssayStatus = "bought" | "in_progress" | "in_review" | "reviewed";
+
+
 export default function EssayDetailPage() {
   const navigate = useNavigate();
   const params = useParams<{ essayId: string }>();
@@ -36,6 +39,25 @@ export default function EssayDetailPage() {
   if (essayError) {
     return <div className={styles.error}>Ошибка загрузки эссе</div>;
   }
+
+  const statusMap: Record<EssayStatus, { label: string; className: string }> = {
+      bought: {
+        label: "Куплено",
+        className: styles.statusBought ?? "",
+      },
+      in_progress: {
+        label: "В процессе",
+        className: styles.statusInProgress ?? "",
+      },
+      in_review: {
+        label: "На проверке",
+        className: styles.statusInReview ?? "",
+      },
+      reviewed: {
+        label: "Проверено",
+        className: styles.statusReviewed ?? "",
+      },
+    };
 
   return (
     <>
