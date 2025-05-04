@@ -1,12 +1,12 @@
 import styles from "./UserEssay.module.scss";
-// import { getUserEssay, getEssay } from "@/services/api/essays";
+import { getUserEssay, getEssay } from "@/services/api/essays";
 import { getUserEssay } from "@/services/api/essays";
 import { useQuery } from "@tanstack/react-query"
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { useParams } from "react-router-dom";
 import { BackButton } from "@/lib/twa/components/BackButton";
-// import { Skeleton } from "@repo/ui";
+import { Skeleton } from "@repo/ui";
 
 export default function UserEssayPage() {
     const params = useParams<{ purchaseEssayId: string }>();
@@ -27,34 +27,34 @@ export default function UserEssayPage() {
     });
   
     if (userEssayLoading || !userEssayData) {
-    //   return <UserEssaySectionLoading />;
-    return <h1>fsfvetrsg</h1>
+      return <UserEssaySectionLoading />;
+
     }
   
     if (userEssayError) {
       return <div className={styles.error}>Ошибка загрузки</div>;
     }
 
-    // const {
-    //     data: essayData,
-    //     isLoading: essayLoading,
-    //     error: essayError,
-    //   } = useQuery({
-    //     queryKey: ["essay", params.essayId],
-    //     queryFn: async () => {
-    //       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
-    //       return getEssay({ id: userEssayData.essay_id, token });
-    //     },
-    //     enabled: !!params.essayId,
-    //   });
+    const {
+        data: essayData,
+        isLoading: essayLoading,
+        error: essayError,
+      } = useQuery({
+        queryKey: ["essay", params.essayId],
+        queryFn: async () => {
+          const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
+          return getEssay({ id: userEssayData.essay_id, token });
+        },
+        enabled: !!params.essayId,
+      });
       
-    //   if (essayLoading || !essayData) {
-    //     return <UserEssaySectionLoading />;
-    //   }
+      if (essayLoading || !essayData) {
+        return <UserEssaySectionLoading />;
+      }
     
-    //   if (essayError) {
-    //     return <div className={styles.error}>Ошибка загрузки</div>;
-    //   }
+      if (essayError) {
+        return <div className={styles.error}>Ошибка загрузки</div>;
+      }
 
     return (
         <>
@@ -97,17 +97,17 @@ export default function UserEssayPage() {
     );
     }
 
-// const UserEssaySectionLoading = () => (
-//     <section className="wrapper">
-//         <div className={styles.cards}>
-//         <Skeleton
-//             style={{
-//             height: "65px",
-//             borderRadius: "var(--rounded-2xl)",
-//             gridColumn: "span 2",
-//             }}
-//         />
-//         </div>
-//     </section>
-//     );
+const UserEssaySectionLoading = () => (
+    <section className="wrapper">
+        <div className={styles.cards}>
+        <Skeleton
+            style={{
+            height: "65px",
+            borderRadius: "var(--rounded-2xl)",
+            gridColumn: "span 2",
+            }}
+        />
+        </div>
+    </section>
+    );
 
