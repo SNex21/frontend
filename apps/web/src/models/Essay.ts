@@ -9,7 +9,7 @@ export interface TopicEssay {
 }
 
 export interface UserEssay {
-    id: number;
+    id: string;
     user_id: number;
     essay_id: number;
     status: string;
@@ -19,7 +19,8 @@ export interface UserEssay {
 }
   
 export interface UserEssayShort {
-    id: number;
+    id: string;
+    essay_id: number;
     title: string;
     status: string;
  }
