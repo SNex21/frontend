@@ -22,7 +22,7 @@ export const getUserEssays = async ({ token }: { token: string }): Promise<GetUs
   };
 
 
-  export const getEssay = async ({ id, token }: { id: string, token: string }): Promise<GetEssaysRes> => {
+  export const getEssay = async ({ id, token }: { id: number, token: string }): Promise<GetEssaysRes> => {
   const { data } = await apiClient.get<GetEssaysRes>(`${API_ENDPOINTS.GET_ESSAYS_TOPICS}/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`
