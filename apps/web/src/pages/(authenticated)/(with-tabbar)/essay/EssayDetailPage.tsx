@@ -3,7 +3,7 @@ import { BackButton } from "@/lib/twa/components/BackButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { useQuery } from "@tanstack/react-query";
-import { getEssay, getEssaysTopics } from "@/services/api/essays";
+import { getEssay } from "@/services/api/essays";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { Skeleton } from "@repo/ui";
 import { Link } from "react-router-dom";
