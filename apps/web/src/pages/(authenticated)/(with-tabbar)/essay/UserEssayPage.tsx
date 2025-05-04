@@ -173,7 +173,7 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
     </div>
 
     <div className={styles.section}>
-      <h1 className={styles.subtitle}>Итоговый балл: 15/26</h1></h2>
+      <h1 className={styles.subtitle}>Итоговый балл: 15/26</h1>
     </div>
 
     <div className={styles.section}>
