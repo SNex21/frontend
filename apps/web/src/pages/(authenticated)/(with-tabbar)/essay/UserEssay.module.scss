@@ -43,11 +43,40 @@
     margin-top: 20px;
   }
   
-  .status {
-    color: #5f2eea;
+  .statusBought {
+    color: #6c757d;
     font-weight: 600;
+    font-size: 11px;
+    white-space: nowrap;
   }
-
+  
+  .statusInProgress {
+    color: #4900dc;
+    font-weight: 600;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  
+  .statusInReview {
+    color: #17a2b8;
+    font-weight: 600;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  
+  .statusReviewed {
+    color: #16d74a;
+    font-weight: 600;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  
+  .statusUnknown {
+    color: #6c757d;
+    font-weight: 600;
+    font-size: 11px;
+    white-space: nowrap;
+  }  
   .complete {
     position: fixed;
     bottom: 0;

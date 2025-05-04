@@ -84,7 +84,7 @@ const BoughtEssayView = ({ userEssayData }: { userEssayData: any }) => (
 
     <div className={styles.statusBlock}>
       <p>
-        Статус: <span className={styles.status}>не начато</span>
+        Статус: <span className={styles.statusBought}>не начато</span>
       </p>
       <p>Выбрать дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
     </div>
@@ -115,7 +115,7 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
 
     <div className={styles.statusBlock}>
       <p>
-        Статус: <span className={styles.status}>{translateStatus(userEssayData.status)}</span>
+        Статус: <span className={styles.statusInProgress}>{translateStatus(userEssayData.status)}</span>
       </p>
       <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
     </div>
