@@ -10,11 +10,12 @@ export interface TopicEssay {
 
 export interface UserEssay {
     id: string;
-    user_id: number;
     essay_id: number;
     status: string;
     score: number;
     review: string;
+    download_essay_file_url: string;
+    download_user_file_url: string;
     deadline: string;
 }
   

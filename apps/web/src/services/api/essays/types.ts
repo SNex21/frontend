@@ -1,4 +1,4 @@
-import { TopicEssay, UserEssayShort } from "@/models/Essay.ts";
+import { TopicEssay, UserEssayShort, UserEssay } from "@/models/Essay.ts";
 
 export type GetEssaysTopicsRes = TopicEssay[];
 export type GetUserEssaysRes = UserEssayShort[];
@@ -14,3 +14,4 @@ export interface GetEssayReq {
   }
   
 export type GetEssaysRes = TopicEssay;
+export type GetUserEssayRes = UserEssay;
