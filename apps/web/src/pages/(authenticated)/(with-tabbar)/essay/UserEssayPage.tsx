@@ -50,7 +50,7 @@ export default function UserEssayPage() {
         enabled: !!params.essayId,
       });
       
-      if (essayData || !essayLoading) {
+      if (essayLoading || !essayData) {
         return <UserEssaySectionLoading />;
       }
     
