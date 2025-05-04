@@ -93,7 +93,6 @@
   
     z-index: 10;
   }
-  
   .modalOverlay {
     position: fixed;
     top: 0;
@@ -138,15 +137,24 @@
       border: none;
     }
   
-    .button {
-      width: 100%;
-      background-color: #4900dc;
-      color: white;
-      border: none;
-      font-weight: bold;
-      &:disabled {
-        background-color: #a5a5a5;
-        cursor: not-allowed;
-      }
+  
+  .button {
+    background-color: #4900DC;
+    width: 100%;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: var(--rounded-2xl);
+    padding: var(--spacing-3) var(--spacing-6);
+    cursor: pointer;
+    transition: background-color 0.3s;
+  
+    &--inactive {
+      background-color: #280078; /* Цвет неактивной кнопки */
+      color: #a5a5a5;
+      cursor: not-allowed;
+  
     }
   }
+  
