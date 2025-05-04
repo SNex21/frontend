@@ -70,7 +70,7 @@ const router = createBrowserRouter(
         </Route>
         
         <Route path="/essay/:essayId/*" element={<EssayDetailPage />} />
-        <Route path="/essay/purchases/:purchaseEssayId/*" element={<UserEssayPage />} />
+        <Route path="/essay/purchase/:purchaseEssayId/*" element={<UserEssayPage />} />
 
         <Route path="/subscription" element={<SubscriptionPage />} />
         <Route path="/subscription/:planId/*" element={<SubsciptionBuyPage />} />
