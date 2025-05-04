@@ -74,7 +74,7 @@ export default function UserEssayPage() {
           <h2 className={styles.subtitle}>Твое сочинение</h2>
           <div className={styles.fileBox}>
             <img src="/icons/folder-icon.png" alt="file" className={styles.fileIcon} />
-            <span className={styles.fileName}>{userEssayData.filename}</span>
+            <span className={styles.fileName}>{userEssayData.download_essay_file_url}</span>
           </div>
         </div>
 
