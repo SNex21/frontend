@@ -83,7 +83,14 @@ export default function UserEssayPage() {
             onStartClick={() => setModalOpen(true)}
           />
         ) : (
-          <InProgressEssayView userEssayData={userEssayData} />
+         {userEssayData.status === "in_progress" ? (
+            <InProgressEssayView userEssayData={userEssayData} />
+         ):(
+            {userEssayData.status === "in_review" ? (
+            <InProgressEssayView userEssayData={userEssayData} />):(
+                <ReviewedEssayView userEssayData={userEssayData} />
+            )}
+         )}
         )}
       </div>
 
@@ -175,9 +182,6 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
             <p>Сочинение соответствует теме и строится на материале указанного произведения. Автор раскрывает проблему взаимоотношений отцов и детей на примере Печорина и Максима Максимыча в романе «Герой нашего времени». Приведены два аргумента: отношение Печорина к старому знакомому и его внутреннее одиночество. Однако анализ недостаточно глубок, выводы не всегда связаны с текстом. Стиль речи соответствует нормам, но наблюдаются отдельные нарушения в построении предложений. Оценка: 2 из 5.</p>
         </div>
     </div>
-
-
-
   </>
 );
 
