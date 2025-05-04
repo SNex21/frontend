@@ -1,4 +1,21 @@
-.wrapper {
+/* ==== АНИМАЦИИ ==== */
+@keyframes slideFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate {
+    animation: slideFadeIn 0.4s ease-out;
+  }
+  
+  /* ==== ОБЩИЕ ОБЕРТКИ ==== */
+  .wrapper {
     padding: 16px;
   }
   
@@ -18,6 +35,7 @@
     margin-bottom: 10px;
   }
   
+  /* ==== ФАЙЛЫ ==== */
   .fileBox {
     display: flex;
     align-items: center;
@@ -38,6 +56,7 @@
     font-size: 16px;
   }
   
+  /* ==== СТАТУСЫ ==== */
   .statusBlock {
     font-size: 16px;
     margin-top: 20px;
@@ -76,23 +95,24 @@
     font-weight: 600;
     font-size: 16px;
     white-space: nowrap;
-  }  
+  }
+  
+  /* ==== ПЛАШКА С КНОПКОЙ ==== */
   .complete {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 10%;
-  
     background-color: var(--ds-background-100);
     padding: var(--spacing-4);
-  
     display: flex;
     justify-content: center;
     align-items: center;
-  
     z-index: 10;
   }
+  
+  /* ==== МОДАЛЬНОЕ ОКНО ==== */
   .modalOverlay {
     position: fixed;
     top: 0;
@@ -115,9 +135,9 @@
     text-align: center;
     position: relative;
     z-index: 101;
-    
-    .title{
-        margin-bottom: 10px;
+  
+    .title {
+      margin-bottom: 10px;
     }
   }
   
@@ -140,10 +160,9 @@
       color: var(--ds-gray-alpha-1000);
       border: none;
     }
-}
-
+  }
   
-
+  /* ==== КНОПКИ ==== */
   .button {
     background-color: #4900DC;
     width: 100%;
@@ -157,9 +176,17 @@
     transition: background-color 0.3s;
   
     &--inactive {
-      background-color: #280078; /* Цвет неактивной кнопки */
+      background-color: #280078;
       color: #a5a5a5;
       cursor: not-allowed;
-  
     }
   }
+  
+  /* ==== ЗАГЛУШКА ЗАГРУЗКИ ==== */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+  }
+
+  

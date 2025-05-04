@@ -16,7 +16,6 @@ export default function UserEssayPage() {
   const [isModalOpen, setModalOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  // First query to fetch user essay data
   const {
     data: userEssayData,
     isLoading: userEssayLoading,
@@ -31,7 +30,6 @@ export default function UserEssayPage() {
     enabled: !!params.purchaseEssayId,
   });
 
-  // Second query to fetch the base essay (depends on userEssayData)
   const {
     data: essayData,
     isLoading: essayLoading,
@@ -48,7 +46,7 @@ export default function UserEssayPage() {
   const startEssayMutation = useMutation({
     mutationFn: async ({ essay_id, deadline }: { essay_id: string; deadline: string }) => {
       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
-      return patchStartEssay({ essay_id: essay_id, token, deadline });
+      return patchStartEssay({ essay_id, token, deadline });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userEssays", params.purchaseEssayId] });
@@ -56,17 +54,14 @@ export default function UserEssayPage() {
     },
   });
 
-  // Loading states
   if (userEssayLoading || essayLoading) {
     return <UserEssaySectionLoading />;
   }
 
-  // Error states
   if (userEssayError || essayError) {
     return <div className={styles.error}>Ошибка загрузки</div>;
   }
 
-  // Data not ready yet
   if (!userEssayData || !essayData) {
     return <UserEssaySectionLoading />;
   }
@@ -78,22 +73,22 @@ export default function UserEssayPage() {
         <h1 className={styles.title}>{essayData.title}</h1>
 
         {(() => {
-        if (userEssayData.status === "bought") {
+          if (userEssayData.status === "bought") {
             return (
-            <BoughtEssayView
+              <BoughtEssayView
                 userEssayData={userEssayData}
                 onStartClick={() => setModalOpen(true)}
-            />
+              />
             );
-        } else if (
+          } else if (
             userEssayData.status === "in_progress" ||
             userEssayData.status === "in_review"
-        ) {
+          ) {
             return <InProgressEssayView userEssayData={userEssayData} />;
-        } else {
+          } else {
             return <ReviewedEssayView userEssayData={userEssayData} />;
-        }
-    })()}
+          }
+        })()}
       </div>
 
       <DeadlineModal
@@ -133,15 +128,52 @@ const BoughtEssayView = ({
 
     <div className={styles.statusBlock}>
       <p>
-        Статус: <span className={styles.statusBought}>не начато{userEssayData.deadline} - это фикс на деве так нада</span>
+        Статус:{" "}
+        <span className={styles.statusBought}>
+          не начато
+        </span>
       </p>
       <p>Выбрать дедлайн: —</p>
     </div>
 
-    <div className={styles.complete}>
+    <div className={`${styles.complete} ${styles.animate}`}>
       <button className={styles.button} onClick={onStartClick}>
         Начать
       </button>
+    </div>
+  </>
+);
+
+const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
+  <>
+    <div className={styles.section}>
+      <h2 className={styles.subtitle}>Текст сочинения</h2>
+      <div className={styles.fileBox}>
+        <FileEmoji size={25} />
+        <span className={styles.fileName}>26.pdf</span>
+      </div>
+    </div>
+
+    <div className={styles.section}>
+      <h2 className={styles.subtitle}>Твое сочинение</h2>
+      <div className={styles.fileBox}>
+        <FileEmoji size={25} />
+        <span className={styles.fileName}>file.docx</span>
+      </div>
+    </div>
+
+    <div className={styles.statusBlock}>
+      <p>
+        Статус:{" "}
+        <span className={styles[`status${capitalizeFirstLetter(userEssayData.status)}`]}>
+          {translateStatus(userEssayData.status)}
+        </span>
+      </p>
+      <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
+    </div>
+
+    <div className={`${styles.complete} ${styles.animate}`}>
+      <button className={styles.button}>Отправить решение</button>
     </div>
   </>
 );
@@ -159,7 +191,7 @@ const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
     <div className={styles.section}>
       <h2 className={styles.subtitle}>Твое сочинение</h2>
       <div className={styles.fileBox}>
-      <FileEmoji size={25} />
+        <FileEmoji size={25} />
         <span className={styles.fileName}>file.docx</span>
       </div>
     </div>
@@ -167,7 +199,7 @@ const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
     <div className={styles.statusBlock}>
       <p>
         Статус:{" "}
-        <span className={`${styles[`status${capitalizeFirstLetter(userEssayData.status)}`]}`}>
+        <span className={styles[`status${capitalizeFirstLetter(userEssayData.status)}`]}>
           {translateStatus(userEssayData.status)}
         </span>
       </p>
@@ -179,64 +211,15 @@ const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
     </div>
 
     <div className={styles.section}>
-    <h2 className={styles.subtitle}>Рецензия проверяющего</h2>
-        <div className={styles.fileBox}>
-            <p>Сочинение соответствует теме и строится на материале указанного произведения. Автор раскрывает проблему взаимоотношений отцов и детей на примере Печорина и Максима Максимыча в романе «Герой нашего времени». Приведены два аргумента: отношение Печорина к старому знакомому и его внутреннее одиночество. Однако анализ недостаточно глубок, выводы не всегда связаны с текстом. Стиль речи соответствует нормам, но наблюдаются отдельные нарушения в построении предложений. Оценка: 2 из 5.</p>
-        </div>
+      <h2 className={styles.subtitle}>Рецензия проверяющего</h2>
+      <div className={styles.fileBox}>
+        <p>
+          Сочинение соответствует теме и строится на материале указанного произведения. Автор раскрывает проблему взаимоотношений отцов и детей на примере Печорина и Максима Максимыча в романе «Герой нашего времени». Приведены два аргумента: отношение Печорина к старому знакомому и его внутреннее одиночество. Однако анализ недостаточно глубок, выводы не всегда связаны с текстом. Стиль речи соответствует нормам, но наблюдаются отдельные нарушения в построении предложений. Оценка: 2 из 5.
+        </p>
+      </div>
     </div>
   </>
 );
-
-const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
-    <>
-      <div className={styles.section}>
-        <h2 className={styles.subtitle}>Текст сочинения</h2>
-        <div className={styles.fileBox}>
-          <FileEmoji size={25} />
-          <span className={styles.fileName}>26.pdf</span>
-        </div>
-      </div>
-  
-      <div className={styles.section}>
-        <h2 className={styles.subtitle}>Твое сочинение</h2>
-        <div className={styles.fileBox}>
-        <FileEmoji size={25} />
-          <span className={styles.fileName}>file.docx</span>
-        </div>
-      </div>
-  
-      <div className={styles.statusBlock}>
-        <p>
-          Статус:{" "}
-          <span className={`${styles[`status${capitalizeFirstLetter(userEssayData.status)}`]}`}>
-            {translateStatus(userEssayData.status)}
-          </span>
-        </p>
-        <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
-      </div>
-  
-      <div className={styles.complete}>
-        <button className={styles.button}>Отправить решение</button>
-      </div>
-    </>
-  );  
-
-function capitalizeFirstLetter(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-const translateStatus = (status: string) => {
-  switch (status) {
-    case "in_progress":
-      return "в процессе";
-    case "in_review":
-      return "на проверке";
-    case "reviewed":
-      return "проверено";
-    default:
-      return status;
-  }
-};
 
 const DeadlineModal = ({
   isOpen,
@@ -259,7 +242,7 @@ const DeadlineModal = ({
           type="date"
           value={deadline}
           onChange={(e) => setDeadline(e.target.value)}
-          min={new Date().toISOString().split("T")[0]} // сегодня и далее
+          min={new Date().toISOString().split("T")[0]}
         />
         <div className={styles.modalButtons}>
           <button onClick={onClose} className={styles.secondaryButton}>
@@ -291,3 +274,20 @@ const UserEssaySectionLoading = () => (
     </div>
   </section>
 );
+
+function capitalizeFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function translateStatus(status: string) {
+  switch (status) {
+    case "in_progress":
+      return "в процессе";
+    case "in_review":
+      return "на проверке";
+    case "reviewed":
+      return "проверено";
+    default:
+      return status;
+  }
+}
