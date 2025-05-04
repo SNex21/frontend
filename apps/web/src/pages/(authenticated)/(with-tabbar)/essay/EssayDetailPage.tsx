@@ -63,6 +63,7 @@ export default function EssayDetailPage() {
       },
     };
 
+    
   return (
     <>
       <BackButton onClick={() => navigate("/essay")} />
