@@ -2,18 +2,17 @@ import styles from "./UserEssay.module.scss";
 import { getUserEssay, getEssay } from "@/services/api/essays";
 import { useQuery } from "@tanstack/react-query";
 import { useCloudStorage } from "@/lib/twa/hooks";
-import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
+import { ACCESS_TOKEN_NAME } from "@/services/auth/storage";
 import { useParams } from "react-router-dom";
 import { BackButton } from "@/lib/twa/components/BackButton";
 import { Skeleton } from "@repo/ui";
 
 export default function UserEssayPage() {
-  const params = useParams<{ essayId: string }>(); // ID всегда приходит как строка из URL
+  const params = useParams<{ essayId: string }>(); // ❗️ Обязательно строка
   const cloudStorage = useCloudStorage();
 
   const essayId = params.essayId;
 
-  // Первый запрос — получаем userEssay
   const {
     data: userEssayData,
     isLoading: userEssayLoading,
@@ -21,24 +20,21 @@ export default function UserEssayPage() {
   } = useQuery({
     queryKey: ["userEssay", essayId],
     queryFn: async () => {
-      if (!essayId) throw new Error("ID эссе не найден");
       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
+      if (!essayId) throw new Error("ID эссе отсутствует");
       return getUserEssay({ id: essayId, token });
     },
     enabled: !!essayId,
   });
 
-  // Если первый запрос ещё грузится или ещё не запущен
   if (userEssayLoading || !essayId) {
     return <UserEssaySectionLoading />;
   }
 
-  // Если ошибка первого запроса
-  if (userEssayError) {
+  if (userEssayError || !userEssayData) {
     return <div className={styles.error}>Ошибка загрузки</div>;
   }
 
-  // Второй запрос — получаем базовое эссе по `essay_id`
   const {
     data: essayData,
     isLoading: essayLoading,
@@ -52,12 +48,10 @@ export default function UserEssayPage() {
     enabled: !!userEssayData?.essay_id,
   });
 
-  // Если второй запрос ещё грузится
   if (essayLoading || !essayData) {
     return <UserEssaySectionLoading />;
   }
 
-  // Если ошибка второго запроса
   if (essayError) {
     return <div className={styles.error}>Ошибка загрузки</div>;
   }
@@ -80,15 +74,16 @@ export default function UserEssayPage() {
           <h2 className={styles.subtitle}>Твое сочинение</h2>
           <div className={styles.fileBox}>
             <img src="/icons/folder-icon.png" alt="file" className={styles.fileIcon} />
-            <span className={styles.fileName}>abvgd.docx</span>
+            <span className={styles.fileName}>{userEssayData.filename || "файл.docx"}</span>
           </div>
         </div>
 
         <div className={styles.statusBlock}>
           <p>
-            Статус: <span className={styles.status}>{userEssayData.status}</span>
+            Статус:{" "}
+            <span className={styles.status}>{userEssayData.status}</span>
           </p>
-          <p>Твой дедлайн: {userEssayData.deadline}</p>
+          <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
         </div>
       </div>
     </>
