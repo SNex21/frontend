@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage";
 import { useParams } from "react-router-dom";
+import { FileEmoji } from "@repo/ui/emojis";
 import { BackButton } from "@/lib/twa/components/BackButton";
 import { Skeleton } from "@repo/ui";
 
@@ -54,7 +55,7 @@ export default function UserEssayPage() {
   if (!userEssayData || !essayData) {
     return <UserEssaySectionLoading />;
   }
-  
+
   return (
     <>
       <BackButton onClick={() => window.history.back()} />
@@ -76,7 +77,7 @@ const BoughtEssayView = ({ userEssayData }: { userEssayData: any }) => (
     <div className={styles.section}>
       <h2 className={styles.subtitle}>Текст сочинения</h2>
       <div className={styles.fileBox}>
-        <img src="/icons/folder-icon.png" alt="file" className={styles.fileIcon} />
+      <FileEmoji size={25}>
         <span className={styles.fileName}>Текст появится после старта</span>
       </div>
     </div>
@@ -99,7 +100,7 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
     <div className={styles.section}>
       <h2 className={styles.subtitle}>Текст сочинения</h2>
       <div className={styles.fileBox}>
-        <img src="/icons/folder-icon.png" alt="file" className={styles.fileIcon} />
+        <FileEmoji size={25}>
         <span className={styles.fileName}>26.pdf</span>
       </div>
     </div>

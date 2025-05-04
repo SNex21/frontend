@@ -13,3 +13,4 @@ export * from "./СonfettiEmoji";
 export * from "./LightningEmoji";
 export * from "./PhoneEmoji";
 export * from "./KindSmileEmoji";
+export * from "./FileEmoji";
