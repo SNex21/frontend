@@ -122,7 +122,7 @@ const BoughtEssayView = ({
       <h2 className={styles.subtitle}>Текст сочинения</h2>
       <div className={styles.fileBox}>
         <FileEmoji size={25} />
-        <span className={styles.fileName}>Текст появится после старта</span>
+        <span className={styles.fileName}>Текст появится после старта {userEssayData.status}</span>
       </div>
     </div>
 
