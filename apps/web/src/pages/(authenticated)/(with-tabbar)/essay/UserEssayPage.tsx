@@ -204,7 +204,7 @@ const DeadlineModal = ({
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <h3>Поставь себе дедлайн</h3>
+        <h3 className={styles.title}>Поставь себе дедлайн</h3>
         <input
           type="date"
           value={deadline}
