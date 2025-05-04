@@ -27,7 +27,8 @@ export default function UserEssayPage() {
     });
   
     if (userEssayLoading || !userEssayData) {
-      return <UserEssaySectionLoading />;
+    //   return <UserEssaySectionLoading />;
+    return <h1>fsfvetrsg</h1>
     }
   
     if (userEssayError) {
