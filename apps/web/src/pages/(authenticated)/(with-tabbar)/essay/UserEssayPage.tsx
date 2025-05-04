@@ -165,11 +165,55 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
       <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
     </div>
 
-    <div className={styles.complete}>
-      <button className={styles.button}>Отправить решение</button>
+    <div className={styles.section}>
+      <h1 className={styles.subtitle}>Итоговый балл: 15/26</h1></h2>
     </div>
+
+    <div className={styles.section}>
+    <h2 className={styles.subtitle}>Рецензия проверяющего</h2>
+        <div className={styles.fileBox}>
+            <p>Сочинение соответствует теме и строится на материале указанного произведения. Автор раскрывает проблему взаимоотношений отцов и детей на примере Печорина и Максима Максимыча в романе «Герой нашего времени». Приведены два аргумента: отношение Печорина к старому знакомому и его внутреннее одиночество. Однако анализ недостаточно глубок, выводы не всегда связаны с текстом. Стиль речи соответствует нормам, но наблюдаются отдельные нарушения в построении предложений. Оценка: 2 из 5.</p>
+        </div>
+    </div>
+
+
+
   </>
 );
+
+const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
+    <>
+      <div className={styles.section}>
+        <h2 className={styles.subtitle}>Текст сочинения</h2>
+        <div className={styles.fileBox}>
+          <FileEmoji size={25} />
+          <span className={styles.fileName}>26.pdf</span>
+        </div>
+      </div>
+  
+      <div className={styles.section}>
+        <h2 className={styles.subtitle}>Твое сочинение</h2>
+        <div className={styles.fileBox}>
+        <FileEmoji size={25} />
+          <span className={styles.fileName}>{userEssayData.download_essay_file_url}</span>
+        </div>
+      </div>
+  
+      <div className={styles.statusBlock}>
+        <p>
+          Статус:{" "}
+          <span className={`${styles[`status${capitalizeFirstLetter(userEssayData.status)}`]}`}>
+            {translateStatus(userEssayData.status)}
+          </span>
+        </p>
+        <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
+      </div>
+  
+      <div className={styles.complete}>
+        <button className={styles.button}>Отправить решение</button>
+      </div>
+    </>
+  );  
 
 function capitalizeFirstLetter(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
