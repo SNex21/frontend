@@ -9,7 +9,7 @@ import { BackButton } from "@/lib/twa/components/BackButton";
 // import { Skeleton } from "@repo/ui";
 
 export default function UserEssayPage() {
-    const params = useParams<{ essayId: string }>();
+    const params = useParams<{ purchaseEssayId: string }>();
     const cloudStorage = useCloudStorage();
   
     const {
@@ -17,13 +17,13 @@ export default function UserEssayPage() {
       isLoading: userEssayLoading,
       error: userEssayError,
     } = useQuery({
-      queryKey: ["essay", params.essayId],
+      queryKey: ["essay", params.purchaseEssayId],
       queryFn: async () => {
         const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
-        const essayId = String(params.essayId);
-        return getUserEssay({ id: essayId, token });
+        const purchaseEssayId = String(params.purchaseEssayId);
+        return getUserEssay({ id: purchaseEssayId, token });
       },
-      enabled: !!params.essayId,
+      enabled: !!params.purchaseEssayId,
     });
   
     if (userEssayLoading || !userEssayData) {

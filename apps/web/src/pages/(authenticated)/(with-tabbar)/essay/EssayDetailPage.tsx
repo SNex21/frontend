@@ -16,7 +16,7 @@ type EssayStatus = "bought" | "in_progress" | "in_review" | "reviewed";
 
 export default function EssayDetailPage() {
   const navigate = useNavigate();
-  const params = useParams<{ purchaseEssayId: string }>();
+  const params = useParams<{ essayId: string }>();
   const cloudStorage = useCloudStorage();
 
   const {
@@ -24,16 +24,16 @@ export default function EssayDetailPage() {
     isLoading: essayLoading,
     error: essayError,
   } = useQuery({
-    queryKey: ["essay", params.purchaseEssayId],
+    queryKey: ["essay", params.essayId],
     queryFn: async () => {
       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
-      const purchaseEssayId = Number(params.purchaseEssayId);
-      if (isNaN(purchaseEssayId)) {
+      const essayId = Number(params.essayId);
+      if (isNaN(essayId)) {
         throw new Error("Некорректный ID эссе");
       }
-      return getEssay({ id: purchaseEssayId, token });
+      return getEssay({ id: essayId, token });
     },
-    enabled: !!params.purchaseEssayId,
+    enabled: !!params.essayId,
   });
 
   if (essayLoading || !essayData) {
@@ -63,7 +63,7 @@ export default function EssayDetailPage() {
       },
     };
 
-
+    
   return (
     <>
       <BackButton onClick={() => navigate("/essay")} />
