@@ -83,14 +83,14 @@ export default function UserEssayPage() {
             onStartClick={() => setModalOpen(true)}
           />
         ) : (
-         {userEssayData.status === "in_progress" ? (
+         userEssayData.status === "in_progress" ? (
             <InProgressEssayView userEssayData={userEssayData} />
          ):(
-            {userEssayData.status === "in_review" ? (
+            userEssayData.status === "in_review" ? (
             <InProgressEssayView userEssayData={userEssayData} />):(
                 <ReviewedEssayView userEssayData={userEssayData} />
-            )}
-         )}
+            )
+         )
         )}
       </div>
 
