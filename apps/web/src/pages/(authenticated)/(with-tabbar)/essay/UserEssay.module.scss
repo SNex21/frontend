@@ -23,9 +23,9 @@
     align-items: center;
     gap: 12px;
     padding: 12px;
-    border: 1px dashed #ccc;
+    border: 1px dashed var(--ds-gray-alpha-400);
     border-radius: 12px;
-    background-color: #fafafa;
+    background-color: var(--ds-background-200);
   }
   
   .fileIcon {
