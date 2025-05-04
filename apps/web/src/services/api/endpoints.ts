@@ -8,7 +8,7 @@ const API_ENDPOINTS = {
   GET_TOPICS: "/practice/topics/",
   PAYMENT: "/payment",
   GET_ESSAYS_TOPICS: "/practice/essay",
-  GET_USERS_ESSAYS: "/practice/essay/purchases",
+  GET_USERS_ESSAYS: "/practice/essay/purchase",
 };
 
 export { API_ENDPOINTS };

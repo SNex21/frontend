@@ -82,7 +82,7 @@ export default function EssayDetailPage() {
 
         {/* Секция: купленные сочинения */}
         <section className={styles.section}>
-        <h2 className={styles.subtitle}>Твои сочинения</h2>
+        <h2 className={styles.subtitle}>Твои попытки</h2>
         <div className={styles.essayList}>
           {/* Если сочинений нет — центрированный текст */}
           {essayData.purchased_essays.length === 0 ? (
