@@ -97,17 +97,17 @@ export default function UserEssayPage() {
     );
     }
 
-const UserEssaySectionLoading = () => (
-    <section className="wrapper">
-        <div className={styles.cards}>
-        <Skeleton
-            style={{
-            height: "65px",
-            borderRadius: "var(--rounded-2xl)",
-            gridColumn: "span 2",
-            }}
-        />
-        </div>
-    </section>
-    );
+// const UserEssaySectionLoading = () => (
+//     <section className="wrapper">
+//         <div className={styles.cards}>
+//         <Skeleton
+//             style={{
+//             height: "65px",
+//             borderRadius: "var(--rounded-2xl)",
+//             gridColumn: "span 2",
+//             }}
+//         />
+//         </div>
+//     </section>
+//     );
 
