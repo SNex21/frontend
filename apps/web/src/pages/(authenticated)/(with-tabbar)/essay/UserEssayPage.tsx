@@ -1,6 +1,5 @@
 import styles from "./UserEssay.module.scss";
 import { getUserEssay, getEssay } from "@/services/api/essays";
-import { getUserEssay } from "@/services/api/essays";
 import { useQuery } from "@tanstack/react-query"
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
@@ -17,7 +16,7 @@ export default function UserEssayPage() {
       isLoading: userEssayLoading,
       error: userEssayError,
     } = useQuery({
-      queryKey: ["essay", params.purchaseEssayId],
+      queryKey: ["userEssays", params.purchaseEssayId],
       queryFn: async () => {
         const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
         const purchaseEssayId = String(params.purchaseEssayId);
@@ -38,22 +37,16 @@ export default function UserEssayPage() {
     const {
         data: essayData,
         isLoading: essayLoading,
-        error: essayError,
       } = useQuery({
-        queryKey: ["essay", params.essayId],
+        queryKey: ["essays"],
         queryFn: async () => {
           const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
           return getEssay({ id: userEssayData.essay_id, token });
         },
-        enabled: !!params.essayId,
       });
       
       if (essayLoading || !essayData) {
         return <UserEssaySectionLoading />;
-      }
-    
-      if (essayError) {
-        return <div className={styles.error}>Ошибка загрузки</div>;
       }
 
     return (
