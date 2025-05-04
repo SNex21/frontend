@@ -124,7 +124,7 @@ const BoughtEssayView = ({
 
     <div className={styles.statusBlock}>
       <p>
-        Статус: <span className={styles.statusBought}>не начато</span>
+        Статус: <span className={styles.statusBought}>не начато{userEssayData.deadline} - это фикс на деве так нада</span>
       </p>
       <p>Выбрать дедлайн: —</p>
     </div>
