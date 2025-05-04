@@ -41,10 +41,6 @@ export default function UserEssayPage() {
         queryKey: ["essay", params.essayId],
         queryFn: async () => {
           const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
-          const essayId = Number(params.essayId);
-          if (isNaN(essayId)) {
-            throw new Error("Некорректный ID эссе");
-          }
           return getEssay({ id: userEssayData.essay_id, token });
         },
         enabled: !!params.essayId,
