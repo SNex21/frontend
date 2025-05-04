@@ -107,7 +107,7 @@
   }
   
   .modalContent {
-    background: white;
+    background: var(--ds-background-200);
     padding: 20px;
     border-radius: var(--rounded-xl);
     max-width: 400px;
@@ -132,7 +132,7 @@
     }
   
     .secondaryButton {
-      background-color: #e5e5e5;
+      background-color: var(--ds-background-200);
       color: black;
       border: none;
     }
