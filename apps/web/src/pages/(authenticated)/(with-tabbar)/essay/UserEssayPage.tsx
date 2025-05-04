@@ -146,7 +146,7 @@ const BoughtEssayView = ({
   </>
 );
 
-const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
+const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
   <>
     <div className={styles.section}>
       <h2 className={styles.subtitle}>Текст сочинения</h2>
@@ -187,7 +187,7 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
   </>
 );
 
-const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
+const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
     <>
       <div className={styles.section}>
         <h2 className={styles.subtitle}>Текст сочинения</h2>
