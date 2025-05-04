@@ -33,32 +33,32 @@ export default function UserEssayPage() {
       return <div className={styles.error}>Ошибка загрузки</div>;
     }
 
-    const {
-        data: essayData,
-        isLoading: essayLoading,
-        error: essayError,
-      } = useQuery({
-        queryKey: ["essay", params.essayId],
-        queryFn: async () => {
-          const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
-          return getEssay({ id: userEssayData.essay_id, token });
-        },
-        enabled: !!params.essayId,
-      });
+    // const {
+    //     data: essayData,
+    //     isLoading: essayLoading,
+    //     error: essayError,
+    //   } = useQuery({
+    //     queryKey: ["essay", params.essayId],
+    //     queryFn: async () => {
+    //       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
+    //       return getEssay({ id: userEssayData.essay_id, token });
+    //     },
+    //     enabled: !!params.essayId,
+    //   });
       
-      if (essayLoading || !essayData) {
-        return <UserEssaySectionLoading />;
-      }
+    //   if (essayLoading || !essayData) {
+    //     return <UserEssaySectionLoading />;
+    //   }
     
-      if (essayError) {
-        return <div className={styles.error}>Ошибка загрузки</div>;
-      }
+    //   if (essayError) {
+    //     return <div className={styles.error}>Ошибка загрузки</div>;
+    //   }
 
     return (
         <>
         <BackButton onClick={() => window.history.back()} />
         <div className={styles.wrapper}>
-            <h1 className={styles.title}>{essayData.title}</h1>
+            <h1 className={styles.title}>dfwesfre</h1>
 
             <div className={styles.section}>
             <h2 className={styles.subtitle}>Текст сочинения</h2>
