@@ -77,7 +77,7 @@ const BoughtEssayView = ({ userEssayData }: { userEssayData: any }) => (
     <div className={styles.section}>
       <h2 className={styles.subtitle}>Текст сочинения</h2>
       <div className={styles.fileBox}>
-      <FileEmoji size={25}>
+      <FileEmoji size={25} />
         <span className={styles.fileName}>Текст появится после старта</span>
       </div>
     </div>
@@ -100,7 +100,7 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
     <div className={styles.section}>
       <h2 className={styles.subtitle}>Текст сочинения</h2>
       <div className={styles.fileBox}>
-        <FileEmoji size={25}>
+        <FileEmoji size={25} />
         <span className={styles.fileName}>26.pdf</span>
       </div>
     </div>
