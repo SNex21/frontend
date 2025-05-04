@@ -6,7 +6,7 @@ import { useCloudStorage } from "@/lib/twa/hooks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import { useParams } from "react-router-dom";
 import { BackButton } from "@/lib/twa/components/BackButton";
-import { Skeleton } from "@repo/ui";
+// import { Skeleton } from "@repo/ui";
 
 export default function UserEssayPage() {
     const params = useParams<{ essayId: string }>();
