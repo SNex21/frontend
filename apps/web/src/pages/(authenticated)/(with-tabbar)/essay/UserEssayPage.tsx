@@ -220,46 +220,46 @@ const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
     </div>
   </>
 );
-
 const DeadlineModal = ({
-  isOpen,
-  onClose,
-  onSubmit,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  onSubmit: (deadline: string) => void;
-}) => {
-  const [deadline, setDeadline] = useState("");
-
-  if (!isOpen) return null;
-
-  return (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modalContent}>
-        <h3 className={styles.title}>Поставь себе дедлайн</h3>
-        <input
-          type="date"
-          value={deadline}
-          onChange={(e) => setDeadline(e.target.value)}
-          min={new Date().toISOString().split("T")[0]}
-        />
-        <div className={styles.modalButtons}>
-          <button onClick={onClose} className={styles.secondaryButton}>
-            Отмена
-          </button>
-          <button
-            onClick={() => onSubmit(deadline)}
-            disabled={!deadline}
-            className={styles.button}
-          >
-            Сохранить
-          </button>
+    isOpen,
+    onClose,
+    onSubmit,
+  }: {
+    isOpen: boolean;
+    onClose: () => void;
+    onSubmit: (deadline: string) => void;
+  }) => {
+    const [deadline, setDeadline] = useState("");
+  
+    if (!isOpen) return null;
+  
+    return (
+      <div className={styles.modalOverlay}>
+        <div className={styles.modalContent}>
+          <h3 className={styles.title}>Поставь себе дедлайн</h3>
+          <input
+            type="date"
+            value={deadline}
+            onChange={(e) => setDeadline(e.target.value)}
+            min={new Date().toISOString().split("T")[0]}
+          />
+          <div className={styles.modalButtons}>
+            <button onClick={onClose} className={styles.secondaryButton}>
+              Отмена
+            </button>
+            <button
+              onClick={() => onSubmit(deadline)}
+              disabled={!deadline}
+              className={styles.button}
+            >
+              Сохранить
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
+  
 
 const UserEssaySectionLoading = () => (
   <section className="wrapper">
