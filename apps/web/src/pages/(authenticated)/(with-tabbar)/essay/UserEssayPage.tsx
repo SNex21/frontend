@@ -85,6 +85,9 @@ export default function UserEssayPage() {
           <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
         </div>
       </div>
+      <div className={styles.complete}>
+          <button className={styles.button}>Купить</button>
+        </div>
     </>
   );
 }

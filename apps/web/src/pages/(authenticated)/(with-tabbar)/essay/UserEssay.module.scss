@@ -48,3 +48,39 @@
     font-weight: 600;
   }
   
+  .complete {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+  
+    background-color: var(--ds-background-200);
+    padding: var(--spacing-4);
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    z-index: 10;
+  }
+  
+  .button {
+    background-color: #4900DC;
+    width: 100%;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: var(--rounded-2xl);
+    padding: var(--spacing-3) var(--spacing-6);
+    cursor: pointer;
+    transition: background-color 0.3s;
+  
+    &--inactive {
+      background-color: #280078; /* Цвет неактивной кнопки */
+      color: #a5a5a5;
+      cursor: not-allowed;
+  
+    }
+  }
