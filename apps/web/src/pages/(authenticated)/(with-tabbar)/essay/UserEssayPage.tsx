@@ -1,5 +1,5 @@
 import styles from "./UserEssay.module.scss";
-import { getUserEssay, getEssay } from "@/services/api/essays";
+import { getUserEssay, getEssay, patchStartEssay } from "@/services/api/essays";
 import { useQuery } from "@tanstack/react-query";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage";
@@ -7,10 +7,13 @@ import { useParams } from "react-router-dom";
 import { FileEmoji } from "@repo/ui/emojis";
 import { BackButton } from "@/lib/twa/components/BackButton";
 import { Skeleton } from "@repo/ui";
+import React, { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 
 export default function UserEssayPage() {
   const params = useParams<{ purchaseEssayId: string }>();
   const cloudStorage = useCloudStorage();
+  const [isModalOpen, setModalOpen] = useState(false);
 
   // First query to fetch user essay data
   const {
@@ -41,6 +44,15 @@ export default function UserEssayPage() {
     enabled: !!userEssayData,
   });
 
+  const startEssayMutation = useMutation({
+    mutationFn: ({ essay_id, deadline }: { essay_id: string; deadline: string }) =>
+      patchStartEssay({ id: essay_id, token: cloudStorage.getItem(ACCESS_TOKEN_NAME), deadline }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["userEssays", params.purchaseEssayId] });
+      queryClient.invalidateQueries({ queryKey: ["essays", userEssayData?.essay_id] });
+    },
+  });
+
   // Loading states
   if (userEssayLoading || essayLoading) {
     return <UserEssaySectionLoading />;
@@ -63,21 +75,46 @@ export default function UserEssayPage() {
         <h1 className={styles.title}>{essayData.title}</h1>
 
         {userEssayData.status === "bought" ? (
-          <BoughtEssayView userEssayData={userEssayData} />
+          <BoughtEssayView
+            userEssayData={userEssayData}
+            onStartClick={() => setModalOpen(true)}
+          />
         ) : (
           <InProgressEssayView userEssayData={userEssayData} />
         )}
       </div>
+
+      <DeadlineModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={(deadline) => {
+          startEssayMutation.mutate(
+            {
+              essay_id: userEssayData.id,
+              deadline,
+            },
+            {
+              onSuccess: () => setModalOpen(false),
+            }
+          );
+        }}
+      />
     </>
   );
 }
 
-const BoughtEssayView = ({ userEssayData }: { userEssayData: any }) => (
+const BoughtEssayView = ({
+  userEssayData,
+  onStartClick,
+}: {
+  userEssayData: any;
+  onStartClick: () => void;
+}) => (
   <>
     <div className={styles.section}>
       <h2 className={styles.subtitle}>Текст сочинения</h2>
       <div className={styles.fileBox}>
-      <FileEmoji size={25} />
+        <FileEmoji size={25} />
         <span className={styles.fileName}>Текст появится после старта</span>
       </div>
     </div>
@@ -86,11 +123,13 @@ const BoughtEssayView = ({ userEssayData }: { userEssayData: any }) => (
       <p>
         Статус: <span className={styles.statusBought}>не начато</span>
       </p>
-      <p>Выбрать дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
+      <p>Выбрать дедлайн: —</p>
     </div>
 
     <div className={styles.complete}>
-      <button className={styles.button}>Начать</button>
+      <button className={styles.button} onClick={onStartClick}>
+        Начать
+      </button>
     </div>
   </>
 );
@@ -115,7 +154,10 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
 
     <div className={styles.statusBlock}>
       <p>
-        Статус: <span className={styles.statusInProgress}>{translateStatus(userEssayData.status)}</span>
+        Статус:{" "}
+        <span className={`${styles[`status${capitalizeFirstLetter(userEssayData.status)}`]}`}>
+          {translateStatus(userEssayData.status)}
+        </span>
       </p>
       <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
     </div>
@@ -125,6 +167,10 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
     </div>
   </>
 );
+
+function capitalizeFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 const translateStatus = (status: string) => {
   switch (status) {
@@ -137,6 +183,46 @@ const translateStatus = (status: string) => {
     default:
       return status;
   }
+};
+
+const DeadlineModal = ({
+  isOpen,
+  onClose,
+  onSubmit,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (deadline: string) => void;
+}) => {
+  const [deadline, setDeadline] = useState("");
+
+  if (!isOpen) return null;
+
+  return (
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent}>
+        <h3>Выберите дедлайн</h3>
+        <input
+          type="date"
+          value={deadline}
+          onChange={(e) => setDeadline(e.target.value)}
+          min={new Date().toISOString().split("T")[0]} // сегодня и далее
+        />
+        <div className={styles.modalButtons}>
+          <button onClick={onClose} className={styles.secondaryButton}>
+            Отмена
+          </button>
+          <button
+            onClick={() => onSubmit(deadline)}
+            disabled={!deadline}
+            className={styles.button}
+          >
+            Сохранить
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const UserEssaySectionLoading = () => (

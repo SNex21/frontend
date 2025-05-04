@@ -26,3 +26,6 @@ export interface UserEssayShort {
     status: string;
  }
 
+export interface PaymentLink {
+    link: string;
+}

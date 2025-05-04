@@ -1,4 +1,11 @@
-import { GetEssaysTopicsRes, GetUserEssaysRes, GetEssaysRes, GetUserEssayRes } from "@/services/api/essays/types.ts";
+import { 
+  GetEssaysTopicsRes, 
+  GetUserEssaysRes, 
+  GetEssaysRes, 
+  GetUserEssayRes, 
+  GetEssayPaymentLinkReq, 
+  GetPayLinkRes,
+  StartEssayProp, } from "@/services/api/essays/types.ts";
 import { apiClient } from "@/services/api/client.ts";
 import { API_ENDPOINTS } from "@/services/api/endpoints.ts";
 
@@ -39,3 +46,23 @@ export const getUserEssay = async ({ id, token }: { id: string, token: string })
   });
   return data;
 };
+
+export const getEssayPaymentLink = async ({ token, ...params }: GetEssayPaymentLinkReq): Promise<GetPayLinkRes> => {
+  const { data } = await apiClient.post<GetPayLinkRes>(`${API_ENDPOINTS.PAYMENT}`, params, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+};
+
+export const patchStartEssay = async ({ essay_id, token }: StartEssayProp) => {
+  const { data } = await apiClient.patch(`${API_ENDPOINTS.GET_ESSAYS_TOPICS}/${essay_id}/start`, {
+    headers: {
+      Authorization: `Bearer ${token}`, 
+    },
+  });
+  return data;
+};
+
