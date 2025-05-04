@@ -7,13 +7,14 @@ import { useParams } from "react-router-dom";
 import { FileEmoji } from "@repo/ui/emojis";
 import { BackButton } from "@/lib/twa/components/BackButton";
 import { Skeleton } from "@repo/ui";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 
 export default function UserEssayPage() {
   const params = useParams<{ purchaseEssayId: string }>();
   const cloudStorage = useCloudStorage();
   const [isModalOpen, setModalOpen] = useState(false);
+  const queryClient = useQueryClient();
 
   // First query to fetch user essay data
   const {
@@ -45,8 +46,10 @@ export default function UserEssayPage() {
   });
 
   const startEssayMutation = useMutation({
-    mutationFn: ({ essay_id, deadline }: { essay_id: string; deadline: string }) =>
-      patchStartEssay({ id: essay_id, token: cloudStorage.getItem(ACCESS_TOKEN_NAME), deadline }),
+    mutationFn: async ({ essay_id, deadline }: { essay_id: string; deadline: string }) => {
+      const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
+      return patchStartEssay({ id: essay_id, token, deadline });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userEssays", params.purchaseEssayId] });
       queryClient.invalidateQueries({ queryKey: ["essays", userEssayData?.essay_id] });
