@@ -1,6 +1,6 @@
 import styles from "./UserEssay.module.scss";
 // import { getUserEssay, getEssay } from "@/services/api/essays";
-import { getEssay } from "@/services/api/essays";
+import { getUserEssay } from "@/services/api/essays";
 import { useQuery } from "@tanstack/react-query"
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
