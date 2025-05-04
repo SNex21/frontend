@@ -77,21 +77,23 @@ export default function UserEssayPage() {
       <div className={styles.wrapper}>
         <h1 className={styles.title}>{essayData.title}</h1>
 
-        {userEssayData.status === "bought" ? (
-          <BoughtEssayView
-            userEssayData={userEssayData}
-            onStartClick={() => setModalOpen(true)}
-          />
-        ) : (
-         userEssayData.status === "in_progress" ? (
-            <InProgressEssayView userEssayData={userEssayData} />
-         ):(
-            userEssayData.status === "in_review" ? (
-            <InProgressEssayView userEssayData={userEssayData} />):(
-                <ReviewedEssayView userEssayData={userEssayData} />
-            )
-         )
-        )}
+        {(() => {
+        if (userEssayData.status === "bought") {
+            return (
+            <BoughtEssayView
+                userEssayData={userEssayData}
+                onStartClick={() => setModalOpen(true)}
+            />
+            );
+        } else if (
+            userEssayData.status === "in_progress" ||
+            userEssayData.status === "in_review"
+        ) {
+            return <InProgressEssayView userEssayData={userEssayData} />;
+        } else {
+            return <ReviewedEssayView userEssayData={userEssayData} />;
+        }
+    })()}
       </div>
 
       <DeadlineModal
