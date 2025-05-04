@@ -8,7 +8,7 @@ import { FileEmoji } from "@repo/ui/emojis";
 import { BackButton } from "@/lib/twa/components/BackButton";
 import { Skeleton } from "@repo/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function UserEssayPage() {
   const params = useParams<{ purchaseEssayId: string }>();
@@ -48,7 +48,7 @@ export default function UserEssayPage() {
   const startEssayMutation = useMutation({
     mutationFn: async ({ essay_id, deadline }: { essay_id: string; deadline: string }) => {
       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
-      return patchStartEssay({ id: essay_id, token, deadline });
+      return patchStartEssay({ essay_id: essay_id, token, deadline });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userEssays", params.purchaseEssayId] });
