@@ -121,7 +121,7 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
     </div>
 
     <div className={styles.complete}>
-      <button className={styles.button}>Купить</button>
+      <button className={styles.button}>Отправить решение</button>
     </div>
   </>
 );
