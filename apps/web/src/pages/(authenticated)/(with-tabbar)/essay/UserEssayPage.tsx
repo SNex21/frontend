@@ -159,8 +159,8 @@ const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
     <div className={styles.section}>
       <h2 className={styles.subtitle}>Твое сочинение</h2>
       <div className={styles.fileBox}>
-        <img src="/icons/folder-icon.png" alt="file" className={styles.fileIcon} />
-        <span className={styles.fileName}>{userEssayData.download_essay_file_url}</span>
+      <FileEmoji size={25} />
+        <span className={styles.fileName}>file.docx</span>
       </div>
     </div>
 
@@ -201,7 +201,7 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
         <h2 className={styles.subtitle}>Твое сочинение</h2>
         <div className={styles.fileBox}>
         <FileEmoji size={25} />
-          <span className={styles.fileName}>{userEssayData.download_essay_file_url}</span>
+          <span className={styles.fileName}>file.docx</span>
         </div>
       </div>
   
