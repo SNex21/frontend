@@ -1,106 +1,105 @@
 import styles from "./UserEssay.module.scss";
 import { getUserEssay, getEssay } from "@/services/api/essays";
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query";
 import { useCloudStorage } from "@/lib/twa/hooks";
-import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
+import { ACCESS_TOKEN_NAME } from "@/services/auth/storage";
 import { useParams } from "react-router-dom";
 import { BackButton } from "@/lib/twa/components/BackButton";
 import { Skeleton } from "@repo/ui";
 
 export default function UserEssayPage() {
-    const params = useParams<{ purchaseEssayId: string }>();
-    const cloudStorage = useCloudStorage();
-  
-    const {
-      data: userEssayData,
-      isLoading: userEssayLoading,
-      error: userEssayError,
-    } = useQuery({
-      queryKey: ["userEssays", params.purchaseEssayId],
-      queryFn: async () => {
-        const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
-        const purchaseEssayId = String(params.purchaseEssayId);
-        return getUserEssay({ id: purchaseEssayId, token });
-      },
-      enabled: !!params.purchaseEssayId,
-    });
-  
-    if (userEssayLoading || !userEssayData) {
-      return <UserEssaySectionLoading />;
+  const params = useParams<{ purchaseEssayId: string }>();
+  const cloudStorage = useCloudStorage();
 
-    }
-  
-    if (userEssayError) {
-      return <div className={styles.error}>Ошибка загрузки</div>;
-    }
+  // First query to fetch user essay data
+  const {
+    data: userEssayData,
+    isLoading: userEssayLoading,
+    error: userEssayError,
+  } = useQuery({
+    queryKey: ["userEssays", params.purchaseEssayId],
+    queryFn: async () => {
+      const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
+      const purchaseEssayId = String(params.purchaseEssayId);
+      return getUserEssay({ id: purchaseEssayId, token });
+    },
+    enabled: !!params.purchaseEssayId,
+  });
 
-    const {
-        data: essayData,
-        isLoading: essayLoading,
-      } = useQuery({
-        queryKey: ["essays"],
-        queryFn: async () => {
-          const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
-          return getEssay({ id: userEssayData.essay_id, token });
-        },
-      });
-      
-      if (essayLoading || !essayData) {
-        return <UserEssaySectionLoading />;
-      }
+  // Second query to fetch the base essay (depends on userEssayData)
+  const {
+    data: essayData,
+    isLoading: essayLoading,
+    error: essayError,
+  } = useQuery({
+    queryKey: ["essays", userEssayData?.essay_id],
+    queryFn: async () => {
+      const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
+      return getEssay({ id: userEssayData!.essay_id, token });
+    },
+    enabled: !!userEssayData,
+  });
 
-    return (
-        <>
-        <BackButton onClick={() => window.history.back()} />
-        <div className={styles.wrapper}>
-            <h1 className={styles.title}>dfwesfre</h1>
+  // Loading states
+  if (userEssayLoading || essayLoading) {
+    return <UserEssaySectionLoading />;
+  }
 
-            <div className={styles.section}>
-            <h2 className={styles.subtitle}>Текст сочинения</h2>
-            <div className={styles.fileBox}>
-                <img
-                src="/icons/folder-icon.png"
-                alt="file"
-                className={styles.fileIcon}
-                />
-                <span className={styles.fileName}>26.pdf</span>
-            </div>
-            </div>
+  // Error states
+  if (userEssayError || essayError) {
+    return <div className={styles.error}>Ошибка загрузки</div>;
+  }
 
-            <div className={styles.section}>
-            <h2 className={styles.subtitle}>Твое сочинение</h2>
-            <div className={styles.fileBox}>
-                <img
-                src="/icons/folder-icon.png"
-                alt="file"
-                className={styles.fileIcon}
-                />
-                <span className={styles.fileName}>abvgd.docx</span>
-            </div>
-            </div>
+  // Data not ready yet
+  if (!userEssayData || !essayData) {
+    return <UserEssaySectionLoading />;
+  }
 
-            <div className={styles.statusBlock}>
-            <p>
-                Статус: <span className={styles.status}>{userEssayData.status}</span>
-            </p>
-            <p>Твой дедлайн: {userEssayData.deadline}</p>
-            </div>
+  // Render page
+  return (
+    <>
+      <BackButton onClick={() => window.history.back()} />
+      <div className={styles.wrapper}>
+        <h1 className={styles.title}>{essayData.title}</h1>
+
+        <div className={styles.section}>
+          <h2 className={styles.subtitle}>Текст сочинения</h2>
+          <div className={styles.fileBox}>
+            <img src="/icons/folder-icon.png" alt="file" className={styles.fileIcon} />
+            <span className={styles.fileName}>26.pdf</span>
+          </div>
         </div>
-        </>
-    );
-    }
 
+        <div className={styles.section}>
+          <h2 className={styles.subtitle}>Твое сочинение</h2>
+          <div className={styles.fileBox}>
+            <img src="/icons/folder-icon.png" alt="file" className={styles.fileIcon} />
+            <span className={styles.fileName}>{userEssayData.filename}</span>
+          </div>
+        </div>
+
+        <div className={styles.statusBlock}>
+          <p>
+            Статус: <span className={styles.status}>{userEssayData.status}</span>
+          </p>
+          <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
+        </div>
+      </div>
+    </>
+  );
+}
+
+// Loading skeleton UI
 const UserEssaySectionLoading = () => (
-    <section className="wrapper">
-        <div className={styles.cards}>
-        <Skeleton
-            style={{
-            height: "65px",
-            borderRadius: "var(--rounded-2xl)",
-            gridColumn: "span 2",
-            }}
-        />
-        </div>
-    </section>
-    );
-
+  <section className="wrapper">
+    <div className={styles.cards}>
+      <Skeleton
+        style={{
+          height: "65px",
+          borderRadius: "var(--rounded-2xl)",
+          gridColumn: "span 2",
+        }}
+      />
+    </div>
+  </section>
+);
