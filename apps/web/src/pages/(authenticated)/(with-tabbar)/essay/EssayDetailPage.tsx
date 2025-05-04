@@ -16,7 +16,7 @@ type EssayStatus = "bought" | "in_progress" | "in_review" | "reviewed";
 
 export default function EssayDetailPage() {
   const navigate = useNavigate();
-  const params = useParams<{ essayId: number }>();
+  const params = useParams<{ essayId: string }>();
   const cloudStorage = useCloudStorage();
 
   const {
