@@ -13,7 +13,9 @@ import { useState } from "react";
 export default function UserEssayPage() {
   const params = useParams<{ purchaseEssayId: string }>();
   const cloudStorage = useCloudStorage();
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [deadline, setDeadline] = useState("");
+  const [noDeadline, setNoDeadline] = useState(false);
+  const [isStarted, setStarted] = useState(false);
   const queryClient = useQueryClient();
 
   const {
@@ -62,7 +64,6 @@ export default function UserEssayPage() {
     },
   });
 
-
   if (userEssayLoading || essayLoading) {
     return <UserEssaySectionLoading />;
   }
@@ -86,7 +87,22 @@ export default function UserEssayPage() {
             return (
               <BoughtEssayView
                 userEssayData={userEssayData}
-                onStartClick={() => setModalOpen(true)}
+                deadline={deadline}
+                setDeadline={setDeadline}
+                noDeadline={noDeadline}
+                setNoDeadline={setNoDeadline}
+                isStartEnabled={noDeadline || deadline}
+                onStartClick={() => {
+                  startEssayMutation.mutate(
+                    {
+                      essay_id: userEssayData.id,
+                      ...(noDeadline ? {} : { deadline }),
+                    },
+                    {
+                      onSuccess: () => setStarted(true),
+                    }
+                  );
+                }}
               />
             );
           } else if (
@@ -99,31 +115,25 @@ export default function UserEssayPage() {
           }
         })()}
       </div>
-
-      <DeadlineModal
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
-        onSubmit={(deadline) => {
-          startEssayMutation.mutate(
-            {
-              essay_id: userEssayData.id,
-              ...(deadline ? { deadline } : {}),
-            },
-            {
-              onSuccess: () => setModalOpen(false),
-            }
-          );
-        }}
-      />
     </>
   );
 }
 
 const BoughtEssayView = ({
   userEssayData,
+  deadline,
+  setDeadline,
+  noDeadline,
+  setNoDeadline,
+  isStartEnabled,
   onStartClick,
 }: {
   userEssayData: any;
+  deadline: string;
+  setDeadline: (d: string) => void;
+  noDeadline: boolean;
+  setNoDeadline: (v: boolean) => void;
+  isStartEnabled: boolean;
   onStartClick: () => void;
 }) => (
   <>
@@ -131,22 +141,50 @@ const BoughtEssayView = ({
       <h2 className={styles.subtitle}>Текст сочинения</h2>
       <div className={styles.fileBox}>
         <FileEmoji size={25} />
-        <span className={styles.fileName}>Текст появится после старта {userEssayData.status}</span>
+        <span className={styles.fileName}>Текст появится после старта ({userEssayData.status})</span>
       </div>
     </div>
 
     <div className={styles.statusBlock}>
       <p>
         Статус:{" "}
-        <span className={styles.statusBought}>
-          не начато
-        </span>
+        <span className={styles.statusBought}>не начато</span>
       </p>
-      <p>Выбрать дедлайн: —</p>
+    </div>
+
+    <div className={styles.section}>
+      <h2 className={styles.subtitle}>Выберите дедлайн</h2>
+      <input
+        type="date"
+        value={deadline}
+        onChange={(e) => {
+          setDeadline(e.target.value);
+          setNoDeadline(false);
+        }}
+        min={new Date().toISOString().split("T")[0]}
+        className={styles.dateInput}
+      />
+      <label className={styles.checkboxLabel}>
+        <input
+          type="checkbox"
+          checked={noDeadline}
+          onChange={(e) => {
+            setNoDeadline(e.target.checked);
+            if (e.target.checked) {
+              setDeadline("");
+            }
+          }}
+        />
+        Без дедлайна
+      </label>
     </div>
 
     <div className={`${styles.complete} ${styles.animate}`}>
-      <button className={styles.button} onClick={onStartClick}>
+      <button
+        className={styles.button}
+        onClick={onStartClick}
+        disabled={!isStartEnabled}
+      >
         Начать
       </button>
     </div>
@@ -244,46 +282,6 @@ const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
     </div>
   </>
 );
-const DeadlineModal = ({
-    isOpen,
-    onClose,
-    onSubmit,
-  }: {
-    isOpen: boolean;
-    onClose: () => void;
-    onSubmit: (deadline?: string) => void;
-  }) => {
-    const [deadline, setDeadline] = useState("");
-  
-    if (!isOpen) return null;
-  
-    return (
-      <div className={styles.modalOverlay}>
-        <div className={styles.modalContent}>
-          <h3 className={styles.title}>Поставь себе дедлайн</h3>
-          <input
-            type="date"
-            value={deadline}
-            onChange={(e) => setDeadline(e.target.value)}
-            min={new Date().toISOString().split("T")[0]}
-          />
-          <div className={styles.modalButtons}>
-            <button onClick={onClose} className={styles.secondaryButton}>
-              Отмена
-            </button>
-            <button
-              onClick={() => onSubmit(deadline)}
-              disabled={!deadline}
-              className={styles.button}
-            >
-              Сохранить
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-  
 
 const UserEssaySectionLoading = () => (
   <section className="wrapper">
@@ -315,3 +313,4 @@ function translateStatus(status: string) {
       return status;
   }
 }
+
