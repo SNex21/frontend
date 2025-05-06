@@ -15,7 +15,7 @@ export default function UserEssayPage() {
   const cloudStorage = useCloudStorage();
   const [deadline, setDeadline] = useState("");
   const [noDeadline, setNoDeadline] = useState(false);
-  const [isStarted, setStarted] = useState(false);
+  const [, setStarted] = useState(false); /
   const queryClient = useQueryClient();
 
   const {
@@ -91,7 +91,7 @@ export default function UserEssayPage() {
                 setDeadline={setDeadline}
                 noDeadline={noDeadline}
                 setNoDeadline={setNoDeadline}
-                isStartEnabled={noDeadline || deadline}
+                isStartEnabled={noDeadline || Boolean(deadline)}
                 onStartClick={() => {
                   startEssayMutation.mutate(
                     {
