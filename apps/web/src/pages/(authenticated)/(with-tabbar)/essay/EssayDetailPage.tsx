@@ -118,11 +118,9 @@ export default function EssayDetailPage() {
         </section>
 
         <div className={styles.complete}>
-        <Haptic type="impact" value="medium" asChild>
           <Link to={`/essay/buy/${params.essayId}`}>
           <button className={styles.button}>Купить</button>
           </Link>
-        </Haptic>
         </div>
       </div>
     </>
