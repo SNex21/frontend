@@ -25,7 +25,7 @@ export default function EssayBuyPage() {
       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
       return getEssayPaymentLink({
         token,
-        id : params.essayId,
+        id : Number(params.essayId),
         email,
       });
     },
