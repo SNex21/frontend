@@ -5,7 +5,9 @@ import {
   GetUserEssayRes, 
   GetEssayPaymentLinkReq, 
   GetPayLinkRes,
-  StartEssayProp, } from "@/services/api/essays/types.ts";
+  StartEssayProp, 
+  CheckTransactionProp,
+  CheckPaymentRes,} from "@/services/api/essays/types.ts";
 import { apiClient } from "@/services/api/client.ts";
 import { API_ENDPOINTS } from "@/services/api/endpoints.ts";
 
@@ -47,8 +49,8 @@ export const getUserEssay = async ({ id, token }: { id: string, token: string })
   return data;
 };
 
-export const getEssayPaymentLink = async ({ token, ...params }: GetEssayPaymentLinkReq): Promise<GetPayLinkRes> => {
-  const { data } = await apiClient.post<GetPayLinkRes>(`${API_ENDPOINTS.PAYMENT}`, params, {
+export const getEssayPaymentLink = async ({ token, ...body }: GetEssayPaymentLinkReq): Promise<GetPayLinkRes> => {
+  const { data } = await apiClient.post<GetPayLinkRes>(`${API_ENDPOINTS.PAYMENT}`, body, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -62,6 +64,15 @@ export const patchStartEssay = async ({ token, essay_id, ...body }: StartEssayPr
   const { data } = await apiClient.patch(`${API_ENDPOINTS.GET_USERS_ESSAYS}/${essay_id}/start`, body, {
     headers: {
       Authorization: `Bearer ${token}`, 
+    },
+  });
+  return data;
+};
+
+export const checkTransaction = async ({ token, id }: CheckTransactionProp): Promise<CheckPaymentRes> => {
+  const { data } = await apiClient.get<CheckPaymentRes>(`${API_ENDPOINTS.PAYMENT}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   });
   return data;

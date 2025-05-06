@@ -27,5 +27,11 @@ export interface UserEssayShort {
  }
 
 export interface PaymentLink {
+    id: string;
     link: string;
 }
+
+export interface PaymentStatus {
+    status: string;
+  }
+    
