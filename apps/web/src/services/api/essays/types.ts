@@ -21,7 +21,7 @@ export interface StartEssayProp {
   token: string;
 
   essay_id: string;
-  deadline: string;
+  deadline: string | null;
 }
 
 export interface CheckTransactionProp {
