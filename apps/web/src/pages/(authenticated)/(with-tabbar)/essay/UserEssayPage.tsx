@@ -15,12 +15,26 @@ import { Skeleton } from "@repo/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
+// Типизация данных
+interface UserEssayData {
+  id: string;
+  essay_id: string;
+  status: "bought" | "in_progress" | "in_review" | "reviewed";
+  download_essay_file_url: string;
+  download_user_file_url?: string;
+  deadline?: string;
+}
+
+interface EssayData {
+  id: string;
+  title: string;
+}
+
 export default function UserEssayPage() {
   const params = useParams<{ purchaseEssayId: string }>();
   const cloudStorage = useCloudStorage();
   const [isModalOpen, setModalOpen] = useState(false);
   const queryClient = useQueryClient();
-
   const purchaseEssayId = params.purchaseEssayId!;
 
   // Получаем данные по пользовательскому сочинению
@@ -28,7 +42,7 @@ export default function UserEssayPage() {
     data: userEssayData,
     isLoading: userEssayLoading,
     error: userEssayError,
-  } = useQuery({
+  } = useQuery<UserEssayData>({
     queryKey: ["userEssays", purchaseEssayId],
     queryFn: async () => {
       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
@@ -41,7 +55,7 @@ export default function UserEssayPage() {
     data: essayData,
     isLoading: essayLoading,
     error: essayError,
-  } = useQuery({
+  } = useQuery<EssayData>({
     queryKey: ["essays", userEssayData?.essay_id],
     queryFn: async () => {
       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
@@ -102,7 +116,6 @@ export default function UserEssayPage() {
       <BackButton onClick={() => window.history.back()} />
       <div className={styles.wrapper}>
         <h1 className={styles.title}>{essayData.title}</h1>
-
         {(() => {
           switch (userEssayData.status) {
             case "bought":
@@ -118,7 +131,7 @@ export default function UserEssayPage() {
                 <InProgressEssayView
                   userEssayData={userEssayData}
                   onSubmitFile={(file) => submitEssayMutation.mutate({ file })}
-                  isSubmitting={submitEssayMutation.isLoading}
+                  isSubmitting={submitEssayMutation.isPending}
                 />
               );
             case "reviewed":
@@ -128,7 +141,6 @@ export default function UserEssayPage() {
           }
         })()}
       </div>
-
       <DeadlineModal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
@@ -154,7 +166,7 @@ const BoughtEssayView = ({
   userEssayData,
   onStartClick,
 }: {
-  userEssayData: any;
+  userEssayData: UserEssayData;
   onStartClick: () => void;
 }) => (
   <>
@@ -165,14 +177,12 @@ const BoughtEssayView = ({
         <span className={styles.fileName}>Текст появится после старта</span>
       </div>
     </div>
-
     <div className={styles.statusBlock}>
       <p>
         Статус:{" "}
         <span className={styles.statusBought}>не начато</span>
       </p>
     </div>
-
     <div className={`${styles.complete} ${styles.animate}`}>
       <button className={styles.button} onClick={onStartClick}>
         Начать
@@ -182,7 +192,7 @@ const BoughtEssayView = ({
 );
 
 interface InProgressEssayViewProps {
-  userEssayData: any;
+  userEssayData: UserEssayData;
   onSubmitFile: (file: File) => void;
   isSubmitting: boolean;
 }
@@ -193,7 +203,6 @@ const InProgressEssayView = ({
   isSubmitting,
 }: InProgressEssayViewProps) => {
   const [file, setFile] = useState<File | null>(null);
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
@@ -206,12 +215,11 @@ const InProgressEssayView = ({
         <h2 className={styles.subtitle}>Текст сочинения</h2>
         <div className={styles.fileBox}>
           <FileEmoji size={25} />
-          <a href={userEssayData.download_essay_file_url} download="26.pdf">
+          <a href={String(userEssayData.download_essay_file_url)} download="26.pdf">
             <span className={styles.fileName}>26.pdf</span>
           </a>
         </div>
       </div>
-
       <div className={styles.section}>
         <h2 className={styles.subtitle}>Твое сочинение</h2>
         <label className={styles.fileUploadBox}>
@@ -224,7 +232,6 @@ const InProgressEssayView = ({
           )}
         </label>
       </div>
-
       <div className={styles.statusBlock}>
         <p>
           Статус:{" "}
@@ -238,7 +245,6 @@ const InProgressEssayView = ({
         </p>
         <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
       </div>
-
       <div className={`${styles.complete} ${styles.animate}`}>
         <button
           className={styles.button}
@@ -252,36 +258,32 @@ const InProgressEssayView = ({
   );
 };
 
-const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
+const ReviewedEssayView = ({ userEssayData }: { userEssayData: UserEssayData }) => (
   <>
     <div className={styles.section}>
       <h2 className={styles.subtitle}>Текст сочинения</h2>
       <div className={styles.fileBox}>
         <FileEmoji size={25} />
-        <a href={userEssayData.download_essay_file_url} download="26.pdf">
+        <a href={String(userEssayData.download_essay_file_url)} download="26.pdf">
           <span className={styles.fileName}>26.pdf</span>
         </a>
       </div>
     </div>
-
     <div className={styles.section}>
       <h2 className={styles.subtitle}>Твое сочинение</h2>
       <div className={styles.fileBox}>
         <FileEmoji size={25} />
-        <a href={userEssayData.download_user_file_url} download="file.docx">
+        <a href={String(userEssayData.download_user_file_url)} download="file.docx">
           <span className={styles.fileName}>file.docx</span>
         </a>
       </div>
     </div>
-
     <div className={styles.statusBlock}>
       <p>
         Статус:{" "}
         <span
           className={
-            styles[
-              `status${capitalizeFirstLetter(userEssayData.status)}`
-            ]
+            styles[`status${capitalizeFirstLetter(userEssayData.status)}`]
           }
         >
           {translateStatus(userEssayData.status)}
@@ -289,11 +291,9 @@ const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
       </p>
       <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
     </div>
-
     <div className={styles.section}>
       <h1 className={styles.subtitle}>Итоговый балл: 15/26</h1>
     </div>
-
     <div className={styles.section}>
       <h2 className={styles.subtitle}>Рецензия проверяющего</h2>
       <div className={styles.fileBox}>
@@ -317,9 +317,7 @@ const DeadlineModal = ({
   onSubmit: (deadline?: string) => void;
 }) => {
   const [deadline, setDeadline] = useState("");
-
   if (!isOpen) return null;
-
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
