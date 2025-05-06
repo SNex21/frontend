@@ -44,7 +44,7 @@ export default function UserEssayPage() {
   });
 
   const startEssayMutation = useMutation({
-    mutationFn: async ({ essay_id, deadline }: { essay_id: string; deadline: string }) => {
+    mutationFn: async ({ essay_id, deadline }: { essay_id: string; deadline: string | null }) => {
       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
       return patchStartEssay({ essay_id, token, deadline });
     },
