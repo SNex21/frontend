@@ -8,8 +8,8 @@ import { getEssayPaymentLink, checkTransaction } from "@/services/api/essays";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
 import styles from "./EssayBuy.module.scss";
 import { BackButton } from "@/lib/twa/components/BackButton";
-import Clock from "../../../assets/fonts/gifs/clock.gif";
-import Confetti from "../../../assets/fonts/gifs/confetti.gif";
+import Clock from "../../../../assets/fonts/gifs/clock.gif";
+import Confetti from "../../../../assets/fonts/gifs/confetti.gif";
 
 export default function EssayBuyPage() {
   const navigate = useNavigate();
