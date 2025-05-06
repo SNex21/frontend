@@ -8,7 +8,7 @@ import { FileEmoji } from "@repo/ui/emojis";
 import { BackButton } from "@/lib/twa/components/BackButton";
 import { Skeleton } from "@repo/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function UserEssayPage() {
   const params = useParams<{ purchaseEssayId: string }>();
@@ -255,14 +255,8 @@ const DeadlineModal = ({
   }) => {
     const [deadline, setDeadline] = useState("");
   
-    useEffect(() => {
-      if (isOpen) {
-        setDeadline(""); // сброс при открытии
-      }
-    }, [isOpen]);
-  
     if (!isOpen) return null;
-  9
+  
     return (
       <div className={styles.modalOverlay}>
         <div className={styles.modalContent}>
@@ -285,10 +279,7 @@ const DeadlineModal = ({
               Сохранить
             </button>
             <button
-              onClick={() => {
-                setDeadline("");
-                onSubmit();
-              }}
+              onClick={() => onSubmit()}
               className={styles.secondaryButton}
             >
               Без дедлайна
@@ -298,6 +289,7 @@ const DeadlineModal = ({
       </div>
     );
   };
+  
 
 const UserEssaySectionLoading = () => (
   <section className="wrapper">
