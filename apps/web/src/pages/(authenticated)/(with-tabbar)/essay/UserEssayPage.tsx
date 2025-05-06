@@ -8,8 +8,7 @@ import { FileEmoji } from "@repo/ui/emojis";
 import { BackButton } from "@/lib/twa/components/BackButton";
 import { Skeleton } from "@repo/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import React;
+import React, { useState } from "react";
 
 export default function UserEssayPage() {
   const params = useParams<{ purchaseEssayId: string }>();
