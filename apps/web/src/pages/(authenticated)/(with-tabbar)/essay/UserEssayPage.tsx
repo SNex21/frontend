@@ -44,15 +44,24 @@ export default function UserEssayPage() {
   });
 
   const startEssayMutation = useMutation({
-    mutationFn: async ({ essay_id, deadline }: { essay_id: string; deadline: string | null }) => {
+    mutationFn: async ({
+      essay_id,
+      deadline,
+    }: {
+      essay_id: string;
+      deadline?: string;
+    }) => {
       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
-      return patchStartEssay({ essay_id, token, deadline });
+      return patchStartEssay(
+        deadline ? { essay_id, token, deadline } : { essay_id, token }
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userEssays", params.purchaseEssayId] });
       queryClient.invalidateQueries({ queryKey: ["essays", userEssayData?.essay_id] });
     },
   });
+
 
   if (userEssayLoading || essayLoading) {
     return <UserEssaySectionLoading />;
@@ -98,7 +107,7 @@ export default function UserEssayPage() {
           startEssayMutation.mutate(
             {
               essay_id: userEssayData.id,
-              deadline,
+              ...(deadline ? { deadline } : {}),
             },
             {
               onSuccess: () => setModalOpen(false),
@@ -133,7 +142,6 @@ const BoughtEssayView = ({
           не начато
         </span>
       </p>
-      <p>Выбрать дедлайн: —</p>
     </div>
 
     <div className={`${styles.complete} ${styles.animate}`}>
@@ -242,7 +250,7 @@ const DeadlineModal = ({
   }: {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: (deadline: string | null) => void;
+    onSubmit: (deadline?: string) => void;
   }) => {
     const [deadline, setDeadline] = useState("");
   
@@ -269,8 +277,8 @@ const DeadlineModal = ({
             >
               Сохранить
             </button>
-            <button
-              onClick={() => onSubmit(null)}
+            <buttonx
+              onClick={() => onSubmit()}
               className={styles.secondaryButton}
             >
               Без дедлайна
@@ -280,7 +288,6 @@ const DeadlineModal = ({
       </div>
     );
   };
-  
   
 
 const UserEssaySectionLoading = () => (
