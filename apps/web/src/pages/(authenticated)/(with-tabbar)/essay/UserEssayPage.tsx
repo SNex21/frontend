@@ -157,14 +157,13 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => {
     const cloudStorage = useCloudStorage();
     const queryClient = useQueryClient();
   
-    const uploadMutation = useMutation<void, Error, void>({
-        mutationFn: async () => {
+    const uploadMutation = useMutation<void, Error, File>({
+        mutationFn: async (file) => {
           const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
-          if (!selectedFile) throw new Error("No file selected");
           return submitEssay({
             purchaseId: userEssayData.id,
             token,
-            file: selectedFile,
+            file,
           });
         },
         onSuccess: () => {
@@ -173,6 +172,7 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => {
           });
         },
       });
+      
       
   
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
