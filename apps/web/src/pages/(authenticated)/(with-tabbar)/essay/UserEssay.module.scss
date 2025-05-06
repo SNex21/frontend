@@ -27,6 +27,17 @@
     border-radius: 12px;
     background-color: var(--ds-background-200);
   }
+
+  .activeFileBox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px dashed #4900dc;
+    border-radius: 12px;
+    background-color: var(--ds-background-200);
+  }
+  
   
   .fileIcon {
     width: 32px;

@@ -169,9 +169,9 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
 
     <div className={styles.section}>
       <h2 className={styles.subtitle}>Твое сочинение</h2>
-      <div className={styles.fileBox}>
+      <div className={styles.activeFileBox}>
         <FileEmoji size={25} />
-        <span className={styles.fileName}>file.docx</span>
+        <span className={styles.fileName}>Загрузи сюда свой файл с решением</span>
       </div>
     </div>
 
