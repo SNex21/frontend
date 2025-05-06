@@ -17,6 +17,7 @@ export interface UserEssay {
     download_essay_file_url: string;
     download_user_file_url: string;
     deadline: string;
+    created: string;
 }
   
 export interface UserEssayShort {

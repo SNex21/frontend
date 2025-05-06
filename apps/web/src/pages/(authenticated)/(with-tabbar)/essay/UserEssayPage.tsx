@@ -150,7 +150,12 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
       <h2 className={styles.subtitle}>Текст сочинения</h2>
       <div className={styles.fileBox}>
         <FileEmoji size={25} />
+        <a 
+            href={userEssayData.download_essay_file_url}
+            download="26.pdf" 
+            >
         <span className={styles.fileName}>26.pdf</span>
+        </a>
       </div>
     </div>
 
@@ -184,7 +189,12 @@ const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
       <h2 className={styles.subtitle}>Текст сочинения</h2>
       <div className={styles.fileBox}>
         <FileEmoji size={25} />
+        <a 
+            href={userEssayData.download_essay_file_url}
+            download="26.pdf" 
+            >
         <span className={styles.fileName}>26.pdf</span>
+        </a>
       </div>
     </div>
 
@@ -192,7 +202,12 @@ const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
       <h2 className={styles.subtitle}>Твое сочинение</h2>
       <div className={styles.fileBox}>
         <FileEmoji size={25} />
+        <a 
+            href={userEssayData.download_user_file_url}
+            download="26.pdf" 
+            >
         <span className={styles.fileName}>file.docx</span>
+        </a>
       </div>
     </div>
 
