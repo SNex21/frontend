@@ -11,7 +11,6 @@ import {
 import { apiClient } from "@/services/api/client.ts";
 import { API_ENDPOINTS } from "@/services/api/endpoints.ts";
 
-
 export const getEssaysTopics = async ({ token }: { token: string }): Promise<GetEssaysTopicsRes> => {
   const { data } = await apiClient.get<GetEssaysTopicsRes>(`${API_ENDPOINTS.GET_ESSAYS_TOPICS}`, {
     headers: {
@@ -78,3 +77,26 @@ export const checkTransaction = async ({ token, id }: CheckTransactionProp): Pro
   return data;
 };
 
+export const submitEssay = async ({
+  purchaseId,
+  token,
+  file,
+}: {
+  purchaseId: string;
+  token: string;
+  file: File;
+}): Promise<void> => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  await apiClient.post(
+    `${API_ENDPOINTS.GET_USERS_ESSAYS}/${purchaseId}/submit`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
+};

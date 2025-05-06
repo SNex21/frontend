@@ -1,5 +1,5 @@
 import styles from "./UserEssay.module.scss";
-import { getUserEssay, getEssay, patchStartEssay } from "@/services/api/essays";
+import { getUserEssay, getEssay, patchStartEssay, submitEssay } from "@/services/api/essays";
 import { useQuery } from "@tanstack/react-query";
 import { useCloudStorage } from "@/lib/twa/hooks";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage";
@@ -9,6 +9,7 @@ import { BackButton } from "@/lib/twa/components/BackButton";
 import { Skeleton } from "@repo/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import React;
 
 export default function UserEssayPage() {
   const params = useParams<{ purchaseEssayId: string }>();
@@ -152,45 +153,84 @@ const BoughtEssayView = ({
   </>
 );
 
-const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => (
-  <>
-    <div className={styles.section}>
-      <h2 className={styles.subtitle}>Текст сочинения</h2>
-      <div className={styles.fileBox}>
-        <FileEmoji size={25} />
-        <a 
-            href={userEssayData.download_essay_file_url}
-            download="26.pdf" 
-            >
-        <span className={styles.fileName}>26.pdf</span>
-        </a>
-      </div>
-    </div>
-
-    <div className={styles.section}>
-      <h2 className={styles.subtitle}>Твое сочинение</h2>
-      <div className={styles.activeFileBox}>
-        <FileEmoji size={25} />
-        <span className={styles.fileName}>Загрузи сюда свой файл с решением</span>
-      </div>
-    </div>
-
-    <div className={styles.statusBlock}>
-      <p>
-        Статус:{" "}
-        <span className={styles[`status${capitalizeFirstLetter(userEssayData.status)}`]}>
-          {translateStatus(userEssayData.status)}
-        </span>
-      </p>
-      <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
-    </div>
-
-    <div className={`${styles.complete} ${styles.animate}`}>
-      <button className={styles.button}>Отправить решение</button>
-    </div>
-  </>
-);
-
+const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => {
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const cloudStorage = useCloudStorage();
+    const queryClient = useQueryClient();
+  
+    const uploadMutation = useMutation({
+      mutationFn: async () => {
+        const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
+        if (!selectedFile) throw new Error("No file selected");
+        return submitEssay({
+          purchaseId: userEssayData.id,
+          token,
+          file: selectedFile,
+        });
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["userEssays", userEssayData.id],
+        });
+      },
+    });
+  
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files && e.target.files[0]) {
+        setSelectedFile(e.target.files[0]);
+      }
+    };
+  
+    return (
+      <>
+        <div className={styles.section}>
+          <h2 className={styles.subtitle}>Текст сочинения</h2>
+          <div className={styles.fileBox}>
+            <FileEmoji size={25} />
+            <a href={userEssayData.download_essay_file_url} download="26.pdf">
+              <span className={styles.fileName}>26.pdf</span>
+            </a>
+          </div>
+        </div>
+  
+        <div className={styles.section}>
+          <h2 className={styles.subtitle}>Твое сочинение</h2>
+          <label className={styles.activeFileBox}>
+            <FileEmoji size={25} />
+            <span className={styles.fileName}>
+              {selectedFile ? selectedFile.name : "Загрузи сюда свой файл с решением"}
+            </span>
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx"
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
+          </label>
+        </div>
+  
+        <div className={styles.statusBlock}>
+          <p>
+            Статус:{" "}
+            <span className={styles[`status${capitalizeFirstLetter(userEssayData.status)}`]}>
+              {translateStatus(userEssayData.status)}
+            </span>
+          </p>
+          <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
+        </div>
+  
+        <div className={`${styles.complete} ${styles.animate}`}>
+          <button
+            className={styles.button}
+            disabled={!selectedFile || uploadMutation.isLoading}
+            onClick={() => uploadMutation.mutate()}
+          >
+            {uploadMutation.isLoading ? "Отправка..." : "Отправить решение"}
+          </button>
+        </div>
+      </>
+    );
+  };
 const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
   <>
     <div className={styles.section}>
