@@ -265,7 +265,6 @@ const DeadlineModal = ({
             type="date"
             value={deadline}
             onChange={(e) => setDeadline(e.target.value)}
-            min={new Date().toISOString().split("T")[0]}
           />
           <div className={styles.modalButtons}>
             <button onClick={onClose} className={styles.secondaryButton}>
@@ -278,7 +277,7 @@ const DeadlineModal = ({
             >
               Сохранить
             </button>
-            <button
+            <buttonx
               onClick={() => onSubmit()}
               className={styles.secondaryButton}
             >
