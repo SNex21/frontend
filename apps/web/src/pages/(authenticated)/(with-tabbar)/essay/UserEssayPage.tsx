@@ -157,22 +157,23 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => {
     const cloudStorage = useCloudStorage();
     const queryClient = useQueryClient();
   
-    const uploadMutation = useMutation({
-      mutationFn: async () => {
-        const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
-        if (!selectedFile) throw new Error("No file selected");
-        return submitEssay({
-          purchaseId: userEssayData.id,
-          token,
-          file: selectedFile,
-        });
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ["userEssays", userEssayData.id],
-        });
-      },
-    });
+    const uploadMutation = useMutation<void, Error, void>({
+        mutationFn: async () => {
+          const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
+          if (!selectedFile) throw new Error("No file selected");
+          return submitEssay({
+            purchaseId: userEssayData.id,
+            token,
+            file: selectedFile,
+          });
+        },
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ["userEssays", userEssayData.id],
+          });
+        },
+      });
+      
   
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files[0]) {
