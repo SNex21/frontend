@@ -277,7 +277,7 @@ const DeadlineModal = ({
             >
               Сохранить
             </button>
-            <buttonx
+            <button
               onClick={() => onSubmit()}
               className={styles.secondaryButton}
             >
