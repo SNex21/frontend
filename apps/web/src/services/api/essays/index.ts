@@ -50,7 +50,7 @@ export const getUserEssay = async ({ id, token }: { id: string, token: string })
 };
 
 export const getEssayPaymentLink = async ({ token, ...body }: GetEssayPaymentLinkReq): Promise<GetPayLinkRes> => {
-  const { data } = await apiClient.post<GetPayLinkRes>(`${API_ENDPOINTS.PAYMENT}`, body, {
+  const { data } = await apiClient.post<GetPayLinkRes>(`${API_ENDPOINTS.GET_USERS_ESSAYS}/link`, body, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
