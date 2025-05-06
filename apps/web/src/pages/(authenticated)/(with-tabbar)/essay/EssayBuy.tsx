@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { getEssayPaymentLink, checkTransaction } from "@/services/api/essays";
 import { ACCESS_TOKEN_NAME } from "@/services/auth/storage.ts";
-import styles from "./SubscriptionBuy.module.scss";
+import styles from "./EssayBuy.module.scss";
 import { BackButton } from "@/lib/twa/components/BackButton";
 import Clock from "../../../assets/fonts/gifs/clock.gif";
 import Confetti from "../../../assets/fonts/gifs/confetti.gif";
