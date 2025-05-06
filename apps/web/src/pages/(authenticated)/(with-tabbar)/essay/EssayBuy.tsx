@@ -21,6 +21,7 @@ export default function EssayBuyPage() {
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
 
   const { mutate } = useMutation({
+
     mutationFn: async () => {
       const token = await cloudStorage.getItem(ACCESS_TOKEN_NAME);
       return getEssayPaymentLink({

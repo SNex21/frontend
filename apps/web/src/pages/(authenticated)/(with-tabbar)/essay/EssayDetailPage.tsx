@@ -19,6 +19,10 @@ export default function EssayDetailPage() {
   const params = useParams<{ essayId: string }>();
   const cloudStorage = useCloudStorage();
 
+  const handleBuyClick = () => {
+  navigate(`/essay/buy/${params.essayId}`);
+  };
+
   const {
     data: essayData,
     isLoading: essayLoading,
@@ -118,9 +122,10 @@ export default function EssayDetailPage() {
         </section>
 
         <div className={styles.complete}>
-          <Link to={`/essay/buy/${params.essayId}`}>
-          <button className={styles.button}>Купить</button>
-          </Link>
+          <button 
+          className={styles.button}
+          onClick={handleBuyClick}
+          >Купить</button>
         </div>
       </div>
     </>
