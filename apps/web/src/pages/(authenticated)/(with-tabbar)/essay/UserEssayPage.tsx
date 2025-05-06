@@ -276,7 +276,6 @@ const DeadlineModal = ({
               disabled={!deadline}
               className={styles.button}
             >
-
               Сохранить
             </button>
           </div>
