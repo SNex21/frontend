@@ -15,7 +15,7 @@ export default function UserEssayPage() {
   const cloudStorage = useCloudStorage();
   const [deadline, setDeadline] = useState("");
   const [noDeadline, setNoDeadline] = useState(false);
-  const [, setStarted] = useState(false); /
+  const [, setStarted] = useState(false);
   const queryClient = useQueryClient();
 
   const {
