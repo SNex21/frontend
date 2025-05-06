@@ -16,7 +16,8 @@ export interface GetEssayPaymentLinkReq {
 export type GetPayLinkRes = PaymentLink;
 
 export interface StartEssayProp {
+  token: string;
+
   essay_id: string;
   deadline: string;
-  token: string;
 }

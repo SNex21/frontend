@@ -57,9 +57,9 @@ export const getEssayPaymentLink = async ({ token, ...params }: GetEssayPaymentL
   return data;
 };
 
-export const patchStartEssay = async ({ essay_id, deadline, token }: StartEssayProp) => {
-  console.log(deadline)
-  const { data } = await apiClient.patch(`${API_ENDPOINTS.GET_USERS_ESSAYS}/${essay_id}/start`, {
+export const patchStartEssay = async ({ token, essay_id, ...body }: StartEssayProp) => {
+
+  const { data } = await apiClient.patch(`${API_ENDPOINTS.GET_USERS_ESSAYS}/${essay_id}/start`, body, {
     headers: {
       Authorization: `Bearer ${token}`, 
     },
