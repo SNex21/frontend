@@ -242,7 +242,7 @@ const DeadlineModal = ({
   }: {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: (deadline: string) => void;
+    onSubmit: (deadline: string | null) => void;
   }) => {
     const [deadline, setDeadline] = useState("");
   
@@ -269,11 +269,18 @@ const DeadlineModal = ({
             >
               Сохранить
             </button>
+            <button
+              onClick={() => onSubmit(null)}
+              className={styles.secondaryButton}
+            >
+              Без дедлайна
+            </button>
           </div>
         </div>
       </div>
     );
   };
+  
   
 
 const UserEssaySectionLoading = () => (
