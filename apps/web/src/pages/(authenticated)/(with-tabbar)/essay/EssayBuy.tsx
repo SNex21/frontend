@@ -55,7 +55,7 @@ export default function EssayBuyPage() {
   };
 
   const handleConfirmationClick = () => {
-    navigate(`/`);
+    navigate(`/essay`);
   };
 
   const startPolling = (transactionId: string) => {
@@ -103,7 +103,7 @@ export default function EssayBuyPage() {
               className={styles.success_button}
               onClick={handleConfirmationClick}
             >
-              К заданиям!
+              К сочинению!
             </button>
           </div>
         </div>
