@@ -71,13 +71,12 @@ export default function UserEssayPage() {
         <h1 className={styles.title}>{essayData.title}</h1>
         {userEssayData.status === "bought" ? (
           <BoughtEssayView userEssayData={userEssayData} onStartClick={() => setModalOpen(true)} />
-        ) : userEssayData.status === "in_progress" || userEssayData.status === "in_review" ? (
+        ) : userEssayData.status === "in_progress" ? (
           <InProgressEssayView userEssayData={userEssayData} />
         ) : (
-          <ReviewedEssayView userEssayData={userEssayData} />
+          (userEssayData.status === "in_review" ? <InReviewView userEssayData={userEssayData} /> : <ReviewedEssayView userEssayData={userEssayData} />)
         )}
       </div>
-
       <DeadlineModal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
@@ -203,6 +202,41 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => {
     </>
   );
 };
+
+
+const InReviewView = ({ userEssayData }: { userEssayData: any }) => (
+  <>
+    <div className={styles.section}>
+      <h2 className={styles.subtitle}>Текст для сочинения</h2>
+      <div className={styles.fileBox}>
+        <FileEmoji size={25} />
+        <a href={userEssayData.download_essay_file_url} download="26.pdf">
+          <span className={styles.fileName}>26.pdf</span>
+        </a>
+      </div>
+    </div>
+
+    <div className={styles.section}>
+      <h2 className={styles.subtitle}>Твое сочинение</h2>
+      <div className={styles.fileBox}>
+        <FileEmoji size={25} />
+        <a href={userEssayData.download_user_file_url} download="file.docx">
+          <span className={styles.fileName}>file.docx</span>
+        </a>
+      </div>
+    </div>
+
+    <div className={styles.statusBlock}>
+      <p>
+        Статус:{" "}
+        <span className={styles[`status${capitalizeFirstLetter(userEssayData.status)}`]}>
+          {translateStatus(userEssayData.status)}
+        </span>
+      </p>
+      <p>Твой дедлайн: {new Date(userEssayData.deadline).toLocaleDateString()}</p>
+    </div>
+  </>
+);
 
 const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
   <>
