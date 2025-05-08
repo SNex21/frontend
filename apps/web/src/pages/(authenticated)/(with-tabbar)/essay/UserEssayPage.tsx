@@ -160,7 +160,7 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => {
   return (
     <>
       <div className={styles.section}>
-        <h2 className={styles.subtitle}>Текст сочинения</h2>
+        <h2 className={styles.subtitle}>Текст для сочинения</h2>
         <div className={styles.fileBox}>
           <FileEmoji size={25} />
           <a href={userEssayData.download_essay_file_url} download="26.pdf">
@@ -191,13 +191,14 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => {
       </div>
 
       <div className={`${styles.complete} ${styles.animate}`}>
-        <button
-          className={styles.button}
-          onClick={handleSubmit}
-          disabled={!uploadedFile || isSubmitting}
-        >
-          {isSubmitting ? "Отправка..." : "Отправить решение"}
-        </button>
+      <button
+        className={`${styles.button} ${(!uploadedFile || isSubmitting) ? styles["button--inactive"] : ""}`}
+        onClick={handleSubmit}
+        disabled={!uploadedFile || isSubmitting}
+      >
+        {isSubmitting ? "Отправка..." : "Отправить решение"}
+      </button>
+
       </div>
     </>
   );
@@ -206,7 +207,7 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => {
 const ReviewedEssayView = ({ userEssayData }: { userEssayData: any }) => (
   <>
     <div className={styles.section}>
-      <h2 className={styles.subtitle}>Текст сочинения</h2>
+      <h2 className={styles.subtitle}>Текст для сочинения</h2>
       <div className={styles.fileBox}>
         <FileEmoji size={25} />
         <a href={userEssayData.download_essay_file_url} download="26.pdf">
