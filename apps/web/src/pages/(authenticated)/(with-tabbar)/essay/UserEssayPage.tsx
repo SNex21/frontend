@@ -176,7 +176,7 @@ const InProgressEssayView = ({ userEssayData }: { userEssayData: any }) => {
           <span className={styles.fileName}>
             {uploadedFile ? uploadedFile.name : "Загрузи сюда свой файл с решением"}
           </span>
-          <input type="file" hidden onChange={handleFileChange} />
+          <input type="file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" hidden onChange={handleFileChange} />
         </label>
       </div>
 
