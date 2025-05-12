@@ -71,7 +71,7 @@ const ChoicePunctuation: React.FC<ChoicePunctuationProps> = ({
         [styles.correct as string]: isCorrect && state?.submitted,
         [styles.wrong as string]: isSelected && state?.submitted && !isCorrect,
       })}
-      
+      onClick={onSelect}
       >
         {isSelected ? "," : ""}
       </span>
