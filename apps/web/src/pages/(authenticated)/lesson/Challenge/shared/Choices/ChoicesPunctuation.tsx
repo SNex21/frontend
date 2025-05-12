@@ -3,7 +3,7 @@
 import React from "react";
 import { Choice } from "@/models/Session.ts";
 import { ChallengeState } from "@/pages/(authenticated)/lesson/Challenge/Challenge.tsx";
-import {styles} from "./ChoicesPunctuation.module.scss";
+import styles from "./ChoicesPunctuation.module.scss";
 import cn from "classnames";
 
 interface ManyChoicesPunctuationProps {
