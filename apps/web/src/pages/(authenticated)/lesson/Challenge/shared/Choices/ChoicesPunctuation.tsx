@@ -3,9 +3,8 @@
 import React from "react";
 import { Choice } from "@/models/Session.ts";
 import { ChallengeState } from "@/pages/(authenticated)/lesson/Challenge/Challenge.tsx";
-import styles from "./ChoicesPunctuation.module.scss";
+import {styles} from "./ChoicesPunctuation.module.scss";
 import cn from "classnames";
-import { Haptic } from "@/lib/twa/components/Haptic.tsx";
 
 interface ManyChoicesPunctuationProps {
   choices?: Choice[];
@@ -67,12 +66,12 @@ const ChoicePunctuation: React.FC<ChoicePunctuationProps> = ({
   if (isSpace) {
     return (
       <span
-        className={cn(styles.punctuationSlot, {
-          [styles.selected]: isSelected,
-          [styles.correct]: isCorrect && state?.submitted,
-          [styles.wrong]: isSelected && state?.submitted && !isCorrect,
-        })}
-        onClick={onSelect}
+      className={cn(styles.punctuationSlot, {
+        [styles.selected as string]: isSelected,
+        [styles.correct as string]: isCorrect && state?.submitted,
+        [styles.wrong as string]: isSelected && state?.submitted && !isCorrect,
+      })}
+      
       >
         {isSelected ? "," : ""}
       </span>
