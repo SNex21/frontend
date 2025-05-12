@@ -4,8 +4,8 @@ const API_ENDPOINTS = {
   USER: "/user",
   USER_DEFAULT: "/user",
   STATS: "/stats/",
-  SESSION: "/tasks/session/",
-  GET_TOPICS: "/tasks/topics/",
+  SESSION: "/practice/session/",
+  GET_TOPICS: "/practice/topics/",
   PAYMENT: "/payment",
 };
 
