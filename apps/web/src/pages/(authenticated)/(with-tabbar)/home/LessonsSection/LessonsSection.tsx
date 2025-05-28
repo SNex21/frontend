@@ -58,7 +58,7 @@ const LessonCards: FC = () => {
       <>
         {!user.subscription ? (
             <SubscriptionCard
-            title="Открывай режимы тренировки и повторению ошибок с подпиской!"
+            title="Открывай режимы тренировки и повторения ошибок с подпиской!"
             href={"/subscription"}
             icon={<ArrowIcon size={25} />}
           />
